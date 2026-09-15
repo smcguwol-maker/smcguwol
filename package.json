@@ -1,0 +1,15 @@
+{
+  "name": "smc-guwol-website",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "SMC 인천 구월점 고객 소유 정적 홈페이지",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/check.mjs",
+    "check:design": "node scripts/check-design.mjs",
+    "check:release": "node scripts/check-release.mjs",
+    "preview": "node scripts/serve.mjs"
+  },
+  "engines": { "node": ">=20" }
+}

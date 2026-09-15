@@ -1,0 +1,48 @@
+import assert from 'node:assert/strict';
+import { readFile, access } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const root = fileURLToPath(new URL('../', import.meta.url));
+const html = await readFile(path.join(root,'public/index.html'),'utf8');
+const site = JSON.parse(await readFile(path.join(root,'content/site.json'),'utf8'));
+let checks = 0;
+const escaped = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const check = (message, test) => { assert.ok(test, message); checks++; console.log('PASS ' + message); };
+check('한국어 lang 선언', /<html lang="ko">/.test(html));
+check('H1 하나', (html.match(/<h1\b/g) || []).length === 1);
+check('첫 제목의 지역·업종', /<h1[^>]*>인천 구월동<br>음악연습실/.test(html));
+check('모바일 viewport 설정', html.includes('width=device-width, initial-scale=1'));
+check('title·description 반영', html.includes(escaped(site.title)) && html.includes(escaped(site.description)));
+check('빈 템플릿 없음', !/\{\{[A-Z_]+\}\}/.test(html));
+const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
+check('HTML ID 중복 없음', new Set(ids).size === ids.length);
+for(const match of html.matchAll(/href="#([^"]+)"/g)) assert.ok(ids.includes(match[1]),'깨진 앵커: '+match[1]);
+check('모든 내부 메뉴의 대상 존재', true);
+for (const match of html.matchAll(/<a\b[^>]*>/g)) if(match[0].includes('target="_blank"')) assert.ok(match[0].includes('rel="noopener noreferrer"'),'새 창 보안 속성 누락');
+check('외부 새 창 링크 보안 속성', true);
+check('예약 링크 5곳 이상', html.split(`href="${escaped(site.links.booking)}"`).length - 1 >= 5);
+check('전화 링크 형식', html.includes(`href="tel:${site.phone.replace(/-/g,'')}"`));
+for(const match of html.matchAll(/<(?:img|script|link)\b[^>]*(?:src|href)="\.\/([^"]+)"/g)) await access(path.join(root,'public',match[1]));
+check('모든 로컬 이미지·CSS·JS 파일 존재',true);
+for(const img of html.matchAll(/<img\b[^>]*>/g)) if(!img[0].includes('id="photo-full"')) assert.ok(/alt="[^"]+"/.test(img[0]) && /width="\d+"/.test(img[0]) && /height="\d+"/.test(img[0]),'이미지 alt 또는 치수 누락');
+check('사진 설명·크기 속성',true);
+const schema=JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+check('구조화 데이터 일치',schema.name === site.name && schema.telephone === site.phone && Object.entries(site.address).every(([key,value]) => schema.address[key] === value.trim()));
+check('가짜 평점·가격 구조화 데이터 없음', !schema.aggregateRating && !schema.review && !schema.priceRange);
+check('예약 자동화·문의 수집 폼 없음',!/<form\b/.test(html));
+check('추적 스크립트·외부 JS 없음',!/<script[^>]+src="https?:/.test(html));
+const robots=await readFile(path.join(root,'public/robots.txt'),'utf8');
+const sitemap=await readFile(path.join(root,'public/sitemap.xml'),'utf8');
+const headers=await readFile(path.join(root,'public/_headers'),'utf8');
+if(site.publish) {
+  check('정식 페이지 검색 허용', html.includes('content="index,follow"') && !headers.includes('X-Robots-Tag: noindex'));
+  check('canonical·sitemap 연결', html.includes('rel="canonical"') && sitemap.includes('<loc>') && robots.includes('Sitemap: https://'));
+} else {
+  check('미완성 시안 검색 제외', html.includes('content="noindex,nofollow,noarchive"') && robots.includes('Disallow: /') && headers.includes('X-Robots-Tag: noindex'));
+  check('시안의 canonical·sitemap 공개 대기',!html.includes('rel="canonical"') && !sitemap.includes('<loc>'));
+}
+const css = await readFile(path.join(root,'public/styles.css'),'utf8');
+check('모바일·태블릿 분기 포함',css.includes('max-width:600px') && css.includes('max-width:800px'));
+check('동작 줄이기·안전 영역 대응',css.includes('prefers-reduced-motion') && css.includes('safe-area-inset-bottom'));
+check('파일 경로에 비밀 설정 없음', !html.includes('.env') && !html.includes('API_KEY'));
+console.log(`\n${checks} static checks passed. External destination behavior and visual QA are checked separately.`);
