@@ -10,7 +10,7 @@
 
 ## 2. 고객 Cloudflare 계정의 배포 연결·작업자 초대
 
-**고객 전달:** 작업자 초대를 완료했고, Cloudflare Workers and Pages 앱에는 `smcguwol-maker/smcguwol` 저장소 하나만 선택했습니다. 초대 수락·실제 계정 접근·Pages 프로젝트 및 배포 성공은 아직 독립 확인하지 않았습니다. 고객에게 동일한 초대와 저장소 선택을 다시 요청하지 않습니다.
+**현재 상태:** 고객은 작업자 초대와 Cloudflare Workers and Pages 앱의 `smcguwol-maker/smcguwol` 저장소 단독 선택을 완료했다고 전달했습니다. 제작자는 초대 수락과 Cloudflare 앱 인증 완료를 보고했습니다. 마지막 승인 전 화면에서 고객 SMC 계정과 Account Read·Account Settings Read·Pages Read·Pages Write, 필수 User Read·Background Access를 확인했습니다. 현재 Work 대화에는 Cloudflare 기능이 노출되지 않아 실제 계정 API 조회·Pages 프로젝트·배포 성공은 아직 확인하지 못했습니다. 같은 초대·설치·인증을 반복 요청하지 않습니다. 이어서 진행할 상세 상태는 `NEXT_SESSION.md`를 우선 참고합니다.
 
 ### 고객 GitHub를 고객 Cloudflare에 연결
 
@@ -27,7 +27,7 @@
 
 Pages 작업에는 공식 역할 **Workers Platform Admin**을 검토합니다. 이 역할은 Pages 외에도 Workers 등 개발 플랫폼 제품을 읽고 수정할 수 있으므로 'Pages만의 권한'이라고 설명하지 않습니다. 결제·전체 계정 관리를 위한 Super Administrator 역할을 기본 요청하지 않습니다. 도메인의 DNS 수정 권한은 실제 도메인이 추가된 뒤 필요한 도메인 범위로 확인합니다.
 
-계정 초대 완료만으로 현재 작업 환경에 Cloudflare 접근이 생기는 것은 아닙니다. 제작자는 본인의 초대를 수락하고 정상적인 Cloudflare 로그인으로 고객 계정 접근을 확인해야 합니다. 현재 이 대화에서 사용 가능한 Cloudflare 연결 도구는 확인되지 않았으며, 고객 계정에서 인증된 실제 화면 접근도 아직 없습니다.
+초대 수락과 앱 인증은 제작자가 완료했다고 확인했습니다. 인증 완료와 이 대화에서의 Cloudflare 기능 사용 가능 여부는 구분합니다. 현재 기능이 없는 원인은 확정하지 않았습니다. OpenAI 공식 안내는 설치 후 새 대화에서 플러그인을 사용할 것을 안내하므로, 다음 세션에서 Cloudflare 기능을 불러와 계정 조회부터 수행합니다. 고객 재초대·전체 권한 확대·인증 반복을 해결책으로 자동 요청하지 않습니다. 비밀번호·토큰·인증 코드를 채팅이나 저장소에 보관하지 않습니다.
 
 ## 3. 도메인 구매처·현재 사용 상태
 
