@@ -4,9 +4,41 @@
 
 ## 바로 할 작업
 
-디자인 검토 02의 레퍼런스 비교, A/B 개선, Preview 배포와 Chrome 검수를 완료했습니다. 아래 최신 링크에서 A/B를 비교하고 사용자의 방향 선택과 수정 의견을 받습니다. 최종안은 아직 선택하지 않았습니다.
+사용자가 2차 A/B의 차별화가 부족하다고 평가해 디자인 검토 03을 새로 구현·배포했습니다. 아래 개선안과 이전 A/B를 비교하고 사용자의 시각적 평가를 받습니다. 배포·기능 검사 통과를 디자인 만족이나 최종안 선택으로 간주하지 않습니다.
 
-## 최신 배포·검수 결과 · 2026-09-16 · 디자인 검토 02
+## 최신 배포·검수 결과 · 2026-09-16 · 디자인 검토 03
+
+- [개선안 03](https://design-round-03.smcguwol-review.pages.dev/design/c.html)
+- [개선 전후 비교 안내](https://design-round-03.smcguwol-review.pages.dev/design/)
+- [이전 A](https://design-round-03.smcguwol-review.pages.dev/design/a.html) · [이전 B](https://design-round-03.smcguwol-review.pages.dev/design/b.html)
+- [이번 최종 검토 배포의 고정 주소](https://2c4def08.smcguwol-review.pages.dev/design/c.html)
+- [디자인 기준과 구현 설명](DESIGN_ROUND_03.md)
+
+### 무엇을 바꿨는가
+
+대표 장면을 전체 폭의 실제 C6 홀 사진으로 바꿨습니다. PC에서는 피아노를 피한 우측에 제목을 배치하고, 모바일·태블릿에서는 사진 아래에 제목을 둡니다. 공간 안내는 실제 방 번호를 선택하면 큰 사진·설명·예약 경로가 함께 바뀌는 구성입니다. 전체 요금표는 펼쳐서 확인합니다. 장식용 영문과 추상적인 슬로건을 줄였습니다. 기존 A/B는 비교용으로 보존했습니다.
+
+### 배포와 확인 범위
+
+- 기존 고객 Pages 프로젝트를 실제 목록 조회(HTTP 200) 후 재사용했습니다. public의 18개 파일을 직접 업로드했습니다. 새 프로젝트나 다른 호스팅을 만들지 않았습니다.
+- 최종 배포: 2026-09-16 23:43 KST, API의 환경 `preview`와 배포 단계 `success` 확인. Preview 이름은 `design-round-03`이며 Git 브랜치명과 다릅니다.
+- 구현 커밋 `76fc74a413686df18f89c162b14ce11b7c07f177`, 태블릿 수정 포함 코드 커밋 `b8b275136f14c67252f1c3aadad2cd6cbc3e6758`. 검토 브랜치는 `codex/smc-design-review`입니다.
+- 최초 3차 배포를 검수하면서 768px에서 제목이 피아노와 겹치는 부분을 발견했습니다. 태블릿 구간을 사진·제목의 세로 배치로 바꾸고 재배포했습니다. 최종 768px 화면에서 사진 하단 462px, 제목 상단 492px로 분리된 것을 실제 확인했습니다.
+- 최종 배포의 제공 파일 17개는 모두 HTTP 200, 검색 제외 헤더, 로컬 빌드와 SHA-256 일치를 확인했습니다. 나머지 1개인 _headers는 Cloudflare 응답 설정 파일입니다.
+- 기존 정적 검사 22개, 디자인 비교 4개 페이지, 공개/편집 검사 8개 시나리오와 JavaScript 구문 검사를 통과했습니다.
+- Chrome에서 1440×960 PC, 390×844 모바일, 320px 소형 화면과 768px 태블릿의 배치를 확인했습니다. 가로 넘침이 없었고, 표시되는 실제 사진이 로드됐습니다. Chrome 화면 크기 검수이며 실기기 검수는 아닙니다.
+- 방 선택, PC·모바일 방향키 조작, 선택 상태와 표시 패널 일치, C6 전화 링크, 펼치는 요금표와 메뉴의 요금표 열기, 6개 확정 가격 행을 확인했습니다. 전화 발신·예약·결제는 하지 않았습니다. 외부 업체 정보는 기존 검수 기록을 유지합니다.
+- content/site.json과 기존 전체 원페이지의 내용은 바꾸지 않았습니다. publish는 false이며 main·도메인·DNS·네임서버는 변경하지 않았습니다.
+
+### 남은 검토와 도구 제한
+
+1. 사용자가 새 첫인상과 공간 선택 방식을 평가해야 합니다. 만족 여부를 확인한 뒤 전체 원페이지의 최종 디자인 통합 범위를 정합니다.
+2. 실제 iPhone/Android·Safari·전화 앱 전환, 운영체제별 글꼴과 확대·보조기술 검수는 남았습니다. JavaScript 비활성 상태는 HTML의 기본 구조를 유지했으며 실제 브라우저 비활성 검수는 별도입니다.
+3. 네이버 일부 주차 안내와 지도 전화번호가 기존 확정 정보와 다른 항목은 공개 전에 확인합니다. 고객에게 메시지를 보내지 않았습니다.
+4. GitHub 자동 배포는 이전 Cloudflare Git 연결 오류 8000011 이후 미완료 상태입니다. 이번도 직접 업로드이며 완료된 인증·초대를 반복 요청하지 않습니다.
+5. Figma에는 코드 작성 전 편집 가능한 첫 화면 초안을 추가했으나 이어진 스크린샷 호출에서 Starter 플랜 MCP 도구 호출 한도 오류가 반환됐습니다. 유료 전환을 하지 않았고, Figma 초안의 검수 완료를 주장하지 않습니다. 최종 웹 검수는 Chrome에서 수행했습니다.
+
+## 2차 배포·검수 이력 · 2026-09-16 · 디자인 검토 02
 
 - [최신 A/B 비교](https://design-round-02.smcguwol-review.pages.dev/design/)
 - [A · 공간의 온도](https://design-round-02.smcguwol-review.pages.dev/design/a.html)
@@ -92,7 +124,7 @@ B안의 모바일 문구가 붙는 오류를 검토 브랜치에서 수정하고
 - 저장소: https://github.com/smcguwol-maker/smcguwol
 - 검토 브랜치: `codex/smc-design-review`
 - Draft PR: https://github.com/smcguwol-maker/smcguwol/pull/1
-- 실제 A/B 코드 최초 커밋: `d38ca1519ccf58a2ca1d7c38dcc2b060f75698c2`. 디자인 검토 02 구현 커밋은 `95f2a670bf721c1fcd5d693446c4734069dc8abe`입니다. 작업 시작 시 원격 브랜치의 최신 내용을 조회합니다.
+- 최초 A/B 이후 디자인 검토 03과 태블릿 수정까지 반영했습니다. 코드 커밋은 `b8b275136f14c67252f1c3aadad2cd6cbc3e6758`입니다. 이후 인수인계 문서 커밋이 있으므로 작업 시작 시 원격 브랜치의 최신 내용을 조회합니다.
 - main은 초기 README 상태로 유지했습니다. 제작 코드는 검토 브랜치에 있습니다. main을 그대로 빌드하지 않습니다.
 - 프레임워크 없는 HTML/CSS/JavaScript, Node.js 20 이상. 외부 빌드 의존성 없음.
 - 빌드 명령 `node scripts/build.mjs`, 출력 `public`, 루트 빈칸, Framework None.
@@ -102,6 +134,7 @@ B안의 모바일 문구가 붙는 오류를 검토 브랜치에서 수정하고
 
 ## 디자인·검수 현황
 
+- 최신 개선안 03: 전체 폭의 C6 실사진, 실제 방 선택에 따라 바뀌는 사진·설명·예약 경로, 펼치는 요금표. src/design-c.html과 해당 CSS·JS가 원본입니다. 아래 A/B는 이전 비교안입니다.
 - A: 크림·올리브와 명조 제목, 실제 사진을 중심으로 한 차분한 스튜디오 소개.
 - B: 흰색과 선명한 파랑, 굵은 제목과 연습 목적별 공간 선택을 중심으로 한 안내.
 - A/B는 첫 화면·공간 소개·요금·예약 안내의 비교 시안이며 완성된 두 개의 전체 사이트가 아닙니다. 기존 전체 원페이지는 public/index.html에 있습니다.
@@ -130,6 +163,6 @@ B안의 모바일 문구가 붙는 오류를 검토 브랜치에서 수정하고
 
 ## 읽을 파일
 
-README.md, docs/DEPLOYMENT.md, docs/DESIGN_ROUND_02.md, docs/DESIGN_DIRECTION.md(1차 이력), docs/QA.md, docs/EDITING.md, docs/CONTENT_SOURCES.md, content/site.json.
+README.md, docs/DEPLOYMENT.md, docs/DESIGN_ROUND_03.md, docs/DESIGN_ROUND_02.md(2차 이력), docs/DESIGN_DIRECTION.md(1차 이력), docs/QA.md, docs/EDITING.md, docs/CONTENT_SOURCES.md, content/site.json.
 
 원격 저장소가 기준입니다. 이전 임시 작업 폴더나 20260914 ZIP이 사라졌거나 오래됐어도 제작을 처음부터 다시 시작하지 않습니다. 최신 검토 브랜치를 사용합니다. 고객에게 메시지 전송, PR 병합, 최종 공개 완료를 수행했다고 허위 보고하지 않습니다.
