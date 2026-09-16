@@ -109,6 +109,7 @@ if (!site.publish) {
     ...replacements,
     DESIGN_LOGO: logo.replace('src="./', 'src="../'),
     DESIGN_HERO: hero.replace('src="./', 'src="../'),
+    HALL_IMAGE: designImage(site.hero),
     PERSONAL_HERO: designImage(personal, true),
     ROOM_ONE_PRICE: escape(site.rates.find(r => r.name.startsWith('Room 1 ·'))?.price || '문의'),
     ROOM_PIANO_PRICE: escape(site.rates.find(r => r.name.startsWith('Room 3·4 ·'))?.price || '문의'),
@@ -118,7 +119,7 @@ if (!site.publish) {
     PIANO_IMAGE: designImage(piano), PIANO_SRC: '../' + escape(piano.src),
     PIANO_CAPTION: escape(piano.caption), PIANO_DESCRIPTION: escape(piano.description)
   };
-  for (const [sourceName, outputName] of [['design-index.html', 'index.html'], ['design-a.html', 'a.html'], ['design-b.html', 'b.html']]) {
+  for (const [sourceName, outputName] of [['design-index.html', 'index.html'], ['design-a.html', 'a.html'], ['design-b.html', 'b.html'], ['design-c.html', 'c.html']]) {
     const template = await readFile(path.join(root, 'src', sourceName), 'utf8');
     const rendered = template.replace(/\{\{([A-Z_]+)\}\}/g, (_, key) => {
       if (!(key in designValues)) throw new Error(`정의되지 않은 디자인 템플릿 항목: ${key}`);
@@ -127,5 +128,7 @@ if (!site.publish) {
     await writeFile(path.join(designOutput, outputName), rendered);
   }
   await cp(path.join(root, 'src/design.css'), path.join(designOutput, 'design.css'));
+  await cp(path.join(root, 'src/design-c.css'), path.join(designOutput, 'design-c.css'));
+  await cp(path.join(root, 'src/design-c.js'), path.join(designOutput, 'design-c.js'));
 }
 console.log(`Built public/ — ${site.publish ? 'PRODUCTION: ' + canonical : 'PREVIEW: indexing disabled; final approvals required'}`);

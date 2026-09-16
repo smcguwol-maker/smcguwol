@@ -9,7 +9,7 @@ if (config.publish) {
   await assert.rejects(access(path.join(root, 'public/design')));
   console.log('PASS 정식 공개 출력에는 디자인 비교 페이지가 없습니다.');
 } else {
-  for (const name of ['index', 'a', 'b']) {
+  for (const name of ['index', 'a', 'b', 'c']) {
     const file = path.join(root, 'public/design', name + '.html');
     const html = await readFile(file, 'utf8');
     const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(x => x[1]);
