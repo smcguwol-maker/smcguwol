@@ -48,4 +48,6 @@
 
 ## 다음 결정
 
+실제 Preview: [A/B 비교](https://design-round-02.smcguwol-review.pages.dev/design/) · [A · 공간의 온도](https://design-round-02.smcguwol-review.pages.dev/design/a.html) · [B · 오늘의 연습](https://design-round-02.smcguwol-review.pages.dev/design/b.html). 배포 상태와 검수 범위는 [최신 인수인계](NEXT_SESSION.md)에 기록했습니다.
+
 사용자가 A/B의 첫인상, 공간 선택, 예약 이해도를 비교해 방향을 선택한다. 이후 선택한 안으로 전체 원페이지를 정리한다. 최종 공개와 도메인 연결은 별도 단계다.
