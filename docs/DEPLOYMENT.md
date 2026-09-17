@@ -1,8 +1,14 @@
 # Cloudflare Pages 배포 안내
 
-## 최신 상태 · 2026-09-15
+## 최신 상태 · 2026-09-17
 
-고객 Cloudflare Pages에 A/B 검토본을 직접 업로드하고 배포·화면 검수를 완료했습니다. GitHub 자동 배포는 연결 오류 8000011로 미완료입니다. 실제 확인 링크, 검수 결과, 남은 작업은 [NEXT_SESSION.md](NEXT_SESSION.md)의 최신 결과를 참고하세요. publish: false와 도메인 연결 보류 상태를 유지합니다.
+고객 Pages 기존 프로젝트 `smcguwol-review`에 개선안 03을 첫 페이지로 통합한 검토본을 직접 업로드했습니다. [통합 홈페이지](https://home-review.smcguwol-review.pages.dev/)의 preview 배포 성공과 PC·모바일 크기 화면 검수를 확인했습니다. Git 자동 배포는 미완료입니다. 실제 결과·남은 작업은 [NEXT_SESSION.md](NEXT_SESSION.md)를 참고하세요. publish:false와 도메인 연결 보류를 유지합니다.
+
+이 기존 프로젝트는 Direct Upload 방식이며 Git integration으로 전환할 수 없습니다. Git 자동 배포에는 별도 Git 연결 프로젝트가 필요합니다([공식 문서](https://developers.cloudflare.com/pages/get-started/direct-upload/)). 이번 통합 작업에서는 새 프로젝트를 만들지 않았고 기존 오류 8000011을 재인증으로 해결했다고 주장하지 않습니다.
+
+현재 홈페이지 원본은 `src/index.html`, `src/styles.css`, `src/app.js`이며, `src/design-*`는 비교 이력입니다. 공개 빌드에서 비교 페이지를 제거해도 통합 첫 페이지는 유지됩니다.
+
+2026-09-17 읽기 전용 확인: 고객 계정의 해당 도메인 zone 및 Pages custom domains는 빈 목록입니다. 공개 NS는 LETO 두 서버이며 apex A/AAAA/MX/CAA 응답은 ENODATA입니다. 다른 레코드 전체를 조사한 것은 아닙니다. 실제 도메인/네임서버 변경은 기존 금지 지시가 있어 정식 공개 승인이 필요합니다.
 
 ## 기본 설정
 
@@ -50,7 +56,7 @@
 
 설정 파일의 `url`에 `https://근처연습실co.kr/`를 반영했습니다. 고객은 2026-09-15 구매처가 **LETO**, 현재 네임서버가 **`selene.ns.leto.kr`**, **`nyx.ns.leto.kr`**라고 전달했고, 제공한 관리 화면에서도 두 네임서버를 확인했습니다. 고객은 기존 홈페이지·이메일에 연결하지 않고 도메인만 구매한 상태라고 확인했습니다. 도메인 재구매는 필요하지 않습니다. 현재 네임서버를 유지하고, 배포 미리보기와 실제 DNS 레코드를 확인한 뒤 연결합니다. 자동 갱신·잠금 설정은 변경하지 않았습니다.
 
-최상위 주소 `근처연습실co.kr`를 사용하려면 Pages 프로젝트와 같은 고객 Cloudflare 계정에 도메인(zone)을 추가하고 Cloudflare 네임서버를 사용해야 합니다. Cloudflare Pages 프로젝트의 Custom domains에서 도메인을 연결한 다음 안내되는 DNS 설정을 확인합니다. 고객은 기존 홈페이지·이메일을 사용하지 않는다고 확인했지만, 실제 DNS 레코드는 아직 조회하지 않았습니다. 기존 DNS를 검토하고 실제 Cloudflare 네임서버 값이 발급된 뒤 LETO에서 네임서버를 변경합니다. 현재 LETO 네임서버를 Cloudflare가 발급한 값으로 혼동하지 마세요. 기존 DNS 레코드는 임의로 삭제하지 마세요. 한글 도메인은 브라우저·DNS에서 영문 Punycode로 표시될 수 있으며, 이 프로젝트는 확인된 한글 주소를 URL 표준 형식으로 변환해 canonical·sitemap에 사용합니다.
+최상위 주소 `근처연습실co.kr`를 사용하려면 Pages 프로젝트와 같은 고객 Cloudflare 계정에 도메인(zone)을 추가하고 Cloudflare 네임서버를 사용해야 합니다. Cloudflare Pages 프로젝트의 Custom domains에서 도메인을 연결한 다음 안내되는 DNS 설정을 확인합니다. 고객은 기존 홈페이지·이메일을 사용하지 않는다고 확인했습니다. 위 최신 상태에 기록한 apex A/AAAA/MX/CAA만 조회했으므로 네임서버 변경 전에는 TXT·DS·하위 도메인 등 필요한 나머지 레코드도 확인합니다. 기존 DNS를 검토하고 실제 Cloudflare 네임서버 값이 발급된 뒤 LETO에서 네임서버를 변경합니다. 현재 LETO 네임서버를 Cloudflare가 발급한 값으로 혼동하지 마세요. 기존 DNS 레코드는 임의로 삭제하지 마세요. 한글 도메인은 브라우저·DNS에서 영문 Punycode로 표시될 수 있으며, 이 프로젝트는 확인된 한글 주소를 URL 표준 형식으로 변환해 canonical·sitemap에 사용합니다.
 
 연결 성공 뒤 HTTPS와 www 사용 여부를 확인하고 `content/site.json`의 `url`을 실제 대표 주소로 설정합니다. www·pages.dev 보조 주소의 대표 주소 정리(리디렉션)는 실제 계정·DNS 구성을 확인한 뒤 적용합니다.
 
