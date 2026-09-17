@@ -127,3 +127,149 @@ h2{font-size:42px;line-height:1.35;font-weight:400;letter-spacing:-.06em;word-br
 }
 @media(max-width:360px){.cover-copy h1{font-size:37px}.room-choice{padding-inline:6px!important}.room-choice strong{font-size:11px}.room-choice b{font-size:13px}.visit-details{grid-template-columns:1fr}.phone-number{font-size:25px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+
+/* Refinements of the accepted photo-led direction. */
+body{font-kerning:normal;overflow-wrap:break-word}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid #5686bc;outline-offset:5px}
+a,button,summary{touch-action:manipulation}
+.site-header nav a,.header-book{display:inline-flex;align-items:center;min-height:44px}
+.cover-copy h1{font-size:clamp(3.25rem,4.9vw,4.75rem);letter-spacing:-.055em}
+.cover-copy p{font-size:1rem;line-height:1.85;word-break:keep-all}
+.cover-link{min-height:48px;font-size:.9375rem}
+.section-label{font-size:.8125rem;letter-spacing:.045em}
+.section-intro>p{font-size:.9375rem}
+.room-choice strong{font-size:1.1875rem}
+.room-choice small,.room-conditions{font-size:.8125rem}
+.room-choice b,.rate-price{font-variant-numeric:tabular-nums}
+.room-image{aspect-ratio:1.38;display:grid;place-items:center}
+.room-image img{height:100%;aspect-ratio:auto;object-fit:contain;transition:none}
+.room-image:hover img{transform:none}
+.room-image span{font-size:.75rem;padding:8px 12px}
+.room-caption{font-size:.8125rem}
+.room-description p:last-child{font-size:.9375rem;line-height:1.85}
+.inline-book{display:inline-flex;align-items:center;justify-content:space-between;min-height:46px;font-size:.875rem;gap:14px}
+.summary-note,.rates-table caption,.rates-content>p,.booking-note{font-size:.875rem}
+.rate-hour{font-size:.8125rem}
+.booking-note a{display:inline-block;padding-block:7px}
+.mobile-sections{display:none}
+
+.faq-section{display:grid;grid-template-columns:1fr 1.45fr;gap:80px;padding:0 0 100px}
+.faq-intro{font-size:.875rem;color:var(--muted);margin-top:22px;word-break:keep-all}
+.faq-list{border-top:1px solid var(--ink)}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-item summary{display:flex;justify-content:space-between;gap:22px;padding:23px 0;list-style:none;cursor:pointer;font-size:1rem;line-height:1.65;word-break:keep-all}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:'＋';font-size:20px;flex-shrink:0;font-weight:400}
+.faq-item[open] summary::after{content:'−'}
+.faq-answer{padding:0 30px 24px 0;font-size:.9375rem;color:var(--muted);line-height:1.9;word-break:keep-all}
+.visit-address address{font-size:.9375rem;line-height:1.85;word-break:keep-all;user-select:all}
+.visit-details h3{font-size:.875rem}
+.visit-details p{font-size:.9375rem}
+.visit-actions{display:flex;align-items:center;gap:25px;margin-top:20px;flex-wrap:wrap}
+.map-link{margin-top:0;min-height:46px;align-items:center;font-size:.875rem;gap:35px}
+.copy-address{border:1px solid #677669;background:transparent;min-height:44px;padding:8px 14px;font-size:.8125rem}
+.copy-address:hover{background:#ffffff12}
+.copy-status{min-height:24px;font-size:.8125rem;margin-top:8px;color:#c6cec4}
+.site-footer{font-size:.8125rem;gap:25px}
+.site-footer>div{flex-wrap:wrap;gap:10px 25px}
+.site-footer a{display:inline-flex;align-items:center;min-height:44px}
+
+.photo-open{overflow:hidden}
+.photo-viewer{width:min(1060px,calc(100% - 48px));max-width:none;max-height:calc(100dvh - 48px);padding:0;border:0;background:var(--paper);color:var(--ink)}
+.photo-viewer::backdrop{background:rgba(7,15,10,.86)}
+.photo-viewer-header{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:12px 20px;border-bottom:1px solid var(--line)}
+.photo-viewer-header h2{font-size:1rem;letter-spacing:-.025em;line-height:1.5}
+.photo-viewer-header form{margin:0;flex-shrink:0}
+.photo-viewer-header button{display:flex;align-items:center;gap:20px;border:0;background:transparent;font-size:.875rem;min-height:44px;padding:4px 8px}
+.photo-viewer-header button span{font-size:26px;line-height:1}
+.photo-viewer figure{padding:0 20px 16px}
+.photo-viewer img{width:100%;height:auto;max-height:calc(100dvh - 175px);object-fit:contain}
+.photo-viewer figcaption{font-size:.8125rem;line-height:1.6;margin-top:12px;color:var(--muted);word-break:keep-all}
+.polish-notes{border-top:1px solid var(--line);margin-top:35px;padding-top:28px}
+.polish-notes h2{font-size:1.375rem;letter-spacing:-.04em}
+.polish-notes p{font-size:.875rem;color:var(--muted);line-height:1.9;margin-top:15px;word-break:keep-all}
+
+@media(min-width:701px) and (max-width:1000px){
+  .cover-copy h1{font-size:2.75rem}
+  .cover-copy p{font-size:.875rem}
+  .room-choice strong{font-size:1.0625rem}
+  .room-description p:last-child{font-size:.875rem}
+  .faq-section{grid-template-columns:1fr 1.4fr;gap:40px;padding-bottom:70px}
+}
+@media(max-width:700px){
+  html{scroll-padding-top:20px;scroll-padding-bottom:100px}
+  body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+  .review-strip{align-items:center;min-height:34px;padding:3px 20px;font-size:.625rem}
+  .review-strip a{padding:4px 0}
+  .site-header{top:15px;padding-bottom:12px}
+  .header-book{font-size:.8125rem}
+  .cover-copy{padding:28px 24px 32px}
+  .cover-copy h1{font-size:clamp(2.125rem,10.6vw,2.75rem);letter-spacing:-.06em;line-height:1.25}
+  .cover-copy p{font-size:.9375rem;line-height:1.8;margin-top:20px}
+  .cover-copy p br{display:initial}
+  .cover-link{font-size:.875rem;width:100%;max-width:280px;margin-top:18px}
+  .photo-caption{font-size:.8125rem}
+  .photo-caption span{font-size:.6875rem}
+  .studio-line{font-size:.8125rem;padding-block:18px;line-height:1.85}
+  .mobile-sections{display:grid;grid-template-columns:repeat(3,1fr);padding:0 20px;border-bottom:1px solid var(--line)}
+  .mobile-sections a{display:flex;align-items:center;justify-content:center;gap:12px;min-height:48px;font-size:.8125rem}
+  .mobile-sections a+a{border-left:1px solid var(--line)}
+  .mobile-sections span{color:var(--muted)}
+  .rooms-section{padding-top:54px;padding-bottom:54px}
+  .section-label{font-size:.75rem;margin-bottom:12px}
+  h2{font-size:2rem;line-height:1.35;letter-spacing:-.05em}
+  .section-intro>p{font-size:.875rem;line-height:1.85;margin-top:20px}
+  .section-intro>p br{display:none}
+  .room-choice{padding:13px 9px!important}
+  .room-choice strong{font-size:.8125rem;line-height:1.5;min-height:3em;white-space:normal;word-break:keep-all;letter-spacing:-.035em}
+  .room-choice b{font-size:.9375rem;margin-top:9px}
+  .room-choice b span{font-size:.6875rem}
+  .room-choice[aria-selected=true]{box-shadow:inset 0 3px 0 var(--forest)}
+  .choice-number{font-size:1.125rem;margin-bottom:3px}
+  .room-conditions{font-size:.75rem;line-height:1.8;margin-top:15px;word-break:keep-all}
+  .room-image span{font-size:.6875rem;padding:7px 10px}
+  .room-description{margin-top:22px}
+  .room-caption{font-size:.75rem}
+  .room-description h3{font-size:1.5rem;margin:8px 0 13px}
+  .room-description p:last-child{font-size:.9375rem}
+  .inline-book{font-size:.875rem;width:100%;margin-top:18px}
+  .rates-wrap{margin-top:38px}
+  .rates-disclosure summary{font-size:1.125rem;padding-block:22px}
+  .summary-note{font-size:.75rem;margin-top:2px}
+  .rates-table{font-size:.875rem;line-height:1.65}
+  .rates-table th,.rates-table td{padding:17px 4px}
+  .rates-table th{word-break:keep-all}
+  .rates-table caption{font-size:.75rem;line-height:1.7}
+  .rate-hour{font-size:.75rem;margin-top:4px}
+  .rates-content>p,.booking-note{font-size:.8125rem;line-height:1.85}
+  .faq-section{display:block;padding-bottom:58px}
+  .faq-intro{font-size:.875rem;margin-top:18px}
+  .faq-list{margin-top:30px}
+  .faq-item summary{font-size:.9375rem;padding:20px 0;gap:14px}
+  .faq-answer{font-size:.875rem;padding:0 14px 22px 0}
+  .visit-section{padding:50px 0}
+  .visit-address h2{font-size:2rem}
+  .visit-address address{font-size:.875rem;line-height:1.9}
+  .visit-actions{gap:14px}
+  .map-link{font-size:.875rem;gap:18px}
+  .copy-address{font-size:.75rem;padding-inline:11px}
+  .visit-details{grid-template-columns:1fr;gap:27px;margin-top:28px}
+  .visit-details h3{font-size:.8125rem;margin-bottom:8px}
+  .visit-details p{font-size:.875rem;line-height:1.85}
+  .phone-number{font-size:1.625rem;margin-top:0;min-height:44px}
+  .site-footer{padding:26px 0 22px;font-size:.75rem}
+  .site-footer>div{font-size:.75rem;gap:0 22px;margin-top:14px}
+  .mobile-booking{grid-template-columns:1fr 1.7fr;padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -4px 20px #17241f0a}
+  .mobile-booking a{display:flex;justify-content:center;align-items:center;flex-direction:column;min-height:68px;padding:10px 8px;line-height:1.5;font-size:.875rem}
+  .mobile-booking a:last-child{gap:3px}
+  .mobile-booking small{font-size:.6875rem;color:#c6d2bf}
+  .mobile-booking span{margin:0;font-weight:500}
+  .photo-viewer{width:calc(100% - 24px);max-height:calc(100dvh - 32px)}
+  .photo-viewer-header{padding:8px 12px;gap:12px}
+  .photo-viewer-header h2{font-size:.875rem}
+  .photo-viewer-header button{gap:12px;font-size:.8125rem}
+  .photo-viewer figure{padding:0 12px 14px}
+  .photo-viewer img{max-height:calc(100dvh - 170px)}
+  .photo-viewer figcaption{font-size:.75rem}
+}
