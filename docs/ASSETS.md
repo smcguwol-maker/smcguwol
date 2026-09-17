@@ -54,3 +54,10 @@
 ## 사용자가 직접 전달한 뮬 이미지
 
 `reference-materials/mule-overview.jpg`(132×2048)와 `reference-materials/mule-promo.png`(1000×558)를 원본 바이트 그대로 보관합니다. JPG는 확대 사용에 부족한 해상도이며 PNG는 방송 관련 홍보 주장의 확인이 필요합니다. 현재 갤러리는 네이버 예약의 가로1000px 사진을 사용합니다.
+
+## 네이버 예약 링크의 N 아이콘 · 2026-09-17
+
+- 사용자 요청으로 첫 페이지의 네이버 예약 링크에 N 로고 배지를 적용했습니다. 다른 사업자 서비스의 링크임을 식별하는 용도이며 SMC가 네이버의 공식 서비스라는 의미가 아닙니다.
+- 원본: https://developers.naver.com/inc/devcenter/downloads/bi/NAVER_login_KR.zip 의 NAVER_login_Light_KR_green_icon_H48.png. 네이버 개발자센터에서 제공한 N 단독 아이콘 PNG 바이트를 변경 없이 src/styles.css의 data URI로 포함했습니다. 방문자 브라우저에서 제3자 이미지 서버를 호출하지 않습니다.
+- 출처: https://developers.naver.com/docs/login/bi/bi.md 및 https://www.navercorp.com/company/brandGuide . 로그인 기능이나 로그인 문구는 추가하지 않았으며 기존 고객 네이버 예약 링크를 유지합니다.
+- C6 홀 전화 문의를 선택하면 모바일 버튼의 네이버 배지를 숨기고 기존 전화 동작으로 전환합니다. 네이버 브랜드 및 로고의 권리는 네이버에 있습니다.

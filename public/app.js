@@ -17,6 +17,7 @@ if (switcher) {
       if (booking && mobilePrimary && mobileSecondary) {
         const href = booking.getAttribute('href');
         const byPhone = href.startsWith('tel:');
+        mobilePrimary.classList.toggle('naver-book', !byPhone);
         mobilePrimary.setAttribute('href', href);
         if (byPhone) mobilePrimary.removeAttribute('target');
         else mobilePrimary.setAttribute('target', '_blank');

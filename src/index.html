@@ -28,7 +28,7 @@
       <header class="site-header">
         <a class="brand" href="#main" aria-label="SMC 인천 구월점 첫 화면">{{LOGO_IMAGE}}<span><strong>SMC</strong><small>인천 구월점</small></span></a>
         <nav aria-label="주 메뉴"><a href="#rooms">공간</a><a href="#rates">요금·예약</a><a href="#visit">오시는 길</a></nav>
-        <a class="header-book" href="{{BOOKING}}" target="_blank" rel="noopener noreferrer">네이버 예약 <span aria-hidden="true">↗</span></a>
+        <a class="header-book naver-book" href="{{BOOKING}}" target="_blank" rel="noopener noreferrer"><span class="naver-mark" aria-hidden="true"></span><span class="naver-label">네이버 예약</span><span class="booking-arrow" aria-hidden="true">↗</span></a>
       </header>
       <p class="photo-caption">{{HERO_CAPTION}} <span>실제 공간 사진</span></p>
       <div class="cover-copy">
@@ -53,11 +53,11 @@
         <div class="room-panels">
           <article class="room-panel" id="room-personal" aria-labelledby="personal-title" data-booking-room="1번방 · 개인 악기 연습실">
             <a class="room-image" href="{{PERSONAL_SRC}}" aria-label="1번 개인 악기 연습실 사진 크게 보기">{{PERSONAL_IMAGE}}<span>사진 크게 보기 ＋</span></a>
-            <div class="room-description"><div><p class="room-caption">Room 1 · 블루투스 작은방</p><h3 id="personal-title">개인 악기 연습실</h3><p>{{PERSONAL_DESCRIPTION}}</p></div><a class="inline-book" href="{{BOOKING}}" target="_blank" rel="noopener noreferrer">네이버 예약 <span aria-hidden="true">↗</span></a></div>
+            <div class="room-description"><div><p class="room-caption">Room 1 · 블루투스 작은방</p><h3 id="personal-title">개인 악기 연습실</h3><p>{{PERSONAL_DESCRIPTION}}</p></div><a class="inline-book naver-book" href="{{BOOKING}}" target="_blank" rel="noopener noreferrer"><span class="naver-mark" aria-hidden="true"></span><span class="naver-label">네이버 예약</span><span class="booking-arrow" aria-hidden="true">↗</span></a></div>
           </article>
           <article class="room-panel" id="room-piano" aria-labelledby="piano-title" data-booking-room="3번방 · 야마하 업라이트">
             <a class="room-image" href="{{PIANO_SRC}}" aria-label="3번 업라이트피아노 연습실 사진 크게 보기">{{PIANO_IMAGE}}<span>사진 크게 보기 ＋</span></a>
-            <div class="room-description"><div><p class="room-caption">Room 3 · 야마하 업라이트</p><h3 id="piano-title">야마하 업라이트피아노</h3><p>{{PIANO_DESCRIPTION}}</p></div><a class="inline-book" href="{{BOOKING}}" target="_blank" rel="noopener noreferrer">네이버 예약 <span aria-hidden="true">↗</span></a></div>
+            <div class="room-description"><div><p class="room-caption">Room 3 · 야마하 업라이트</p><h3 id="piano-title">야마하 업라이트피아노</h3><p>{{PIANO_DESCRIPTION}}</p></div><a class="inline-book naver-book" href="{{BOOKING}}" target="_blank" rel="noopener noreferrer"><span class="naver-mark" aria-hidden="true"></span><span class="naver-label">네이버 예약</span><span class="booking-arrow" aria-hidden="true">↗</span></a></div>
           </article>
           <article class="room-panel" id="room-hall" aria-labelledby="hall-title" data-booking-room="5번 홀 · 야마하 C6">
             <a class="room-image" href="{{HALL_SRC}}" aria-label="5번 야마하 C6 홀 사진 크게 보기">{{HALL_IMAGE}}<span>사진 크게 보기 ＋</span></a>
@@ -70,9 +70,9 @@
           <summary><span>전체 공간 요금표</span><span class="summary-note">30분 기준 · 최소 1시간 예약</span><span class="disclosure-icon" aria-hidden="true">＋</span></summary>
           <div class="rates-content">{{RATES}}<p>{{RATE_NOTE}}</p></div>
         </details>
-        <p class="booking-note">일반 연습실은 <a href="{{BOOKING}}" target="_blank" rel="noopener noreferrer">네이버에서 시간 확인</a> · C6 홀과 개인룸은 <a href="{{TEL}}">전화 문의</a></p>
+        <p class="booking-note">일반 연습실은 <a class="naver-text" href="{{BOOKING}}" target="_blank" rel="noopener noreferrer"><span class="naver-mark" aria-hidden="true"></span>네이버에서 시간 확인</a> · C6 홀과 개인룸은 <a href="{{TEL}}">전화 문의</a></p>
         <div class="booking-guide" aria-labelledby="booking-guide-title">
-          <div><p class="section-label">예약 방법</p><h3 id="booking-guide-title">연습할 방과 시간을<br>확인해 주세요.</h3><a class="inline-book" href="{{BOOKING}}" target="_blank" rel="noopener noreferrer">네이버 예약 열기 <span aria-hidden="true">↗</span></a></div>
+          <div><p class="section-label">예약 방법</p><h3 id="booking-guide-title">연습할 방과 시간을<br>확인해 주세요.</h3><a class="inline-book naver-book" href="{{BOOKING}}" target="_blank" rel="noopener noreferrer"><span class="naver-mark" aria-hidden="true"></span><span class="naver-label">네이버 예약 열기</span><span class="booking-arrow" aria-hidden="true">↗</span></a></div>
           <div><ol class="booking-steps"><li><span aria-hidden="true">01</span><div><strong>네이버의 예약 탭 선택</strong><p>예약 링크를 열고 ‘예약’ 탭에서 원하는 방을 선택하세요.</p></div></li><li><span aria-hidden="true">02</span><div><strong>날짜·시간과 금액 확인</strong><p>최소 1시간부터 예약할 수 있습니다. 최종 요금과 취소·변경 조건을 확인하세요.</p></div></li><li><span aria-hidden="true">03</span><div><strong>예약 확정·입실 안내 확인</strong><p>예약이 확정되면 안내된 방법으로 방문해 주세요.</p></div></li></ol><p class="booking-policy">C6 홀과 개인룸은 <a href="{{TEL}}">전화로 예약 가능 시간 문의</a>가 필요합니다.</p></div>
         </div>
       </div>
@@ -91,7 +91,7 @@
     </section>
   </main>
   <footer class="site-footer content-width"><div><p><strong>SMC</strong> 인천 구월점</p><p class="footer-address">{{ADDRESS}}<br>전화 <a href="{{TEL}}">{{PHONE}}</a> · {{HOURS}}</p><p class="copyright">© {{YEAR}} {{NAME}}</p></div><div><a href="{{KAKAO}}" target="_blank" rel="noopener noreferrer">카카오톡 문의</a><a href="{{INSTAGRAM}}" target="_blank" rel="noopener noreferrer">인스타그램</a><a href="{{BLOG}}" target="_blank" rel="noopener noreferrer">블로그</a></div></footer>
-  <aside class="mobile-booking" aria-label="빠른 예약"><a data-mobile-secondary href="{{TEL}}">전화 문의</a><a data-mobile-primary href="{{BOOKING}}" target="_blank" rel="noopener noreferrer"><small data-mobile-room>일반 연습실</small><span data-mobile-action>네이버 예약 ↗</span></a></aside>
+  <aside class="mobile-booking" aria-label="빠른 예약"><a data-mobile-secondary href="{{TEL}}">전화 문의</a><a class="naver-book" data-mobile-primary href="{{BOOKING}}" target="_blank" rel="noopener noreferrer"><span class="naver-mark" aria-hidden="true"></span><span class="mobile-booking-label"><small data-mobile-room>일반 연습실</small><span data-mobile-action>네이버 예약 ↗</span></span></a></aside>
   <dialog class="photo-viewer" aria-labelledby="photo-viewer-title">
     <div class="photo-viewer-header"><h2 id="photo-viewer-title">SMC 공간 사진</h2><button class="photo-close" type="button" autofocus>닫기 <span aria-hidden="true">×</span></button></div>
     <figure>{{HALL_IMAGE}}<figcaption></figcaption></figure>
