@@ -302,9 +302,16 @@ a,button,summary{touch-action:manipulation}
 .header-book.naver-book{background:transparent;color:#fff;border:0;border-left:1px solid #ffffff50;padding:8px 0 8px 22px;flex-shrink:0;font-weight:400}
 .header-book.naver-book:hover{background:transparent;color:#e5eadf}
 .inline-book.naver-book{width:max-content;max-width:100%;justify-content:center}
-.booking-note .naver-text{display:inline-flex;align-items:center;gap:6px;color:var(--ink)}
+.booking-note{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:0 28px;text-align:left}
+.booking-route{display:flex;align-items:center;gap:10px;min-width:0}
+.booking-route-label{white-space:nowrap}
+.booking-note a{display:inline-flex;align-items:center;min-height:44px;padding-block:0;line-height:1.5;vertical-align:middle}
+.booking-note .naver-text{gap:6px;color:var(--ink);white-space:nowrap}
 .naver-text .naver-mark{flex-basis:20px;width:20px;height:20px;vertical-align:middle}
 @media(max-width:700px){
+  .booking-note{display:grid;justify-content:stretch;gap:0}
+  .booking-route{display:grid;grid-template-columns:7.5em minmax(0,1fr);column-gap:10px;align-items:center}
+  .booking-route a{justify-self:start}
   .header-book.naver-book{gap:7px;min-height:44px;border:0;padding:8px 0;font-size:.8125rem}
   .header-book.naver-book .naver-mark{flex-basis:24px;width:24px;height:24px}
   .header-book.naver-book .booking-arrow{display:none}
