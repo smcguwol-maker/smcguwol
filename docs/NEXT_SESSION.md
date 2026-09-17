@@ -2,6 +2,26 @@
 
 기록: 2026-09-17. 이 파일 상단의 최신 결과는 아래 과거 이력과 이전 연결 설명보다 우선합니다.
 
+## 최신 결과 · 2026-09-17 17:28 KST · 승인 후 main 병합 및 운영 배포
+
+- 사용자가 GitHub 연결 권한 화면 확인과 정식 공개(main 병합·고객 도메인/DNS/네임서버 연결·검색 공개)를 승인했습니다. 아래 과거 이력의 승인 대기 및 해당 금지 항목은 이번 승인으로 대체됩니다. 유료 서비스·다른 계정/호스팅·고객 메시지·비밀 자격증명 취급은 계속 제외합니다.
+- [PR #1](https://github.com/smcguwol-maker/smcguwol/pull/1)을 검토 완료 상태로 전환한 뒤 병합했습니다. main 병합 커밋은 `d29f425cc779fcdc19c9fc54939226ebf05fe2ff`입니다.
+- 고객의 기존 `smcguwol-review` 프로젝트 Production branch를 `main`으로 변경했습니다. 병합된 main을 SMC 전용 새 임시 폴더에 내려받아 빌드와 정적 검사 22개·디자인 4페이지·공개/편집 시나리오 9개를 통과했습니다.
+- main의 public 파일 18개를 기존 고객 프로젝트 **Production** 환경에 직접 업로드했습니다. API에서 `production`, `deploy/success`, 배포 ID `2cc9c938-cc82-45d3-9c8f-eaa76c0fd13b`를 확인했습니다. Git 자동 배포는 아닙니다.
+- **[현재 운영 배포 주소](https://smcguwol-review.pages.dev/)** · [이번 배포 고정 주소](https://2cc9c938.smcguwol-review.pages.dev/). 공식 도메인 오픈 완료와 구분합니다.
+- 운영 주소의 제공 파일 17개는 HTTP 200 및 로컬 빌드와 SHA-256 일치, noindex 헤더 유지. 없는 주소는 HTTP 404입니다. 실제 Chrome 390px·1440px의 배치, 가로 넘침 없음, 이미지 로딩과 C6 선택 시 모바일 전화 링크 전환을 확인했고 브라우저 오류/경고는 없었습니다. 실기기/Safari·발신/예약 제출 검수로 확대하지 않습니다.
+
+### 실제 차단 지점과 다음 작업
+
+1. **공식 도메인 zone 생성 권한 없음.** API와 동일 고객 계정의 관리 화면 모두 `Requires permission "com.cloudflare.api.account.zone.create" to create zones for the selected account`를 반환했습니다. 재조회 zone 목록은 HTTP 200, 빈 목록입니다. 소유자 계정에서 이 저장소에 기록된 고객 도메인을 같은 고객 Cloudflare 계정에 무료 플랜으로 추가해야 합니다. 플러그인 인증 실패로 단정하지 않으며 재초대/재인증을 반복 요청하지 않습니다.
+2. **Git 자동 배포는 고객 GitHub 계정 연결 필요.** Chrome에는 고객 저장소 소유자가 아닌 계정으로 로그인되어 있었습니다. 연결 화면의 기본값은 All repositories이고 administration/checks/code/deployments/pull requests 읽기·쓰기 권한을 요청했습니다. Install & Authorize를 누르지 않았습니다. 고객 저장소 소유자 계정에서 Only select repositories로 이 저장소만 선택한 실제 권한 범위를 확인한 뒤 연결합니다. 기존 Direct Upload 프로젝트는 Git 방식으로 전환할 수 없으므로 필요 시 별도 고객 Git 프로젝트를 만들고 현재 main을 빌드합니다.
+3. 도메인 zone이 만들어지면 실제 발급된 Cloudflare 네임서버와 DNS를 확인하고 LETO에 반영합니다. Pages custom domain 연결·DNS 전파·공식 HTTPS 확인 후 `publish:true`로 빌드/검사/배포하고 robots·sitemap·canonical을 검증합니다. 현재는 도메인/네임서버 변경 및 검색 공개를 완료하지 않았으며 `publish:false`입니다. 승인 자체를 다시 요청할 필요는 없습니다.
+4. 실제 iPhone/Android·Safari·외부 앱 전환 및 기존 외부 업체 주차/전화 표기 차이는 운영 검수 항목으로 남습니다. 네이버 검색 소유 확인·사이트맵 제출은 공식 HTTPS 이후 진행합니다.
+
+무관한 ChatGPT 프로젝트 파일은 읽거나 수정하지 않았습니다. 이후 과거 이력은 당시 상태 기록입니다.
+
+## 이전 오픈 준비 기록
+
 
 ## 추가 진행 · 2026-09-17 · 모바일 확인과 오픈 준비
 
