@@ -2,6 +2,22 @@
 
 기록: 2026-09-17. 이 파일 상단의 최신 결과는 아래 과거 이력과 이전 연결 설명보다 우선합니다.
 
+## 공식 도메인 연결 준비 · 2026-09-17 22:44 KST
+
+- 사용자가 “처음의 도메인·DNS·네임서버 변경 금지를 해제하고, 고객 계정에서 근처연습실co.kr의 무료 도메인 연결과 필요한 DNS·네임서버 설정을 승인한다”고 명시했습니다. 이전 도메인 변경 금지는 해제됐습니다.
+- 고객 계정 구성원 조회 HTTP 200에서 기존 Workers Platform Admin 외 Administrator 추가를 확인했습니다. 플러그인의 zone 생성은 여전히 `Requires permission "com.cloudflare.api.account.zone.create" to create zones for the selected account`를 반환했습니다. 그러나 동일 고객 계정의 Chrome 관리 화면에서는 도메인 추가가 성공했습니다. 플러그인의 zone 목록은 추가 뒤에도 HTTP 200 빈 목록이어서 실제 도메인 부재로 해석하면 안 됩니다. 재초대·재인증은 요청하지 않았습니다.
+- 고객 계정에 `근처연습실co.kr`(`xn--co-002iq89dzga40o12n.kr`)를 **Free / $0, Full DNS**로 추가했습니다. 기존 robots.txt를 Cloudflare 설정으로 덧붙이지 않도록 신규 설정의 Bot Preference Sync는 껐습니다. DNS 자동 스캔은 0개였고 기존 레코드를 삭제하지 않았습니다.
+- 실제 발급된 네임서버는 **`annabel.ns.cloudflare.com`**, **`roman.ns.cloudflare.com`**입니다. 관리 화면의 네임서버 안내에서 직접 확인했습니다. 현재 공개 NS는 여전히 `selene.ns.leto.kr`, `nyx.ns.leto.kr`입니다.
+- Pages `smcguwol-review`에 위 Punycode 도메인을 추가했습니다(HTTP 200). 도메인 ID `709539f1-e849-47a4-85d6-39cee1fb2da8`. 이어 고객 zone에 **CNAME @ → smcguwol-review.pages.dev, Proxied, TTL Auto**를 저장하고 실제 DNS 목록의 1개 레코드를 확인했습니다.
+- 최종 Pages 도메인 조회는 HTTP 200, domain / verification / validation 모두 **pending**입니다. zone 관리 화면도 pending입니다. 공식 HTTPS 완료·네임서버 전환·검색 공개로 보고하지 않습니다.
+- 공개 DNS 점검: apex A/AAAA/MX/TXT/CAA 및 www A/AAAA/CNAME은 ENODATA, Google DNS의 DS 응답은 Status 0 / Answer null. 공개 조회와 스캔은 사용자 정의 하위 도메인 전체 검사를 대신하지 않습니다. 고객은 기존 홈페이지·이메일 미사용을 앞서 확인했습니다.
+
+### 다음 단계
+
+1. 고객의 LETO 도메인 관리 화면에서 기존 두 네임서버를 위 Cloudflare 두 값으로 교체하고 저장합니다. 현재 연결된 Chrome에 LETO 관리 탭이 없어 이 단계는 실행하지 않았습니다. 고객에게는 비밀번호나 인증코드를 요청하지 않고 실제 네임서버 값과 변경 안내만 전달할 문안을 제공합니다. 고객 메시지를 직접 보내지 않았습니다.
+2. 변경 완료 답변 후 공개 NS 전파, Cloudflare zone 활성화, Pages custom domain active 및 공식 주소의 HTTPS를 확인합니다. 아직 사용하지 않는 www는 추가하지 않았습니다.
+3. 최근 N 버튼·모바일 예약 안내·PC 오시는 길 수정은 여전히 검토 브랜치/Preview의 `9e368593`에 있습니다. 기존 Production은 `0f68846e`이며 이번에는 배포·main·publish:false를 변경하지 않았습니다. 공식 오픈 마무리 시 최근 수정본의 운영 반영과 검색 설정 검증이 남습니다. Git 자동 배포도 별도 미완료입니다.
+
 ## PC 오시는 길 안내 정렬 · 2026-09-17 22:22 KST
 
 - 사용자가 PC에서 지하철·운영 시간·주차 안내가 삐뚤어 보인다고 피드백했습니다. 기존의 좁은 2열과 강제 줄바꿈 때문에 주차 문장의 ‘또는’이 따로 떨어지고 정보의 높이가 불균형했습니다.
