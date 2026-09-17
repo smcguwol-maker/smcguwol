@@ -53,6 +53,8 @@ const schema = {
 };
 const faq = (site.faq || []).map((item, index) => `<details class="faq-item"${index === 0 ? ' open' : ''}><summary>${escape(item.question)}</summary><div class="faq-answer"><p>${escape(item.answer)}</p></div></details>`).join('\n');
 const sharePhoto = site.gallery[0] || site.hero;
+const personalRoom = site.gallery[1] || site.gallery[0] || site.hero;
+const pianoRoom = site.gallery[2] || site.gallery[0] || site.hero;
 const shareImage = canonical ? [
   `<meta property="og:image" content="${escape(new URL(sharePhoto.src, canonical).href)}">`,
   `<meta property="og:image:type" content="${imageType(sharePhoto.src)}">`,
@@ -69,9 +71,15 @@ const replacements = {
   SCHEMA:JSON.stringify(schema).replace(/</g,'\\u003c'),
   VERIFICATION:verification ? `<meta name="naver-site-verification" content="${escape(verification)}">` : '',
   SHARE_IMAGE:shareImage,
-  PREVIEW_NOTICE:site.publish ? '' : '<div class="preview-notice">디자인 확인용 시안 · 정식 공개 전</div>',
+  PREVIEW_NOTICE:site.publish ? '' : '<div class="review-strip"><span>SMC 홈페이지 통합 검토본 · 정식 공개 전</span><a href="./design/">시안 비교</a></div>',
   DESIGN_GUIDE_LINK:site.publish ? '' : '<p><a class="action" href="./public/design/index.html">A/B 디자인 비교 열기 →</a></p>',
-  LOGO_IMAGE:logo, LOGO_SRC:escape(site.logo.src), LOGO_TYPE:imageType(site.logo.src), HERO_IMAGE:hero, HERO_CAPTION:escape(site.hero.caption || site.name), GALLERY:gallery, FAQ:faq, RATES:rates, RATE_NOTE:escape(site.rateNote), YEAR:new Date().getFullYear()
+  LOGO_IMAGE:logo, LOGO_SRC:escape(site.logo.src), LOGO_TYPE:imageType(site.logo.src), HERO_IMAGE:hero, HERO_CAPTION:escape(site.hero.caption || site.name), GALLERY:gallery, FAQ:faq, RATES:rates, RATE_NOTE:escape(site.rateNote), YEAR:new Date().getFullYear(),
+  HALL_IMAGE:image(site.hero), HALL_SRC:'./' + escape(site.hero.src),
+  PERSONAL_IMAGE:image(personalRoom), PERSONAL_SRC:'./' + escape(personalRoom.src), PERSONAL_DESCRIPTION:escape(personalRoom.description),
+  PIANO_IMAGE:image(pianoRoom), PIANO_SRC:'./' + escape(pianoRoom.src), PIANO_DESCRIPTION:escape(pianoRoom.description),
+  ROOM_ONE_PRICE:escape(site.rates.find(r => r.name.startsWith('Room 1 ·'))?.price || '문의'),
+  ROOM_PIANO_PRICE:escape(site.rates.find(r => r.name.startsWith('Room 3·4 ·'))?.price || '문의'),
+  ROOM_HALL_PRICE:escape(site.rates.find(r => r.name.startsWith('Room 5 ·'))?.price || '문의')
 };
 const source = await readFile(path.join(root, 'src/index.html'), 'utf8');
 const render = template => template.replace(/\{\{([A-Z_]+)\}\}/g, (_, key) => {
@@ -96,7 +104,7 @@ for (const sourcePath of new Set(photos.map(photo => photo.src))) {
 await writeFile(path.join(output,'robots.txt'),canonical ? `User-agent: *\nAllow: /\n\nSitemap: ${canonical}sitemap.xml\n` : 'User-agent: *\nDisallow: /\n');
 await writeFile(path.join(output,'sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${canonical ? `\n  <url><loc>${escape(canonical)}</loc></url>\n` : '\n  <!-- 시안: 정식 공개 설정 시 공식 URL이 자동 생성됩니다. -->\n'}</urlset>\n`);
 await writeFile(path.join(output,'_headers'),`/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n${site.publish ? '' : '  X-Robots-Tag: noindex, nofollow, noarchive\n'}\n`);
-await writeFile(path.join(output,'404.html'),`<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>페이지를 찾을 수 없습니다 | SMC 인천 구월점</title><link rel="stylesheet" href="/styles.css"></head><body><main class="container section"><p class="eyebrow">SMC INCHEON GUWOL</p><h1>페이지를 찾을 수 없습니다.</h1><p>주소가 변경되었거나 없는 페이지입니다.</p><a class="button button-dark" href="/">SMC 첫 화면으로</a></main></body></html>`);
+await writeFile(path.join(output,'404.html'),`<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>페이지를 찾을 수 없습니다 | SMC 인천 구월점</title><link rel="stylesheet" href="/styles.css"></head><body><main class="not-found"><p>SMC 인천 구월점</p><h1>페이지를 찾을 수 없습니다.</h1><p>주소가 변경되었거나 없는 페이지입니다.</p><a class="inline-book" href="/">SMC 첫 화면으로 <span aria-hidden="true">↗</span></a></main></body></html>`);
 // 비교 페이지는 공개 전 빌드에만 포함합니다. 공개 전환 시 이전 비교 산출물도 제거합니다.
 const designOutput = path.join(output, 'design');
 await rm(designOutput, { recursive: true, force: true });

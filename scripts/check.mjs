@@ -10,7 +10,8 @@ const escaped = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<
 const check = (message, test) => { assert.ok(test, message); checks++; console.log('PASS ' + message); };
 check('한국어 lang 선언', /<html lang="ko">/.test(html));
 check('H1 하나', (html.match(/<h1\b/g) || []).length === 1);
-check('첫 제목의 지역·업종', /<h1[^>]*>인천 구월동<br>음악연습실/.test(html));
+const heading = html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/)?.[1].replace(/<[^>]*>/g, ' ');
+check('첫 제목의 지역·업종', heading?.includes('구월동') && heading.includes('음악연습실'));
 check('모바일 viewport 설정', html.includes('width=device-width, initial-scale=1'));
 check('title·description 반영', html.includes(escaped(site.title)) && html.includes(escaped(site.description)));
 check('빈 템플릿 없음', !/\{\{[A-Z_]+\}\}/.test(html));
@@ -42,7 +43,8 @@ if(site.publish) {
   check('시안의 canonical·sitemap 공개 대기',!html.includes('rel="canonical"') && !sitemap.includes('<loc>'));
 }
 const css = await readFile(path.join(root,'public/styles.css'),'utf8');
-check('모바일·태블릿 분기 포함',css.includes('max-width:600px') && css.includes('max-width:800px'));
+const breakpoints = [...css.matchAll(/@media[^{}]*max-width:\s*(\d+)px/g)].map(match => Number(match[1]));
+check('모바일·태블릿 분기 포함',breakpoints.some(width => width >= 500 && width <= 700) && breakpoints.some(width => width >= 800 && width <= 1100));
 check('동작 줄이기·안전 영역 대응',css.includes('prefers-reduced-motion') && css.includes('safe-area-inset-bottom'));
 check('파일 경로에 비밀 설정 없음', !html.includes('.env') && !html.includes('API_KEY'));
 console.log(`\n${checks} static checks passed. External destination behavior and visual QA are checked separately.`);

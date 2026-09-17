@@ -46,7 +46,7 @@ try {
   assert.ok(!preview.html.includes('naver-site-verification'));
   passed('시안은 검색 제외 상태이며 빈 확인 태그를 출력하지 않음');
 
-  for (const variant of ['a', 'b', 'index']) {
+  for (const variant of ['a', 'b', 'c', 'index']) {
     const design = await readFile(path.join(fixture, 'public/design', variant + '.html'), 'utf8');
     assert.ok(design.includes('content="noindex,nofollow,noarchive"'));
     assert.ok(!design.includes('{{'));
@@ -98,6 +98,18 @@ try {
 
   await assert.rejects(access(path.join(fixture, 'public/design')));
   passed('공개 전 비교 페이지를 생성하고 정식 공개 전환 시 전체 제거');
+
+  assert.ok(!production.html.includes('{{'));
+  assert.ok(!production.html.includes('./design/'));
+  assert.ok(!production.html.includes('SMC 홈페이지 통합 검토본'));
+  assert.ok(production.html.includes('class="booking-guide"'));
+  assert.ok(production.html.includes('id="faq"'));
+  assert.ok(production.html.includes('id="room-hall"'));
+  for (const match of production.html.matchAll(/(?:src|href)="(\.[^"#]+)"/g)) {
+    assert.ok(!match[1].startsWith('../'), '첫 페이지의 자산 경로가 상위 폴더를 참조함');
+    await access(path.join(fixture, 'public', match[1]));
+  }
+  passed('비교 시안을 제거해도 통합 첫 페이지의 공간·예약·FAQ와 모든 로컬 자산 유지');
 
   // 아래 값은 임시 테스트용입니다. 실제 고객 정보 파일에는 저장하지 않습니다.
   const edited = structuredClone(productionConfig);

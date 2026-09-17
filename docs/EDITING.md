@@ -50,6 +50,8 @@ GitHub에서 해당 파일을 열고 연필 모양(Edit)을 누른 뒤, 변경 �
 
 ## 사진 교체
 
+통합 첫 페이지의 첫 화면·C6 홀은 `hero`, 개인 연습실은 `gallery[1]`, 업라이트는 `gallery[2]`를 사용합니다(배열 번호는 0부터). 이 순서를 유지하고 해당 항목을 교체하세요. 방 번호·제목은 `src/index.html`에 있으므로 방 자체를 바꾸면 함께 수정해야 합니다. `gallery[0]`은 공유 대표 이미지입니다.
+
 1. `assets/`에 원본 사진을 업로드합니다. 파일명은 영문·숫자·하이픈을 권장합니다. 예: `practice-room-01.jpg`.
 2. `content/site.json`의 `hero.src` 또는 `gallery` 항목의 `src`에 `assets/practice-room-01.jpg`처럼 경로를 적습니다.
 3. `alt`는 실제 보이는 공간의 설명, `caption`은 화면에 보일 짧은 제목입니다. 갤러리의 `description`은 어떤 악기를 연습할 수 있는지 등 선택에 도움을 주는 설명입니다. 검색어를 반복해 넣지 않습니다. 첫 화면 사진을 교체하면 `hero.caption`의 방 번호·공간 이름도 함께 바꾸세요.
@@ -86,7 +88,7 @@ GitHub에서 해당 파일을 열고 연필 모양(Edit)을 누른 뒤, 변경 �
 
 사진·요금표·도메인은 고객 확인을 반영하여 `approvals`가 모두 `true`입니다. `url`은 정확한 고객 도메인 `https://근처연습실co.kr/`로 입력했습니다. 도메인 철자가 확정됐다는 의미이며 DNS 연결이나 배포가 완료됐다는 뜻은 아닙니다.
 
-고객 Cloudflare 계정에 배포하고 실제 화면·버튼·도메인 연결을 확인한 후 `publish`를 `true`로 변경하면 정식 canonical·sitemap·robots가 생성됩니다. 현재는 화면 검수와 배포가 남아 `publish: false`를 유지합니다. 한글 도메인은 검색용 URL에서 Punycode로 자동 변환되며, `근처연습실.co.kr`로 점을 추가하면 다른 주소가 됩니다.
+고객 Cloudflare 계정에 배포하고 실제 화면·버튼·도메인 연결을 확인한 후, 정식 공개 승인에 따라 `publish`를 `true`로 변경하면 canonical·sitemap·robots가 생성됩니다. 현재는 미리보기 배포 상태이며 도메인 연결과 공개 승인이 남아 `publish: false`를 유지합니다. 한글 도메인은 검색용 URL에서 Punycode로 자동 변환되며, `근처연습실.co.kr`로 점을 추가하면 다른 주소가 됩니다.
 
 `publish`는 따옴표 없는 `true` 또는 `false`로 입력합니다. `"false"`처럼 문자열로 적으면 빌드가 오류를 알려줍니다. 사진의 `width`·`height`도 큰따옴표 없는 양의 정수로 적으세요.
 
