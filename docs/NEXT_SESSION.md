@@ -2,6 +2,18 @@
 
 기록: 2026-09-18. 이 파일 상단의 최신 결과는 아래 과거 이력과 이전 연결 설명보다 우선합니다.
 
+## 최신본 공식 배포·검색 허용 승인 및 준비 · 2026-09-18 08:33 KST
+
+- 사용자에게 최신본 공식 주소 반영과 검색 공개가 남았다고 설명한 뒤 사용자가 **“그래 진행하라”**고 승인했습니다. 이번 승인에 따라 content/site.json의 publish를 true로 변경했고 정식 공개용 파일을 빌드했습니다. 기존 publish:false 유지 지침은 이번 공식 공개 범위에서 대체됩니다. 코드 기록은 codex/smc-design-review를 사용하며 main 수정·병합은 수행하지 않았습니다.
+- **아직 실제 Production 배포 전입니다.** 공개용 public에는 1·2·3·4·5·9·10번 사진, 최신 정렬/글씨 크기, 펼친 요금표가 포함됩니다. 검토 안내와 비교 페이지를 제외하고 HTML index,follow, noindex 응답 헤더 제거, 공식 Punycode canonical/OG/LocalBusiness/sitemap, robots Allow를 생성했습니다.
+- 정적 22개 및 공개/편집 시나리오 11개, JS 구문 및 diff 공백 검사를 통과했습니다. npm이 현재 PATH에 없어 package.json의 동일 Node 스크립트를 직접 실행했습니다. 빌드의 줄 끝 공백/개행 정규화도 보완했습니다.
+- 앱 내 브라우저 로컬 1440×1000 및 390×844에서 7개 방 목록, 세로 사진 contain 로딩, 열린 요금표, 가로 넘침 없음, 검토 안내 제거와 공식 canonical/검색 허용을 확인했습니다. 실제 배포 후의 화면 검수와 구분합니다.
+- 배포 장애: Cloudflare 프로젝트 조회는 HTTP 200이나 /pages/assets/check-missing 업로드 자산 확인은 **HTTP 403, code 8000013, Authorization failed**입니다. 이를 계정 전체 인증 실패로 판단하지 않습니다. 토큰 조회·추출·재인증은 하지 않았습니다.
+- 현재 브라우저 목록에는 앱 내 브라우저만 있고 이전 Chrome 연결은 없습니다. 앱 내 Cloudflare는 로그인 화면입니다. 사용자에게 기존 로그인된 Chrome의 Codex 확장을 이 대화에 연결해 달라고 요청한 상태입니다. 연결되면 기존 고객 smcguwol-review의 **Production**에 준비한 public만 업로드합니다. 이번 승인으로 Production 배포를 진행할 수 있으므로 재승인 요구는 불필요합니다.
+- 전용 작업 폴더: C:/Users/WOOWON/AppData/Local/Temp/smc-launch-20260918. 업로드 ZIP: C:/Users/WOOWON/AppData/Local/Temp/smc-production-20260918.zip. Windows 업로드는 슬래시 경로를 사용합니다. 전체 저장소는 업로드하지 않습니다.
+- 마지막 확인된 실제 Production은 여전히 0f68846e, 최신 검토 Preview는 8fc2c61e입니다. 공식 HTTPS/네임서버 연결은 아래 07:42 검증대로 정상입니다. 실제 공개 배포 후 이 상단 기록을 배포 ID와 검수 결과로 갱신해야 합니다.
+- 남은 작업: 업로드 → API Production/deploy success 확인 → 공식 루트 및 자산 HTTP 200/파일 일치, noindex 제거, robots/sitemap/canonical, 비교 경로 404 확인 → 공식 PC·모바일 및 예약/사진 검수. 네이버 서치어드바이저 소유 확인/사이트맵 제출은 별도이며 현재 naverVerification은 비어 있습니다. 비밀번호나 비밀 인증정보를 요청하지 않습니다.
+
 ## 공식 도메인 연결 완료 확인 · 2026-09-18 07:42 KST
 
 - 사용자가 고객의 도메인/네임서버 작업 완료 연락을 전달했습니다. 기존 승인 범위에서 읽기 전용으로 실제 상태를 확인했습니다.

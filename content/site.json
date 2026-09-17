@@ -11,7 +11,7 @@
   },
   "hours": "24시간 연중무휴",
   "url": "https://근처연습실co.kr/",
-  "publish": false,
+  "publish": true,
   "naverVerification": "",
   "approvals": {
     "photos": true,

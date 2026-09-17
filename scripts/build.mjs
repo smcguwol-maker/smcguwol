@@ -104,10 +104,10 @@ const replacements = {
   ROOM_HALL_PRICE:escape(site.rates.find(r => r.name.startsWith('Room 5 ·'))?.price || '문의')
 };
 const source = await readFile(path.join(root, 'src/index.html'), 'utf8');
-const render = template => template.replace(/\{\{([A-Z_]+)\}\}/g, (_, key) => {
+const render = template => template.replace(/\r\n/g, '\n').replace(/\{\{([A-Z_]+)\}\}/g, (_, key) => {
   if (!(key in replacements)) throw new Error(`정의되지 않은 템플릿 항목: ${key}`);
   return replacements[key];
-});
+}).replace(/[\t ]+$/gm, '');
 const html = render(source);
 const guide = render(await readFile(path.join(root, 'src/guide.html'), 'utf8'));
 const output = path.join(root, 'public');

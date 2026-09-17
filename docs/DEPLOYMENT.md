@@ -1,5 +1,13 @@
 # Cloudflare Pages 배포 안내
 
+## 공개 배포 준비 · 2026-09-18 08:33 KST
+
+사용자가 최신본의 공식 주소 반영과 검색 공개를 승인했습니다. 검토 브랜치의 `publish:true` 공개 빌드와 검사 33개, PC·모바일 로컬 검수를 완료했습니다. 공개 파일은 검토 안내/비교 페이지를 제외하고 공식 canonical·sitemap·robots 검색 허용을 포함합니다. **실제 Production 업로드는 아직 미완료**입니다. 아래 과거 `publish:false` 설명은 당시 상태입니다.
+
+Cloudflare 프로젝트 읽기는 HTTP 200이나 자산 업로드 확인 API가 HTTP 403 / 8000013 Authorization failed를 반환했습니다. 기존 로그인된 Chrome 연결을 기다립니다. 앱 내 브라우저는 Cloudflare 로그인 화면입니다. 사용자가 기존 Chrome을 연결하면 고객 계정 `733b1c8faa19799bf480b1192f473635` / 기존 `smcguwol-review`의 **Production**으로 전용 폴더의 public 또는 `C:/Users/WOOWON/AppData/Local/Temp/smc-production-20260918.zip`을 업로드하세요. 재초대·토큰 추출은 필요하지 않습니다.
+
+공식 도메인 `근처연습실co.kr`의 네임서버와 HTTPS는 07:42에 확인 완료했고 Pages 도메인/검증 상태는 모두 active입니다. 현재 실제 Production은 여전히 `0f68846e`입니다. 배포 후 성공 ID, 공식 주소의 최신 7개 방 사진 및 검색 허용 응답을 검증하고 이 기록을 갱신합니다. 네이버 서치어드바이저 등록은 별도입니다. 자세한 근거와 승인 범위는 NEXT_SESSION.md 상단을 따릅니다.
+
 ## 최신 상태 · 2026-09-18 00:08 KST
 
 기존 고객 Pages `smcguwol-review`의 Production branch는 `main`이며 Direct Upload 방식입니다. 현재 Production은 `0f68846e`입니다. 이후의 예약 버튼·모바일 정렬·PC 오시는 길·큰 글씨 대응·예약/이용 안내 정렬·전체 7개 방 사진·요금 안내 가독성 수정은 `codex/smc-design-review` 및 PR #2에 있고, [최신 검토본](https://home-review.smcguwol-review.pages.dev/)에 배포했습니다. 7개 방 사진(1·2·3·4·5·9·10번)과 PC 16px/모바일 15px 요금 안내를 포함합니다. 최신 Preview는 `8fc2c61e-c95c-4259-a264-25434e666888`, deploy/success입니다. 검토 주소와 [기존 운영 주소](https://smcguwol-review.pages.dev/)를 구분하세요.
