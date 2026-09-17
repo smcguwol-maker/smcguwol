@@ -2,6 +2,19 @@
 
 기록: 2026-09-18. 이 파일 상단의 최신 결과는 아래 과거 이력과 이전 연결 설명보다 우선합니다.
 
+## 공식 도메인 연결 완료 확인 · 2026-09-18 07:42 KST
+
+- 사용자가 고객의 도메인/네임서버 작업 완료 연락을 전달했습니다. 기존 승인 범위에서 읽기 전용으로 실제 상태를 확인했습니다.
+- 정확한 공식 도메인: **근처연습실co.kr** (한글 뒤에 점 없이 co), ASCII: **xn--co-002iq89dzga40o12n.kr**.
+- 1.1.1.1 및 8.8.8.8 공개 DNS 모두 NS를 **annabel.ns.cloudflare.com**, **roman.ns.cloudflare.com**으로 반환했습니다.
+- 고객 계정 733b1c8faa19799bf480b1192f473635의 Pages smcguwol-review domains API HTTP 200: 도메인 status, validation_data.status, verification_data.status 모두 **active**. 도메인 ID 709539f1-e849-47a4-85d6-39cee1fb2da8, zone_tag 56abbbdbcaec366f81c9675a261b475f.
+- https://xn--co-002iq89dzga40o12n.kr/ 실제 HTTPS 응답 **200** (인증서 검증 우회 없음). HTTP 접속은 **301**로 동일 HTTPS 주소로 이동합니다. 앱 내 브라우저에서도 홈페이지 본문과 실제 사진을 확인했습니다. 이번에는 Chrome 연결이 없어 앱 내 브라우저를 사용했습니다.
+- **공식 주소의 콘텐츠는 아직 이전 Production 0f68846e**입니다. 공식 루트와 smcguwol-review.pages.dev 루트 HTML SHA256이 32f623d45a3cd5a3b6a74526da1604e8c1552cb3588901b01ebc010d7ffdb08b로 일치합니다. 실제 화면의 방 선택은 1·3·5이며 요금표는 접혀 있습니다.
+- 최신 7개 방 사진/요금표 글씨 개선본은 **Preview 8fc2c61e**, https://home-review.smcguwol-review.pages.dev/ 에 있습니다. 해당 HTML SHA256은 80dab214cd2d1311cf86cca1a661e6d199ab169f15da5be43504e0b3aeeb2733으로 공식 주소와 다릅니다.
+- 공식 주소와 Preview 모두 X-Robots-Tag **noindex, nofollow, noarchive**입니다. 도메인 연결 성공과 최종 공개/검색 허용 완료를 구분해야 합니다. 이번 확인에서는 Production 배포, main 수정/병합, publish true 전환, DNS 변경을 수행하지 않았습니다.
+- 다음 단계: 최신 검토본의 공식 주소 반영 및 검색 공개 범위를 확정한 뒤 최종 공개 절차 진행. 기존 main 변경 금지와 publish false 제한은 별도 해제 전까지 유지합니다.
+- 참고: zones 목록 API는 여전히 HTTP 200/빈 결과였습니다. Pages active 및 공개 DNS/HTTPS 성공이 확인되어 빈 목록을 도메인 미생성·인증 실패로 판단하지 않습니다.
+
 ## 모든 방 사진과 요금 안내 가독성 · 2026-09-18 00:08 KST
 
 - 사용자 요청에 따라 네이버에 등록된 **1·2·3·4·5·9·10번, 총 7개 방**을 모두 홈페이지에서 선택·확대할 수 있도록 바꿨습니다. 2·4·9·10번의 실제 대표 사진을 네이버 예약 상세에서 확보했고 원본 표시 파일 바이트를 수정하지 않았습니다. 방당 대표 사진 1장씩이며 네이버의 모든 각도/설비 사진 전체 복제는 아닙니다. 출처·치수는 ASSETS.md에 기록했습니다.
