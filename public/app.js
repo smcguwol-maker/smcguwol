@@ -76,6 +76,17 @@ document.querySelector('[data-mobile-secondary]')?.addEventListener('click', eve
   if (event.currentTarget.getAttribute('href') === '#rates') document.querySelector('.rates-disclosure').open = true;
 });
 
+// Reserve the actual bar height when enlarged text or a narrower screen adds lines.
+const mobileBooking = document.querySelector('.mobile-booking');
+if (mobileBooking && typeof ResizeObserver === 'function') {
+  const reserveBookingSpace = () => {
+    const height = Math.ceil(mobileBooking.getBoundingClientRect().height);
+    document.documentElement.style.setProperty('--mobile-booking-height', `${height}px`);
+  };
+  new ResizeObserver(reserveBookingSpace).observe(mobileBooking);
+  reserveBookingSpace();
+}
+
 // Keep the image links usable even when dialogs or JavaScript are unavailable.
 const viewer = document.querySelector('.photo-viewer');
 if (viewer && typeof viewer.showModal === 'function') {

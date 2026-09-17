@@ -1,16 +1,18 @@
 # Cloudflare Pages 배포 안내
 
-## 최신 상태 · 2026-09-17
+## 최신 상태 · 2026-09-17 23:10 KST
 
-사용자가 정식 공개 범위를 승인했고 PR #1을 main에 병합했습니다(`d29f425cc779fcdc19c9fc54939226ebf05fe2ff`). 기존 고객 Pages `smcguwol-review`의 Production branch는 이제 `main`입니다. main 빌드 파일을 Production 환경에 직접 업로드했으며 [운영 배포 주소](https://smcguwol-review.pages.dev/)와 [고정 배포](https://2cc9c938.smcguwol-review.pages.dev/)의 성공을 확인했습니다. Git 자동 배포와 공식 도메인 오픈은 미완료입니다. 실제 결과·남은 작업은 [NEXT_SESSION.md](NEXT_SESSION.md)를 참고하세요.
+기존 고객 Pages `smcguwol-review`의 Production branch는 `main`이며 Direct Upload 방식입니다. 현재 Production은 `0f68846e`입니다. 이후의 예약 버튼·모바일 정렬·PC 오시는 길·큰 글씨 대응 수정은 `codex/smc-design-review` 및 PR #2에 있고, [최신 검토본](https://home-review.smcguwol-review.pages.dev/)에 배포했습니다. 최신 Preview는 `6898d2bd-9b5e-4981-ba66-f801966a388a`, deploy/success입니다. 검토 주소와 [기존 운영 주소](https://smcguwol-review.pages.dev/)를 구분하세요.
 
-공식 도메인 zone 추가는 API와 관리 화면 모두 `com.cloudflare.api.account.zone.create` 권한 부족으로 실패했습니다. 소유자가 같은 고객 계정에 무료 플랜으로 도메인을 추가해야 합니다. Chrome의 GitHub 로그인도 고객 저장소 소유자 계정으로 전환해야 자동 배포 앱 권한을 이 저장소에 한정할 수 있습니다. 기존 초대·OAuth 인증 반복을 요청하지 않습니다. 공식 도메인 HTTPS 확인 후 검색 공개를 켜는 순서로 진행하며, 현재 `publish:false`입니다. main·도메인/DNS/네임서버·publish 변경에 대한 이전 승인 대기는 해제됐습니다.
+고객 권한 추가 후 Chrome 관리 화면에서 공식 도메인을 Free / $0, Full DNS로 추가했고, Pages custom domain 및 CNAME @ → smcguwol-review.pages.dev(Proxied, TTL Auto)를 저장했습니다. 마지막 도메인 조회인 22:44에는 pending이었으며 현재 고객의 LETO 변경 답변을 기다립니다. 실제 발급 네임서버는 `annabel.ns.cloudflare.com`, `roman.ns.cloudflare.com`입니다. 도메인 재생성·재초대·OAuth 재인증을 반복하지 마세요. 플러그인 zone 조회는 생성 후에도 빈 목록이어서 도메인 부재로 판단하면 안 됩니다.
+
+공식 HTTPS 확인, 최신 검토 수정본의 운영 반영, 검색 공개 검증이 남습니다. `publish:false`입니다. 사용자의 이전 공개/도메인 승인과 실제 실행 상태를 구분하고, 최근 작업은 Preview에만 반영했음을 유의하세요. Git 자동 배포도 연결되지 않았습니다. 상세 승인 범위·실패 이력·고객 답변 후 순서는 [NEXT_SESSION.md](NEXT_SESSION.md)를 참고하세요.
 
 이 기존 프로젝트는 Direct Upload 방식이며 Git integration으로 전환할 수 없습니다. Git 자동 배포에는 별도 Git 연결 프로젝트가 필요합니다([공식 문서](https://developers.cloudflare.com/pages/get-started/direct-upload/)). 이번 통합 작업에서는 새 프로젝트를 만들지 않았고 기존 오류 8000011을 재인증으로 해결했다고 주장하지 않습니다.
 
 현재 홈페이지 원본은 `src/index.html`, `src/styles.css`, `src/app.js`이며, `src/design-*`는 비교 이력입니다. 공개 빌드에서 비교 페이지를 제거해도 통합 첫 페이지는 유지됩니다.
 
-2026-09-17 확인: 고객 계정의 해당 도메인 zone은 생성 실패 후 재조회에서도 빈 목록이며 Pages custom domain도 연결하지 않았습니다. 공개 NS는 LETO 두 서버이며 apex A/AAAA/MX/TXT/CAA 및 www A/AAAA/CNAME 응답은 ENODATA, 공개 DNS DS 조회의 answer는 빈 목록이었습니다. 다른 하위 도메인 전체를 조사한 것은 아닙니다. 실제 도메인/네임서버 변경은 승인됐지만 zone 생성 권한 문제가 먼저 해결되어야 합니다.
+22:44 공개 DNS 확인: NS는 LETO 두 서버였으며 apex A/AAAA/MX/TXT/CAA 및 www A/AAAA/CNAME은 ENODATA, 공개 DNS DS 응답의 Answer는 null이었습니다. 다른 사용자 정의 하위 도메인 전체를 조사한 것은 아닙니다. 고객의 변경 완료 답변 후 공개 NS·zone active·Pages 도메인 active 및 공식 HTTPS를 다시 확인합니다.
 
 ## 기본 설정
 
@@ -48,7 +50,7 @@
 ## 현재 공개 상태
 
 - 시안: 검색 제외(`noindex`, robots 차단). 고객이 확인한 도메인은 설정 파일에 입력했으며 정식 공개 시 canonical·sitemap에 사용됩니다.
-- 고객 계정에 검토본을 배포했습니다. 도메인은 연결하지 않았습니다.
+- 고객 계정에 검토본을 배포했습니다. 도메인/Pages/DNS 설정은 저장했고 네임서버 전환과 실제 HTTPS 활성화는 확인 대기입니다.
 - 사진·방 번호·요금표·도메인 철자는 고객 확인을 반영했습니다. 실제 방문자용 공개 전 화면·버튼 목적지·도메인 연결을 확인해야 합니다.
 - 시안 공유용 배포도 고객님 계정에서만 진행합니다. 검색 제외는 접근 차단이나 암호 보호가 아닙니다.
 
