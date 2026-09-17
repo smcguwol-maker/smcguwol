@@ -27,4 +27,18 @@ Figma의 기존 비교 파일에 편집 가능한 텍스트·레이아웃으로 
 
 ## 실제 검토 링크
 
-[개선안 03](https://design-round-03.smcguwol-review.pages.dev/design/c.html) · [이전 A/B와 비교](https://design-round-03.smcguwol-review.pages.dev/design/). 최종 Preview 배포의 성공과 실제 Chrome 화면을 확인했다. 시각적 만족과 최종 디자인 선택은 사용자 검토를 기다린다.
+[개선안 03](https://design-round-03.smcguwol-review.pages.dev/design/c.html) · [이전 A/B와 비교](https://design-round-03.smcguwol-review.pages.dev/design/). Preview 배포의 성공과 실제 Chrome 화면을 확인했다. 사용자는 03이 이전보다 낫다고 평가했으며, 03을 발전시킬 기준으로 정했다. 정식 공개와 최종 원페이지 통합은 별도 단계다.
+
+## 2026-09-17 완성도 개선
+
+사용자가 현재 방향을 유지하며 개선을 계속하도록 요청했다. 첫 화면의 사진·색상과 공간 선택 구조를 유지하고 다음을 반영했다.
+
+- 모바일 본문·요금 단위의 글자와 터치 영역 확대, 줄바꿈·여백 정리.
+- 공간·사진 / 요금표 / 오시는 길 바로 이동. 선택 방을 표시하는 하단 버튼과 C6 전화 문의 전환·일반 방 네이버 경로 복원.
+- 방 사진의 원본 비율 보존, 기본 dialog를 이용한 사진 확대·닫기, 키보드 복귀. 기존 사진 링크는 스크립트가 없을 때도 원본으로 연결한다.
+- 확정 FAQ 다섯 개를 같은 페이지에 추가. 기존 확정 주소의 복사 버튼과 결과 안내.
+- 외부 폰트·추적 코드·새 패키지를 추가하지 않았다. 실사진을 생성하거나 임의로 보정하지 않았다. 주 사진 원본은 가로 1,000px이므로 고해상도 촬영본 확보는 향후 시각 품질 개선 항목이다.
+
+실제 배포 고정 주소: https://d7fd8236.smcguwol-review.pages.dev/design/c.html
+
+검수 범위와 남은 실기기·접근성·외부 정보 확인은 NEXT_SESSION.md의 최신 기록을 따른다.
