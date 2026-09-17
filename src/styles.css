@@ -82,14 +82,17 @@ h2{font-size:42px;line-height:1.35;font-weight:400;letter-spacing:-.06em;word-br
 .rates-content>p{margin-top:22px;color:var(--muted);font-size:12px;line-height:1.9}
 .booking-note{text-align:right;font-size:12px;color:var(--muted);margin-top:20px}.booking-note a{text-decoration:underline;text-underline-offset:4px;color:var(--ink)}
 .visit-section{padding:90px 0;background:var(--forest);color:#eff1e9}
-.visit-layout{display:grid;grid-template-columns:1.5fr 1fr;gap:100px}
+.visit-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(48px,6vw,88px);align-items:start}
 .visit-section .section-label{color:var(--accent)}
 .visit-address h2{font-size:39px}.visit-address address{font-style:normal;font-size:14px;color:#c6cec4;margin-top:24px}
 .map-link{display:inline-flex;gap:65px;border-bottom:1px solid #a8b4a2;padding:9px 0;font-size:13px;margin-top:25px}
-.visit-details{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.visit-details h3{font-size:12px;font-weight:500;margin-bottom:14px;color:var(--accent)}
+.visit-details{display:grid;grid-template-columns:minmax(0,1fr);gap:0;min-width:0}
+.visit-info{display:grid;grid-template-columns:76px minmax(0,1fr);gap:24px;align-items:baseline;padding:22px 0;border-bottom:1px solid #ffffff24}
+.visit-info:first-child{padding-top:0}
+.visit-details h3{font-size:12px;font-weight:500;margin:0;color:var(--accent)}
 .visit-details p{font-size:13px;color:#d4d9ce;line-height:1.9;word-break:keep-all}
-.phone-number{font:400 29px/1.4 Arial,sans-serif;letter-spacing:-.02em;grid-column:1/-1;margin-top:24px;display:flex;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid #788574}
+.visit-info p span{display:block}
+.phone-number{font:400 29px/1.4 Arial,sans-serif;letter-spacing:-.02em;grid-column:1/-1;margin-top:26px;display:flex;align-items:center;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid #788574;min-height:52px}
 .site-footer{padding:32px 0;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted)}
 .site-footer strong{font:600 22px/1 Arial,sans-serif;margin-right:15px;color:var(--ink)}
 .site-footer>div{display:flex;gap:25px}
@@ -166,6 +169,7 @@ a,button,summary{touch-action:manipulation}
 .visit-address address{font-size:.9375rem;line-height:1.85;word-break:keep-all;user-select:all}
 .visit-details h3{font-size:.875rem}
 .visit-details p{font-size:.9375rem}
+@media(min-width:701px) and (max-width:1000px){.visit-info{grid-template-columns:64px minmax(0,1fr);gap:18px}}
 .visit-actions{display:flex;align-items:center;gap:25px;margin-top:20px;flex-wrap:wrap}
 .map-link{margin-top:0;min-height:46px;align-items:center;font-size:.875rem;gap:35px}
 .copy-address{border:1px solid #677669;background:transparent;min-height:44px;padding:8px 14px;font-size:.8125rem}
@@ -254,10 +258,11 @@ a,button,summary{touch-action:manipulation}
   .visit-actions{gap:14px}
   .map-link{font-size:.875rem;gap:18px}
   .copy-address{font-size:.75rem;padding-inline:11px}
-  .visit-details{grid-template-columns:1fr;gap:27px;margin-top:28px}
+  .visit-details{grid-template-columns:minmax(0,1fr);gap:0;margin-top:28px}
+  .visit-info{display:block;padding:20px 0}
   .visit-details h3{font-size:.8125rem;margin-bottom:8px}
   .visit-details p{font-size:.875rem;line-height:1.85}
-  .phone-number{font-size:1.625rem;margin-top:0;min-height:44px}
+  .phone-number{font-size:1.625rem;margin-top:24px;min-height:44px}
   .site-footer{padding:26px 0 22px;font-size:.75rem}
   .site-footer>div{font-size:.75rem;gap:0 22px;margin-top:14px}
   .mobile-booking{grid-template-columns:1fr 1.7fr;padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -4px 20px #17241f0a}
@@ -283,7 +288,6 @@ a,button,summary{touch-action:manipulation}
 .booking-steps strong{font-size:.9375rem;font-weight:500}
 .booking-steps p,.booking-policy{font-size:.875rem;color:var(--muted);line-height:1.85;margin-top:5px;word-break:keep-all}
 .booking-policy a{text-decoration:underline;text-underline-offset:4px;color:var(--ink)}
-.transit-info{grid-column:1/-1}
 .room-facilities{display:block;margin-bottom:10px;color:var(--ink)}
 .footer-address{font-size:.75rem;line-height:1.8;margin-top:18px}.footer-address a{min-height:0}
 .copyright{font-size:.6875rem;margin-top:12px}
