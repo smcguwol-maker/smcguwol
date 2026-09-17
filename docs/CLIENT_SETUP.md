@@ -1,0 +1,67 @@
+# 고객님께 한 번에 요청할 연결 준비
+
+확인일: 2026-09-15
+
+업체 정보·로고·사진·요금·30분 단위/최소1시간·도메인 철자는 확보되어 있으므로 다시 요청하지 않습니다. 아래는 고객 계정 소유권을 유지하며 업로드·배포·도메인 연결을 진행하기 위해 필요한 설정입니다.
+
+## 1. GitHub 코드 업로드용 앱
+
+**완료:** 고객님이 **ChatGPT Codex Connector → smcguwol**만 선택해 설치·인증했습니다. 고객 계정 설치와 제작 파일 데이터 쓰기 성공을 확인했습니다. 이 설치를 다시 요청하지 않습니다. 자세한 기록은 `GITHUB_ACCESS.md`에 있습니다.
+
+## 2. 고객 Cloudflare 계정의 배포 연결·작업자 초대
+
+**현재 상태:** 고객은 작업자 초대와 Cloudflare Workers and Pages 앱의 `smcguwol-maker/smcguwol` 저장소 단독 선택을 완료했다고 전달했습니다. 제작자는 초대 수락과 Cloudflare 앱 인증 완료를 보고했습니다. 마지막 승인 전 화면에서 고객 SMC 계정과 Account Read·Account Settings Read·Pages Read·Pages Write, 필수 User Read·Background Access를 확인했습니다. 현재 Work 대화에는 Cloudflare 기능이 노출되지 않아 실제 계정 API 조회·Pages 프로젝트·배포 성공은 아직 확인하지 못했습니다. 같은 초대·설치·인증을 반복 요청하지 않습니다. 이어서 진행할 상세 상태는 `NEXT_SESSION.md`를 우선 참고합니다.
+
+### 고객 GitHub를 고객 Cloudflare에 연결
+
+1. 고객님 Cloudflare 계정에 로그인하고 **Workers & Pages → Create application → Pages → Connect to Git**을 선택합니다.
+2. GitHub 연결 시 `smcguwol-maker` 계정으로 진행합니다.
+3. **Cloudflare Workers and Pages** 앱이 요청하는 저장소 접근은 **Only select repositories → smcguwol**로 지정합니다.
+4. Cloudflare에 돌아와 고객 GitHub 계정과 저장소가 선택 가능한지 확인합니다.
+
+이 단계는 코드 저장용 OpenAI 앱과 다른 자동 배포용 연결입니다. 코드가 있는 검토 브랜치는 `codex/smc-design-review`입니다. `main`은 아직 기존 상태이므로 Pages에 빌드할 브랜치가 실제 코드가 있는 브랜치인지 확인합니다. 배포·브랜치 설정은 `DEPLOYMENT.md`를 참고합니다. 화면 명칭이 다르면 보이는 화면을 확인하고 이어갑니다.
+
+### 작업자 초대
+
+고객님 Cloudflare의 **Manage Account → Members → Invite**에서 제작자가 실제 사용하는 Cloudflare 이메일로 초대합니다. 이메일은 고객님께 안내하기 전에 제작자 주소로 확인합니다. GitHub 사용자명 자체를 초대 이메일로 사용하지 않습니다.
+
+Pages 작업에는 공식 역할 **Workers Platform Admin**을 검토합니다. 이 역할은 Pages 외에도 Workers 등 개발 플랫폼 제품을 읽고 수정할 수 있으므로 'Pages만의 권한'이라고 설명하지 않습니다. 결제·전체 계정 관리를 위한 Super Administrator 역할을 기본 요청하지 않습니다. 도메인의 DNS 수정 권한은 실제 도메인이 추가된 뒤 필요한 도메인 범위로 확인합니다.
+
+초대 수락과 앱 인증은 제작자가 완료했다고 확인했습니다. 인증 완료와 이 대화에서의 Cloudflare 기능 사용 가능 여부는 구분합니다. 현재 기능이 없는 원인은 확정하지 않았습니다. OpenAI 공식 안내는 설치 후 새 대화에서 플러그인을 사용할 것을 안내하므로, 다음 세션에서 Cloudflare 기능을 불러와 계정 조회부터 수행합니다. 고객 재초대·전체 권한 확대·인증 반복을 해결책으로 자동 요청하지 않습니다. 비밀번호·토큰·인증 코드를 채팅이나 저장소에 보관하지 않습니다.
+
+## 3. 도메인 구매처·현재 사용 상태
+
+고객이 전달한 정보(2026-09-15, 등록기관·DNS 조회로 독립 검증하지 않음):
+
+- 정확한 도메인: `근처연습실co.kr`
+- 구매처: LETO
+- 현재 네임서버: `selene.ns.leto.kr`, `nyx.ns.leto.kr`
+
+추가 확인(고객 관리 화면·WHOIS 텍스트 및 답변):
+
+- 기존 홈페이지·이메일에 연결하지 않고 도메인만 구매한 상태입니다.
+- 등록일 2026-09-14, 만료일 2031-09-14, 관리 화면 상태 활성, 자동 갱신 꺼짐.
+- WHOIS 영문 표기 `xn--co-002iq89dzga40o12n.kr`는 로컬 IDNA 변환으로 `근처연습실co.kr`와 정확히 일치함을 확인했습니다.
+- 관리 화면에서 위 LETO 네임서버 두 개를 확인했습니다. 등록기관 실시간 조회나 전체 DNS 레코드 조회는 수행하지 않았습니다.
+
+도메인 구매처·네임서버·기존 홈페이지/이메일 사용 여부는 다시 요청하지 않습니다. 실제 DNS 레코드는 연결 시 확인하며, 지금 네임서버를 변경하지 않습니다. 자동 갱신과 잠금 설정도 변경하지 않습니다.
+
+최상위 주소를 Cloudflare Pages에서 쓰려면 같은 고객 Cloudflare 계정에 zone을 추가하고 Cloudflare 네임서버를 사용합니다. 기존 서비스가 있으면 DNS를 먼저 검토합니다. 네임서버 값은 실제 계정에서 발급된 값을 사용하며 임의의 값을 미리 안내하지 않습니다. 구매처 계정의 비밀번호를 전달받는 대신 고객이 변경할 항목과 값을 안내합니다.
+
+## 이후 순서
+
+1. GitHub 권한 확인 → 제작 파일 업로드.
+2. 고객 Cloudflare 계정에서 Pages 빌드·미리보기 생성. 설정값은 `DEPLOYMENT.md` 참조.
+3. 모바일·PC 실제 화면과 버튼 검수 → 고객 시안 확인.
+4. 고객 도메인 zone·기존 DNS 검토 → 발급된 네임서버 및 Custom domains 연결 → HTTPS 확인.
+5. 정식 공개 설정 후 네이버 서치어드바이저 소유 확인·사이트맵 제출 방법 안내.
+
+네임서버 값과 검색 등록용 확인 정보는 실제 설정 과정에서 발급됩니다. 따라서 '지금 자료만 받으면 고객의 추가 조작이 전혀 없다'고 약속하지 않습니다. 제작과 파일 수정은 연결 작업과 별개로 계속 진행합니다.
+
+## 공식 문서
+
+- https://developers.cloudflare.com/pages/get-started/git-integration/
+- https://developers.cloudflare.com/pages/configuration/git-integration/github-integration/
+- https://developers.cloudflare.com/fundamentals/manage-members/manage/
+- https://developers.cloudflare.com/fundamentals/manage-members/roles/
+- https://developers.cloudflare.com/pages/configuration/custom-domains/

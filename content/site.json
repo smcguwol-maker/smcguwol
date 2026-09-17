@@ -1,0 +1,117 @@
+{
+  "name": "SMC 인천 구월점",
+  "title": "인천 구월동 음악연습실 SMC | 24시간 악기·개인 연습공간",
+  "description": "인천 구월동 로데오 거리의 음악연습실 SMC. 트럼펫·관악기 등 개인 악기 연습을 위한 방음 공간, 24시간 연중무휴 운영. 30분당 이용요금과 최소 1시간 예약, 네이버 예약을 안내합니다.",
+  "phone": "0507-1380-8122",
+  "address": {
+    "streetAddress": "인하로489번길 16, 10층",
+    "addressLocality": "남동구",
+    "addressRegion": "인천광역시",
+    "addressCountry": "KR"
+  },
+  "hours": "24시간 연중무휴",
+  "url": "https://근처연습실co.kr/",
+  "publish": false,
+  "naverVerification": "",
+  "approvals": {
+    "photos": true,
+    "rates": true,
+    "domain": true
+  },
+  "logo": {
+    "src": "assets/smc-guwol-logo.jpg",
+    "alt": "SMC 인천 구월점 GUWOL MUSIC STUDIO 로고",
+    "width": 1254,
+    "height": 1254
+  },
+  "links": {
+    "booking": "https://naver.me/FlJiVAwL",
+    "map": "https://kko.to/rYoHNy6WWV",
+    "kakao": "https://open.kakao.com/o/s5K5cVLi",
+    "instagram": "https://www.instagram.com/smcmusicstudio_guwol/",
+    "blog": "https://blog.naver.com/ji2020chun"
+  },
+  "hero": {
+    "src": "assets/room-5-c6.jpg",
+    "alt": "SMC 인천 구월점 5번 홀의 야마하 C6 그랜드피아노와 우드 톤 실내",
+    "caption": "야마하 C6 홀 · 5번방",
+    "position": "35% 50%",
+    "width": 1000,
+    "height": 700
+  },
+  "gallery": [
+    {
+      "src": "assets/room-5-c6.jpg",
+      "alt": "SMC 인천 구월점 5번 홀의 야마하 C6 그랜드피아노와 우드 톤 실내",
+      "caption": "야마하 C6 그랜드 홀 · Room 5",
+      "description": "야마하 C6 그랜드피아노를 갖춘 넓은 홀입니다. 예약 가능 시간은 전화로 문의해 주세요.",
+      "width": 1000,
+      "height": 700
+    },
+    {
+      "src": "assets/room-1.jpg",
+      "alt": "SMC 인천 구월점 1번 개인 연습실의 보면대와 우드 톤 방음 벽면",
+      "caption": "개인 악기 연습공간 · Room 1",
+      "description": "보면대를 갖춘 개인 연습공간입니다. 트럼펫·관악기 등 나의 악기를 가져와 연습하세요.",
+      "width": 1000,
+      "height": 748
+    },
+    {
+      "src": "assets/room-3-upright.jpg",
+      "alt": "SMC 인천 구월점 3번 연습실에 설치된 야마하 업라이트피아노",
+      "caption": "야마하 업라이트 · Room 3",
+      "description": "야마하 업라이트피아노가 있는 공간입니다. 피아노 개인 연습에 이용하세요.",
+      "width": 1000,
+      "height": 717
+    }
+  ],
+  "faq": [
+    {
+      "question": "30분만 예약할 수 있나요?",
+      "answer": "요금표는 30분 기준으로 표시하며, 예약은 최소 1시간부터 가능합니다. 원하는 공간과 시간을 선택한 뒤 네이버 예약에서 최종 이용금액을 확인해 주세요."
+    },
+    {
+      "question": "트럼펫이나 관악기도 연습할 수 있나요?",
+      "answer": "트럼펫·관악기 등 개인 악기 연습이 가능합니다. 피아노가 있는 공간과 개인 악기 연습공간 중 연습 목적에 맞게 선택해 주세요. 드럼 연습은 이용할 수 없습니다."
+    },
+    {
+      "question": "늦은 밤이나 주말에도 이용할 수 있나요?",
+      "answer": "SMC 인천 구월점은 24시간 연중무휴로 운영합니다. 방문 전에 원하는 시간의 예약 가능 여부와 예약 확정, 입실 안내를 확인해 주세요."
+    },
+    {
+      "question": "야마하 C6 홀은 어떻게 예약하나요?",
+      "answer": "야마하 C6 그랜드피아노가 있는 5번 홀은 전화로 예약 가능 시간을 문의해 주세요. 홈페이지의 전화 문의 버튼으로 연결할 수 있습니다."
+    },
+    {
+      "question": "주차는 어디에 하면 되나요?",
+      "answer": "연습실 건물 내 주차는 불가합니다. 인근 인천 문화예술회관 공영주차장 또는 뉴코아 인천점 주차장을 이용해 주세요. 각 주차장의 운영시간과 요금은 방문 전에 확인해 주세요."
+    }
+  ],
+  "rates": [
+    {
+      "name": "Room 1 · 블루투스 작은방",
+      "price": "2,500원"
+    },
+    {
+      "name": "Room 2 · 커즈와일",
+      "price": "3,500원"
+    },
+    {
+      "name": "Room 3·4 · 업라이트",
+      "price": "3,500원"
+    },
+    {
+      "name": "Room 10 · 그랜드 G3",
+      "price": "4,500원"
+    },
+    {
+      "name": "Room 5 · 야마하 C6 홀",
+      "price": "15,000원"
+    },
+    {
+      "name": "개인룸",
+      "price": "변동"
+    }
+  ],
+  "rateNote": "최소 1시간부터 예약할 수 있습니다. 1시간 금액은 표시된 30분 요금의 2배로 계산한 기본 이용금액입니다. 최종 요금은 네이버 예약에서 확인해 주세요. C6 홀과 개인룸은 전화로 문의해 주세요."
+}
