@@ -55,6 +55,27 @@ const faq = (site.faq || []).map((item, index) => `<details class="faq-item"${in
 const sharePhoto = site.gallery[0] || site.hero;
 const personalRoom = site.gallery[1] || site.gallery[0] || site.hero;
 const pianoRoom = site.gallery[2] || site.gallery[0] || site.hero;
+// Room metadata lives beside its real photo; legacy comparison pages keep their photo order.
+const rooms = site.gallery.filter(photo => photo.room).sort((a, b) => a.room.number - b.room.number);
+const roomIds = new Set();
+const roomNumbers = new Set();
+for (const {room} of rooms) {
+  if (!/^[a-z][a-z0-9-]*$/.test(room.id) || !Number.isInteger(room.number) || room.number < 1 || roomIds.has(room.id) || roomNumbers.has(room.number) || !room.title?.trim() || !room.shortTitle?.trim()) throw new Error('방 번호·식별자·이름은 비어 있지 않고 중복되지 않아야 합니다.');
+  roomIds.add(room.id);
+  roomNumbers.add(room.number);
+}
+const roomPrice = room => site.rates.find(rate => rate.name === room.rateName)?.price || '문의';
+const roomChoices = rooms.map(({room}) => `<a class="room-choice" href="#room-${room.id}" id="choice-${room.id}"><span class="choice-number">${String(room.number).padStart(2, '0')}</span><span class="choice-copy"><strong><span class="choice-full-title">${escape(room.title)}</span><span class="choice-short-title">${escape(room.shortTitle)}</span></strong><b>${escape(roomPrice(room))} <span>/ 30분</span></b></span><span class="choice-arrow" aria-hidden="true">↗</span></a>`).join('\n          ');
+const roomPanels = rooms.map(photo => {
+  const {room} = photo;
+  const booking = room.booking === 'phone'
+    ? `<a class="inline-book" href="tel:${site.phone.replace(/-/g, '')}">C6 홀 전화 문의 <span aria-hidden="true">↗</span></a>`
+    : `<a class="inline-book naver-book" href="${escape(site.links.booking)}" target="_blank" rel="noopener noreferrer"><span class="naver-mark" aria-hidden="true"></span><span class="naver-label">네이버 예약</span><span class="booking-arrow" aria-hidden="true">↗</span></a>`;
+  return `<article class="room-panel" id="room-${room.id}" aria-labelledby="${room.id}-title" data-booking-room="${room.number}번방 · ${escape(room.shortTitle)}">
+            <a class="room-image" href="./${escape(photo.src)}" aria-label="${room.number}번방 ${escape(room.title)} 사진 크게 보기">${image(photo)}<span>사진 크게 보기 ＋</span></a>
+            <div class="room-description"><div><p class="room-caption">Room ${room.number}</p><h3 id="${room.id}-title">${escape(room.title)}</h3><p class="room-price">30분 ${escape(roomPrice(room))} · 최소 1시간 예약</p><p>${escape(photo.description)}</p></div>${booking}</div>
+          </article>`;
+}).join('\n          ');
 const shareImage = canonical ? [
   `<meta property="og:image" content="${escape(new URL(sharePhoto.src, canonical).href)}">`,
   `<meta property="og:image:type" content="${imageType(sharePhoto.src)}">`,
@@ -74,6 +95,7 @@ const replacements = {
   PREVIEW_NOTICE:site.publish ? '' : '<div class="review-strip"><span>SMC 홈페이지 통합 검토본 · 정식 공개 전</span><a href="./design/">시안 비교</a></div>',
   DESIGN_GUIDE_LINK:site.publish ? '' : '<p><a class="action" href="./public/design/index.html">A/B 디자인 비교 열기 →</a></p>',
   LOGO_IMAGE:logo, LOGO_SRC:escape(site.logo.src), LOGO_TYPE:imageType(site.logo.src), HERO_IMAGE:hero, HERO_CAPTION:escape(site.hero.caption || site.name), GALLERY:gallery, FAQ:faq, RATES:rates, RATE_NOTE:escape(site.rateNote), YEAR:new Date().getFullYear(),
+  ROOM_CHOICES:roomChoices, ROOM_PANELS:roomPanels,
   HALL_IMAGE:image(site.hero), HALL_SRC:'./' + escape(site.hero.src),
   PERSONAL_IMAGE:image(personalRoom), PERSONAL_SRC:'./' + escape(personalRoom.src), PERSONAL_DESCRIPTION:escape(personalRoom.description),
   PIANO_IMAGE:image(pianoRoom), PIANO_SRC:'./' + escape(pianoRoom.src), PIANO_DESCRIPTION:escape(pianoRoom.description),

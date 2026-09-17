@@ -1,8 +1,8 @@
 # Cloudflare Pages 배포 안내
 
-## 최신 상태 · 2026-09-17 23:36 KST
+## 최신 상태 · 2026-09-18 00:08 KST
 
-기존 고객 Pages `smcguwol-review`의 Production branch는 `main`이며 Direct Upload 방식입니다. 현재 Production은 `0f68846e`입니다. 이후의 예약 버튼·모바일 정렬·PC 오시는 길·큰 글씨 대응·예약/이용 안내 정렬 및 방 목록 설명 수정은 `codex/smc-design-review` 및 PR #2에 있고, [최신 검토본](https://home-review.smcguwol-review.pages.dev/)에 배포했습니다. 최신 Preview는 `d439fe98-bceb-4448-9a77-2ccaadc4f6b5`, deploy/success입니다. 검토 주소와 [기존 운영 주소](https://smcguwol-review.pages.dev/)를 구분하세요.
+기존 고객 Pages `smcguwol-review`의 Production branch는 `main`이며 Direct Upload 방식입니다. 현재 Production은 `0f68846e`입니다. 이후의 예약 버튼·모바일 정렬·PC 오시는 길·큰 글씨 대응·예약/이용 안내 정렬·전체 7개 방 사진·요금 안내 가독성 수정은 `codex/smc-design-review` 및 PR #2에 있고, [최신 검토본](https://home-review.smcguwol-review.pages.dev/)에 배포했습니다. 7개 방 사진(1·2·3·4·5·9·10번)과 PC 16px/모바일 15px 요금 안내를 포함합니다. 최신 Preview는 `8fc2c61e-c95c-4259-a264-25434e666888`, deploy/success입니다. 검토 주소와 [기존 운영 주소](https://smcguwol-review.pages.dev/)를 구분하세요.
 
 고객 권한 추가 후 Chrome 관리 화면에서 공식 도메인을 Free / $0, Full DNS로 추가했고, Pages custom domain 및 CNAME @ → smcguwol-review.pages.dev(Proxied, TTL Auto)를 저장했습니다. 마지막 도메인 조회인 22:44에는 pending이었으며 현재 고객의 LETO 변경 답변을 기다립니다. 실제 발급 네임서버는 `annabel.ns.cloudflare.com`, `roman.ns.cloudflare.com`입니다. 도메인 재생성·재초대·OAuth 재인증을 반복하지 마세요. 플러그인 zone 조회는 생성 후에도 빈 목록이어서 도메인 부재로 판단하면 안 됩니다.
 

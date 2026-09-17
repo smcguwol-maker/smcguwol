@@ -46,7 +46,15 @@
       "caption": "야마하 C6 그랜드 홀 · Room 5",
       "description": "야마하 C6 그랜드피아노를 갖춘 넓은 홀입니다. 예약 가능 시간은 전화로 문의해 주세요.",
       "width": 1000,
-      "height": 700
+      "height": 700,
+      "room": {
+        "number": 5,
+        "id": "hall",
+        "title": "야마하 C6 홀",
+        "shortTitle": "C6 홀",
+        "rateName": "Room 5 · 야마하 C6 홀",
+        "booking": "phone"
+      }
     },
     {
       "src": "assets/room-1.jpg",
@@ -54,7 +62,14 @@
       "caption": "개인 악기 연습공간 · Room 1",
       "description": "보면대를 갖춘 개인 연습공간입니다. 트럼펫·관악기 등 나의 악기를 가져와 연습하세요.",
       "width": 1000,
-      "height": 748
+      "height": 748,
+      "room": {
+        "number": 1,
+        "id": "personal",
+        "title": "개인 악기 연습실",
+        "shortTitle": "개인 연습",
+        "rateName": "Room 1 · 블루투스 작은방"
+      }
     },
     {
       "src": "assets/room-3-upright.jpg",
@@ -62,7 +77,74 @@
       "caption": "야마하 업라이트 · Room 3",
       "description": "야마하 업라이트피아노가 있는 공간입니다. 피아노 개인 연습에 이용하세요.",
       "width": 1000,
-      "height": 717
+      "height": 717,
+      "room": {
+        "number": 3,
+        "id": "piano",
+        "title": "야마하 업라이트",
+        "shortTitle": "업라이트",
+        "rateName": "Room 3·4 · 업라이트"
+      }
+    },
+    {
+      "src": "assets/room-2-kurzweil.jpg",
+      "alt": "SMC 인천 구월점 2번방의 커즈와일 전자피아노와 거울",
+      "caption": "커즈와일 전자피아노 · Room 2",
+      "description": "커즈와일 전자피아노와 블루투스 스피커가 있는 연습실입니다. 악기 연습과 보컬 연습에 이용할 수 있습니다.",
+      "width": 1000,
+      "height": 1333,
+      "room": {
+        "number": 2,
+        "id": "kurzweil",
+        "title": "커즈와일 전자피아노",
+        "shortTitle": "전자피아노",
+        "rateName": "Room 2 · 커즈와일"
+      }
+    },
+    {
+      "src": "assets/room-4-upright.jpg",
+      "alt": "SMC 인천 구월점 4번방의 업라이트피아노와 우드 톤 실내",
+      "caption": "업라이트피아노 · Room 4",
+      "description": "업라이트피아노가 준비된 연습실입니다. 3번방과 사진을 비교해 원하는 공간을 선택하세요.",
+      "width": 1000,
+      "height": 750,
+      "room": {
+        "number": 4,
+        "id": "upright-four",
+        "title": "업라이트피아노",
+        "shortTitle": "업라이트",
+        "rateName": "Room 3·4 · 업라이트"
+      }
+    },
+    {
+      "src": "assets/room-9.jpg",
+      "alt": "SMC 인천 구월점 9번방의 우드 톤 벽면과 개인 악기 연습공간",
+      "caption": "개인 악기 연습공간 · Room 9",
+      "description": "개인 악기를 가져와 연습하는 작은방입니다. 월 이용 계약 전까지 임시 운영하는 공간으로, 이용 가능 여부는 네이버에서 확인해 주세요.",
+      "width": 1000,
+      "height": 1000,
+      "room": {
+        "number": 9,
+        "id": "temporary",
+        "title": "개인 연습실 · 임시 운영",
+        "shortTitle": "임시 연습실",
+        "rateName": "Room 9 · 개인 연습실 (임시 운영)"
+      }
+    },
+    {
+      "src": "assets/room-10-g3.jpg",
+      "alt": "SMC 인천 구월점 10번방의 야마하 G3 그랜드피아노와 밝은 실내",
+      "caption": "야마하 G3 그랜드피아노 · Room 10",
+      "description": "야마하 G3 그랜드피아노가 있는 연습실입니다. 입시·콩쿠르 준비와 피아노 연습에 이용하세요.",
+      "width": 1000,
+      "height": 1334,
+      "room": {
+        "number": 10,
+        "id": "grand-g3",
+        "title": "야마하 G3 그랜드",
+        "shortTitle": "G3 그랜드",
+        "rateName": "Room 10 · 그랜드 G3"
+      }
     }
   ],
   "faq": [
@@ -99,6 +181,10 @@
     {
       "name": "Room 3·4 · 업라이트",
       "price": "3,500원"
+    },
+    {
+      "name": "Room 9 · 개인 연습실 (임시 운영)",
+      "price": "2,500원"
     },
     {
       "name": "Room 10 · 그랜드 G3",

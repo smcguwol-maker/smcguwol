@@ -46,6 +46,19 @@ try {
   assert.ok(!preview.html.includes('naver-site-verification'));
   passed('시안은 검색 제외 상태이며 빈 확인 태그를 출력하지 않음');
 
+  for (const photo of site.gallery.filter(photo => photo.room)) {
+    const {room} = photo;
+    assert.ok(preview.html.includes(`href="#room-${room.id}"`));
+    const panel = preview.html.match(new RegExp(`<article class="room-panel" id="room-${room.id}"[\\s\\S]*?</article>`))?.[0];
+    assert.ok(panel?.includes(`src="./${photo.src}"`), `${room.number}번방의 사진 연결 누락`);
+    assert.ok(panel.includes(room.booking === 'phone' ? `href="tel:${site.phone.replace(/-/g, '')}"` : `href="${site.links.booking}"`));
+  }
+  passed('모든 등록 방의 사진·선택 항목·예약 경로가 공개 빌드에 연결됨');
+  const duplicateRoom = structuredClone(site);
+  duplicateRoom.gallery[1].room.id = duplicateRoom.gallery[0].room.id;
+  await build(duplicateRoom, '방 번호·식별자·이름');
+  passed('중복된 방 식별자로 사진 선택이 잘못 연결되는 설정을 거부');
+
   for (const variant of ['a', 'b', 'c', 'index']) {
     const design = await readFile(path.join(fixture, 'public/design', variant + '.html'), 'utf8');
     assert.ok(design.includes('content="noindex,nofollow,noarchive"'));
