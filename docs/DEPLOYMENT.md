@@ -2,13 +2,15 @@
 
 ## 최신 상태 · 2026-09-17
 
-고객 Pages 기존 프로젝트 `smcguwol-review`에 개선안 03을 첫 페이지로 통합한 검토본을 직접 업로드했습니다. [통합 홈페이지](https://home-review.smcguwol-review.pages.dev/)의 preview 배포 성공과 PC·모바일 크기 화면 검수를 확인했습니다. Git 자동 배포는 미완료입니다. 실제 결과·남은 작업은 [NEXT_SESSION.md](NEXT_SESSION.md)를 참고하세요. publish:false와 도메인 연결 보류를 유지합니다.
+사용자가 정식 공개 범위를 승인했고 PR #1을 main에 병합했습니다(`d29f425cc779fcdc19c9fc54939226ebf05fe2ff`). 기존 고객 Pages `smcguwol-review`의 Production branch는 이제 `main`입니다. main 빌드 파일을 Production 환경에 직접 업로드했으며 [운영 배포 주소](https://smcguwol-review.pages.dev/)와 [고정 배포](https://2cc9c938.smcguwol-review.pages.dev/)의 성공을 확인했습니다. Git 자동 배포와 공식 도메인 오픈은 미완료입니다. 실제 결과·남은 작업은 [NEXT_SESSION.md](NEXT_SESSION.md)를 참고하세요.
+
+공식 도메인 zone 추가는 API와 관리 화면 모두 `com.cloudflare.api.account.zone.create` 권한 부족으로 실패했습니다. 소유자가 같은 고객 계정에 무료 플랜으로 도메인을 추가해야 합니다. Chrome의 GitHub 로그인도 고객 저장소 소유자 계정으로 전환해야 자동 배포 앱 권한을 이 저장소에 한정할 수 있습니다. 기존 초대·OAuth 인증 반복을 요청하지 않습니다. 공식 도메인 HTTPS 확인 후 검색 공개를 켜는 순서로 진행하며, 현재 `publish:false`입니다. main·도메인/DNS/네임서버·publish 변경에 대한 이전 승인 대기는 해제됐습니다.
 
 이 기존 프로젝트는 Direct Upload 방식이며 Git integration으로 전환할 수 없습니다. Git 자동 배포에는 별도 Git 연결 프로젝트가 필요합니다([공식 문서](https://developers.cloudflare.com/pages/get-started/direct-upload/)). 이번 통합 작업에서는 새 프로젝트를 만들지 않았고 기존 오류 8000011을 재인증으로 해결했다고 주장하지 않습니다.
 
 현재 홈페이지 원본은 `src/index.html`, `src/styles.css`, `src/app.js`이며, `src/design-*`는 비교 이력입니다. 공개 빌드에서 비교 페이지를 제거해도 통합 첫 페이지는 유지됩니다.
 
-2026-09-17 읽기 전용 확인: 고객 계정의 해당 도메인 zone 및 Pages custom domains는 빈 목록입니다. 공개 NS는 LETO 두 서버이며 apex A/AAAA/MX/CAA 응답은 ENODATA입니다. 다른 레코드 전체를 조사한 것은 아닙니다. 실제 도메인/네임서버 변경은 기존 금지 지시가 있어 정식 공개 승인이 필요합니다.
+2026-09-17 확인: 고객 계정의 해당 도메인 zone은 생성 실패 후 재조회에서도 빈 목록이며 Pages custom domain도 연결하지 않았습니다. 공개 NS는 LETO 두 서버이며 apex A/AAAA/MX/TXT/CAA 및 www A/AAAA/CNAME 응답은 ENODATA, 공개 DNS DS 조회의 answer는 빈 목록이었습니다. 다른 하위 도메인 전체를 조사한 것은 아닙니다. 실제 도메인/네임서버 변경은 승인됐지만 zone 생성 권한 문제가 먼저 해결되어야 합니다.
 
 ## 기본 설정
 
@@ -29,7 +31,7 @@
 
 ## 이번 A/B 검토본 연결
 
-현재 제작 파일은 `codex/smc-design-review` 검토 브랜치용이며 `main`은 기존 초기 상태입니다. 새 Pages 프로젝트를 설정할 때 `main`을 그대로 빌드하면 제작본이 빌드되지 않습니다.
+초기 A/B 배포는 `codex/smc-design-review`를 사용했습니다. 2026-09-17 PR #1 병합 후에는 `main`에도 최신 통합 홈페이지가 있습니다. 지금 새 Git 연결 프로젝트를 만들면 Production branch는 `main`을 사용합니다. 아래 최초 검토 브랜치 안내는 초기 작업의 이력입니다.
 
 - Pages 프로젝트가 이미 있다면 검토 브랜치의 preview deployment를 사용합니다. Preview branch 설정에 `codex/smc-design-review`가 포함되는지 확인합니다.
 - 새 프로젝트의 최초 빌드에 브랜치 지정이 필요하면 코드가 있는 `codex/smc-design-review`를 초기 브랜치로 선택해 고객 확인용 주소를 만듭니다. 이때 개인 도메인은 아직 연결하지 않고 `publish: false`를 유지합니다. 최종 디자인 병합 후 Production branch를 `main`으로 변경합니다.
