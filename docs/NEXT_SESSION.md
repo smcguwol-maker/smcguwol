@@ -2,6 +2,18 @@
 
 기록: 2026-09-18. 이 파일 상단의 최신 결과는 아래 과거 이력과 이전 연결 설명보다 우선합니다.
 
+## 앱 내부 브라우저의 이전 디자인 캐시 보완 · 2026-09-18 18:22 KST
+
+- 사용자 iPhone 화면에서 ChatGPT 내부 브라우저는 흰색 테두리의 큰 네이버 버튼/연녹색 하단 예약 영역, Safari는 최신 작은 아이콘/짙은 하단 예약 영역을 표시했습니다. 서버의 공식 HTML과 CSS는 최신본이나 CSS·JS 응답이 동일 URL에 Cache-Control public,max-age=14400,must-revalidate(4시간)로 제공되고 있었습니다. 기기 캐시 자체를 읽은 것은 아니며, 브라우저별 이전 CSS 캐시가 가장 유력한 원인입니다. Safari만 지원하는 사이트로 판단하지 않습니다.
+- scripts/build.mjs에서 CSS·JS·사진·로고 및 확대/공유 이미지 URL에 내용 기반 ?v= 식별자를 붙이도록 수정했습니다. publish 모드도 식별자 계산에 포함해 검토본과 공개본의 검색 응답 캐시를 분리합니다. _headers에는 Cache-Control:no-cache를 추가해 다음 요청에서 서버 재검증을 하게 합니다. 이미지 원본과 화면 디자인은 변경하지 않았습니다.
+- 첫 공개 식별자: styles.css?v=a1409b8c3173, app.js?v=5e7ca46f92db. 기존과 같은 홈페이지 주소이며 canonical은 쿼리 없는 공식 루트를 유지합니다. 홈페이지 주소에 임의 쿼리만 붙여서는 하위 CSS 주소가 바뀌지 않으므로 이를 해결책으로 제시하지 않습니다.
+- 빌드·정적22개·공개/편집12개 시나리오·비교검사·JS구문·diff 공백 검사 통과. 새 시나리오는 실제 파일 수정 시 URL 변경, 동일 빌드 URL 안정성, 공개/시안의 다른 캐시 키, 404의 CSS 버전 연결을 검증합니다.
+- 앱 내 브라우저 localhost:8767에서 390×844와1440×1000 검수: 최신 네이버 버튼, 7개 사진 로딩, 모든 방 선택/하단 예약 경로, 세로 사진 확대/Escape/초점 복귀, 펼친 요금표, 가로 넘침 없음, PC 제목36px·본문 시작선637.9896px 일치, error/warn 없음. 실제 iPhone의 캐시를 재현·제거한 검수는 아니므로 재배포 후 사용자의 두 브라우저 확인이 필요합니다.
+- **아직 공식 재배포 전입니다.** 기존 Production 006ffa04가 유지됩니다. 준비 ZIP은 C:/Users/WOOWON/AppData/Local/Temp/smc-production-cachefix-20260918.zip (15개 파일, 1,109,281바이트). 전용 작업 폴더는 C:/Users/WOOWON/AppData/Local/Temp/smc-cachefix-20260918입니다.
+- 사용자 승인된 기존 비공개 Drive ZIP을 **SMC-정식배포-캐시수정-20260918.zip**으로 업데이트했습니다. 기존 파일 ID/다운로드 링크를 유지하고 소유자 전용 권한을 유지합니다. https://drive.google.com/file/d/17QO7tI7eL-Xi6wgT4Jls-m3qOz1vXsQ_/view?usp=drivesdk . 이미 다운로드한 이전 ZIP은 바뀌지 않으므로 새로 다운로드해야 합니다.
+- 다음: 사용자가 이 ZIP을 기존 고객 smcguwol-review/Production에 업로드 → 새 배포 success 확인 → 공식 HTML의 버전 주소/Cache-Control, 각 참조 자산 HTTP200·바이트·noindex 없는지 확인 → ChatGPT 내부 브라우저 닫고 새로 열기/Safari 비교. 이미 열어 둔 페이지를 서버가 강제로 새로고침할 수는 없습니다. 기존 사진의 쿼리 없는 URL 캐시와 새 버전 URL 검수를 구분합니다.
+- main 수정·병합, 고객 메시지, DNS 변경 없음. 네이버 서치어드바이저 관리 계정 답변 대기는 그대로 유지합니다.
+
 ## 검색 후속 작업 재확인 · 2026-09-18 18:09 KST
 
 - 사용자가 고객 전달 전에 검색 후속 작업을 진행하라고 승인했습니다. 홈페이지의 HTTP200, index,follow, 공식 canonical, robots Allow, sitemap, 한국어 lang, 제목/설명, LocalBusiness(사업장명·전화·공식주소·연관 채널) 모두 정상입니다. naver-site-verification 메타태그는 아직 없습니다.

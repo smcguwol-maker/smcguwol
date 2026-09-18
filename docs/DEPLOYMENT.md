@@ -1,5 +1,11 @@
 # Cloudflare Pages 배포 안내
 
+## 캐시 갱신 수정본 재배포 대기 · 2026-09-18 18:22 KST
+
+ChatGPT 내부 브라우저/Safari의 화면 차이 제보를 확인했습니다. 현재 서버의 CSS·JS는 동일 URL에 최대4시간 캐시됩니다. 수정 빌드는 CSS·JS·사진 URL에 내용+공개모드 해시를 붙이고 Cache-Control:no-cache로 재검증합니다. CSS·사진 원본과 디자인은 유지합니다. 정적22개·공개12개 시나리오 및 로컬 PC/모바일 검수 완료.
+
+**공식 배포에는 아직 반영되지 않았습니다.** 사용자 승인된 기존 비공개 Drive ZIP을 SMC-정식배포-캐시수정-20260918.zip(1,109,281바이트)으로 갱신했습니다. 같은 링크에서 새로 다운로드한 뒤 기존 smcguwol-review의 Production에 재업로드해야 합니다. 이후 공식 HTML에서 styles.css?v=a1409b8c3173 및 app.js?v=5e7ca46f92db 참조와 실제 자산 응답을 확인합니다. 상세 근거·검수·후속은 NEXT_SESSION.md 상단을 따릅니다.
+
 ## 현재 공식 배포 상태 · 2026-09-18 18:00 KST
 
 **공식 홈페이지 배포 완료:** [근처연습실co.kr](https://xn--co-002iq89dzga40o12n.kr/). 사용자가 준비된 공개 ZIP을 기존 고객 Pages **smcguwol-review / Production**으로 업로드했고, API에서 **006ffa04-1c5b-48f2-8a98-ee0440b644e8 / deploy success / 17:49:55 KST**를 확인했습니다. 공식 도메인 상태와 검증은 active입니다. 아래 배포 대기·Chrome 연결 대기 설명은 과거 이력입니다.

@@ -23,7 +23,7 @@ for (const match of html.matchAll(/<a\b[^>]*>/g)) if(match[0].includes('target="
 check('외부 새 창 링크 보안 속성', true);
 check('예약 링크 5곳 이상', html.split(`href="${escaped(site.links.booking)}"`).length - 1 >= 5);
 check('전화 링크 형식', html.includes(`href="tel:${site.phone.replace(/-/g,'')}"`));
-for(const match of html.matchAll(/<(?:img|script|link)\b[^>]*(?:src|href)="\.\/([^"]+)"/g)) await access(path.join(root,'public',match[1]));
+for(const match of html.matchAll(/<(?:img|script|link)\b[^>]*(?:src|href)="\.\/([^"]+)"/g)) await access(path.join(root,'public',new URL(match[1], 'https://check.invalid/').pathname));
 check('모든 로컬 이미지·CSS·JS 파일 존재',true);
 for(const img of html.matchAll(/<img\b[^>]*>/g)) if(!img[0].includes('id="photo-full"')) assert.ok(/alt="[^"]+"/.test(img[0]) && /width="\d+"/.test(img[0]) && /height="\d+"/.test(img[0]),'이미지 alt 또는 치수 누락');
 check('사진 설명·크기 속성',true);

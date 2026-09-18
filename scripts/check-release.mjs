@@ -44,13 +44,15 @@ try {
   assert.ok(preview.robots.includes('Disallow: /'));
   assert.ok(!preview.sitemap.includes('<loc>'));
   assert.ok(!preview.html.includes('naver-site-verification'));
+  const previewCheck = spawnSync(process.execPath, [path.join(fixture, 'scripts/check-design.mjs')], { cwd: fixture, encoding: 'utf8', timeout: 15000 });
+  assert.equal(previewCheck.status, 0, previewCheck.stdout + previewCheck.stderr);
   passed('시안은 검색 제외 상태이며 빈 확인 태그를 출력하지 않음');
 
   for (const photo of site.gallery.filter(photo => photo.room)) {
     const {room} = photo;
     assert.ok(preview.html.includes(`href="#room-${room.id}"`));
     const panel = preview.html.match(new RegExp(`<article class="room-panel" id="room-${room.id}"[\\s\\S]*?</article>`))?.[0];
-    assert.ok(panel?.includes(`src="./${photo.src}"`), `${room.number}번방의 사진 연결 누락`);
+    assert.ok(panel?.includes(`src="./${photo.src}?v=`), `${room.number}번방의 사진 연결 누락`);
     assert.ok(panel.includes(room.booking === 'phone' ? `href="tel:${site.phone.replace(/-/g, '')}"` : `href="${site.links.booking}"`));
   }
   passed('모든 등록 방의 사진·선택 항목·예약 경로가 공개 빌드에 연결됨');
@@ -120,9 +122,29 @@ try {
   assert.ok(production.html.includes('id="room-hall"'));
   for (const match of production.html.matchAll(/(?:src|href)="(\.[^"#]+)"/g)) {
     assert.ok(!match[1].startsWith('../'), '첫 페이지의 자산 경로가 상위 폴더를 참조함');
-    await access(path.join(fixture, 'public', match[1]));
+    await access(path.join(fixture, 'public', new URL(match[1], 'https://check.invalid/').pathname));
   }
   passed('비교 시안을 제거해도 통합 첫 페이지의 공간·예약·FAQ와 모든 로컬 자산 유지');
+
+  const assetLinks = page => new Map([...page.matchAll(/(?:src|href)="(\.\/(?:assets\/[^"?]+|styles\.css|app\.js)\?v=[a-f0-9]{12})"/g)]
+    .map(match => [new URL(match[1], canonical).pathname.slice(1), match[1]]));
+  const originalAssets = assetLinks(production.html);
+  assert.equal(originalAssets.size, new Set([site.logo, site.hero, ...site.gallery].map(photo => photo.src)).size + 2);
+  const repeated = await build(productionConfig);
+  assert.deepEqual(assetLinks(repeated.html), originalAssets, '동일한 빌드에서 자산 주소가 바뀜');
+  const previewAssets = assetLinks(preview.html);
+  for (const [name, url] of originalAssets) assert.notEqual(previewAssets.get(name), url, '시안과 공개본이 캐시를 공유함');
+  for (const file of ['src/styles.css', 'src/app.js', site.hero.src]) {
+    const target = path.join(fixture, file);
+    await writeFile(target, Buffer.concat([await readFile(target), Buffer.from('\n/* cache regression fixture */\n')]));
+  }
+  const changedAssets = assetLinks((await build(productionConfig)).html);
+  for (const name of ['styles.css', 'app.js', site.hero.src]) assert.notEqual(changedAssets.get(name), originalAssets.get(name), '변경한 파일이 이전 캐시 주소를 재사용함');
+  assert.equal(changedAssets.get(site.logo.src), originalAssets.get(site.logo.src), '변경하지 않은 사진 주소까지 바뀜');
+  assert.ok(production.headers.includes('Cache-Control: no-cache'));
+  const errorPage = await readFile(path.join(fixture, 'public/404.html'), 'utf8');
+  assert.ok(errorPage.includes(changedAssets.get('styles.css').slice(1)));
+  passed('CSS·JS·사진 변경 및 시안→공개 전환 시 캐시 주소 갱신, 동일 빌드는 주소 유지');
 
   // 아래 값은 임시 테스트용입니다. 실제 고객 정보 파일에는 저장하지 않습니다.
   const edited = structuredClone(productionConfig);

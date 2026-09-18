@@ -1,6 +1,7 @@
 import { readFile, writeFile, mkdir, cp, access, rm } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const site = JSON.parse(await readFile(path.join(root, 'content/site.json'), 'utf8'));
@@ -22,6 +23,17 @@ for (const photo of photos) {
   if (!Number.isInteger(photo.width) || photo.width <= 0 || !Number.isInteger(photo.height) || photo.height <= 0) throw new Error(`사진의 width·height에 실제 픽셀 크기를 입력하세요: ${photo.src}`);
   await access(path.join(root, photo.src));
 }
+// Content-derived URLs prevent in-app browsers from reusing an older release's assets.
+// Include publish mode because preview and production use different indexing headers.
+const assetVersions = new Map();
+for (const [url, sourcePath] of [
+  ['styles.css', 'src/styles.css'], ['app.js', 'src/app.js'],
+  ...[...new Set(photos.map(photo => photo.src))].map(source => [source, source])
+]) {
+  const bytes = await readFile(path.join(root, sourcePath));
+  assetVersions.set(url, createHash('sha256').update(String(site.publish)).update(bytes).digest('hex').slice(0, 12));
+}
+const assetUrl = (source, prefix = './') => `${prefix}${source}?v=${assetVersions.get(source)}`;
 let canonical = '';
 if (site.publish) {
   if (['photos', 'rates', 'domain'].some(key => site.approvals?.[key] !== true)) throw new Error('사진·요금·도메인 확인을 완료한 뒤 공개 설정을 켜 주세요.');
@@ -30,10 +42,10 @@ if (site.publish) {
   if (u.search || u.hash || u.pathname !== '/' || !u.hostname.includes('.') || /localhost|example\.|\.invalid$/.test(u.hostname)) throw new Error('정확히 확인된 사이트 루트 주소가 필요합니다.');
   canonical = u.origin + '/';
 }
-const image = (photo, hero = false) => `<img class="${hero ? 'hero-photo' : 'gallery-photo'}" src="./${escape(photo.src)}" alt="${escape(photo.alt)}" width="${Number(photo.width) || 1200}" height="${Number(photo.height) || 900}" ${hero ? 'fetchpriority="high" loading="eager"' : 'loading="lazy" decoding="async"'}${hero && /^\d{1,3}% \d{1,3}%$/.test(photo.position || '') ? ` style="object-position:${escape(photo.position)}"` : ''}>`;
+const image = (photo, hero = false) => `<img class="${hero ? 'hero-photo' : 'gallery-photo'}" src="${escape(assetUrl(photo.src))}" alt="${escape(photo.alt)}" width="${Number(photo.width) || 1200}" height="${Number(photo.height) || 900}" ${hero ? 'fetchpriority="high" loading="eager"' : 'loading="lazy" decoding="async"'}${hero && /^\d{1,3}% \d{1,3}%$/.test(photo.position || '') ? ` style="object-position:${escape(photo.position)}"` : ''}>`;
 const hero = site.hero.src ? image(site.hero, true) : '<div class="photo-unavailable"><strong>SMC 인천 구월점</strong><span>실제 공간 사진 확인 후 반영 예정</span></div>';
-const logo = `<img class="brand-logo" src="./${escape(site.logo.src)}" alt="${escape(site.logo.alt)}" width="${Number(site.logo.width)}" height="${Number(site.logo.height)}" decoding="async">`;
-const gallery = site.gallery.length ? `<div class="gallery-grid">${site.gallery.map((photo, i) => `<figure class="gallery-item"><a class="gallery-link" href="./${escape(photo.src)}" aria-label="${escape(photo.caption)} 사진 크게 보기">${image(photo)}<span class="photo-expand" aria-hidden="true">＋</span></a><figcaption><span class="gallery-number">${String(i + 1).padStart(2, '0')}</span><div><span class="gallery-title">${escape(photo.caption)}</span>${photo.description ? `<p class="gallery-description">${escape(photo.description)}</p>` : ''}</div></figcaption></figure>`).join('')}</div>` : '<div class="gallery-empty"><div class="photo-unavailable"><strong>공간 갤러리</strong><span>실제 사진을 확보한 뒤 반영합니다. 가상 공간 이미지는 사용하지 않습니다.</span></div></div>';
+const logo = `<img class="brand-logo" src="${escape(assetUrl(site.logo.src))}" alt="${escape(site.logo.alt)}" width="${Number(site.logo.width)}" height="${Number(site.logo.height)}" decoding="async">`;
+const gallery = site.gallery.length ? `<div class="gallery-grid">${site.gallery.map((photo, i) => `<figure class="gallery-item"><a class="gallery-link" href="${escape(assetUrl(photo.src))}" aria-label="${escape(photo.caption)} 사진 크게 보기">${image(photo)}<span class="photo-expand" aria-hidden="true">＋</span></a><figcaption><span class="gallery-number">${String(i + 1).padStart(2, '0')}</span><div><span class="gallery-title">${escape(photo.caption)}</span>${photo.description ? `<p class="gallery-description">${escape(photo.description)}</p>` : ''}</div></figcaption></figure>`).join('')}</div>` : '<div class="gallery-empty"><div class="photo-unavailable"><strong>공간 갤러리</strong><span>실제 사진을 확보한 뒤 반영합니다. 가상 공간 이미지는 사용하지 않습니다.</span></div></div>';
 // 30분 요금만 원본으로 관리합니다. 고정된 원화 금액일 때만 1시간 금액을 계산합니다.
 const hourlyPrice = price => {
   if (!/^(?:\d+|\d{1,3}(?:,\d{3})+)원$/.test(price)) return '';
@@ -72,19 +84,20 @@ const roomPanels = rooms.map(photo => {
     ? `<a class="inline-book" href="tel:${site.phone.replace(/-/g, '')}">C6 홀 전화 문의 <span aria-hidden="true">↗</span></a>`
     : `<a class="inline-book naver-book" href="${escape(site.links.booking)}" target="_blank" rel="noopener noreferrer"><span class="naver-mark" aria-hidden="true"></span><span class="naver-label">네이버 예약</span><span class="booking-arrow" aria-hidden="true">↗</span></a>`;
   return `<article class="room-panel" id="room-${room.id}" aria-labelledby="${room.id}-title" data-booking-room="${room.number}번방 · ${escape(room.shortTitle)}">
-            <a class="room-image" href="./${escape(photo.src)}" aria-label="${room.number}번방 ${escape(room.title)} 사진 크게 보기">${image(photo)}<span>사진 크게 보기 ＋</span></a>
+            <a class="room-image" href="${escape(assetUrl(photo.src))}" aria-label="${room.number}번방 ${escape(room.title)} 사진 크게 보기">${image(photo)}<span>사진 크게 보기 ＋</span></a>
             <div class="room-description"><div><p class="room-caption">Room ${room.number}</p><h3 id="${room.id}-title">${escape(room.title)}</h3><p class="room-price">30분 ${escape(roomPrice(room))} · 최소 1시간 예약</p><p>${escape(photo.description)}</p></div>${booking}</div>
           </article>`;
 }).join('\n          ');
 const shareImage = canonical ? [
-  `<meta property="og:image" content="${escape(new URL(sharePhoto.src, canonical).href)}">`,
+  `<meta property="og:image" content="${escape(new URL(assetUrl(sharePhoto.src), canonical).href)}">`,
   `<meta property="og:image:type" content="${imageType(sharePhoto.src)}">`,
   `<meta property="og:image:width" content="${sharePhoto.width}">`,
   `<meta property="og:image:height" content="${sharePhoto.height}">`,
   `<meta property="og:image:alt" content="${escape(sharePhoto.alt)}">`
 ].join('\n  ') : '';
-if (canonical) { schema.url = canonical; schema['@id'] = canonical + '#smc-guwol'; schema.image = new URL(site.hero.src, canonical).href; schema.logo = new URL(site.logo.src, canonical).href; }
+if (canonical) { schema.url = canonical; schema['@id'] = canonical + '#smc-guwol'; schema.image = new URL(assetUrl(site.hero.src), canonical).href; schema.logo = new URL(assetUrl(site.logo.src), canonical).href; }
 const replacements = {
+  STYLE_URL:assetUrl('styles.css'), SCRIPT_URL:assetUrl('app.js'),
   TITLE:escape(site.title), DESCRIPTION:escape(site.description), NAME:escape(site.name),
   PHONE:escape(site.phone), TEL:`tel:${site.phone.replace(/-/g,'')}`, ADDRESS:escape(addressText), HOURS:escape(site.hours),
   BOOKING:escape(site.links.booking), MAP:escape(site.links.map), KAKAO:escape(site.links.kakao), INSTAGRAM:escape(site.links.instagram), BLOG:escape(site.links.blog),
@@ -94,11 +107,11 @@ const replacements = {
   SHARE_IMAGE:shareImage,
   PREVIEW_NOTICE:site.publish ? '' : '<div class="review-strip"><span>SMC 홈페이지 통합 검토본 · 정식 공개 전</span><a href="./design/">시안 비교</a></div>',
   DESIGN_GUIDE_LINK:site.publish ? '' : '<p><a class="action" href="./public/design/index.html">A/B 디자인 비교 열기 →</a></p>',
-  LOGO_IMAGE:logo, LOGO_SRC:escape(site.logo.src), LOGO_TYPE:imageType(site.logo.src), HERO_IMAGE:hero, HERO_CAPTION:escape(site.hero.caption || site.name), GALLERY:gallery, FAQ:faq, RATES:rates, RATE_NOTE:escape(site.rateNote), YEAR:new Date().getFullYear(),
+  LOGO_IMAGE:logo, LOGO_SRC:escape(assetUrl(site.logo.src, '')), LOGO_TYPE:imageType(site.logo.src), HERO_IMAGE:hero, HERO_CAPTION:escape(site.hero.caption || site.name), GALLERY:gallery, FAQ:faq, RATES:rates, RATE_NOTE:escape(site.rateNote), YEAR:new Date().getFullYear(),
   ROOM_CHOICES:roomChoices, ROOM_PANELS:roomPanels,
-  HALL_IMAGE:image(site.hero), HALL_SRC:'./' + escape(site.hero.src),
-  PERSONAL_IMAGE:image(personalRoom), PERSONAL_SRC:'./' + escape(personalRoom.src), PERSONAL_DESCRIPTION:escape(personalRoom.description),
-  PIANO_IMAGE:image(pianoRoom), PIANO_SRC:'./' + escape(pianoRoom.src), PIANO_DESCRIPTION:escape(pianoRoom.description),
+  HALL_IMAGE:image(site.hero), HALL_SRC:escape(assetUrl(site.hero.src)),
+  PERSONAL_IMAGE:image(personalRoom), PERSONAL_SRC:escape(assetUrl(personalRoom.src)), PERSONAL_DESCRIPTION:escape(personalRoom.description),
+  PIANO_IMAGE:image(pianoRoom), PIANO_SRC:escape(assetUrl(pianoRoom.src)), PIANO_DESCRIPTION:escape(pianoRoom.description),
   ROOM_ONE_PRICE:escape(site.rates.find(r => r.name.startsWith('Room 1 ·'))?.price || '문의'),
   ROOM_PIANO_PRICE:escape(site.rates.find(r => r.name.startsWith('Room 3·4 ·'))?.price || '문의'),
   ROOM_HALL_PRICE:escape(site.rates.find(r => r.name.startsWith('Room 5 ·'))?.price || '문의')
@@ -125,8 +138,8 @@ for (const sourcePath of new Set(photos.map(photo => photo.src))) {
 }
 await writeFile(path.join(output,'robots.txt'),canonical ? `User-agent: *\nAllow: /\n\nSitemap: ${canonical}sitemap.xml\n` : 'User-agent: *\nDisallow: /\n');
 await writeFile(path.join(output,'sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${canonical ? `\n  <url><loc>${escape(canonical)}</loc></url>\n` : '\n  <!-- 시안: 정식 공개 설정 시 공식 URL이 자동 생성됩니다. -->\n'}</urlset>\n`);
-await writeFile(path.join(output,'_headers'),`/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n${site.publish ? '' : '  X-Robots-Tag: noindex, nofollow, noarchive\n'}\n`);
-await writeFile(path.join(output,'404.html'),`<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>페이지를 찾을 수 없습니다 | SMC 인천 구월점</title><link rel="stylesheet" href="/styles.css"></head><body><main class="not-found"><p>SMC 인천 구월점</p><h1>페이지를 찾을 수 없습니다.</h1><p>주소가 변경되었거나 없는 페이지입니다.</p><a class="inline-book" href="/">SMC 첫 화면으로 <span aria-hidden="true">↗</span></a></main></body></html>`);
+await writeFile(path.join(output,'_headers'),`/*\n  Cache-Control: no-cache\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n${site.publish ? '' : '  X-Robots-Tag: noindex, nofollow, noarchive\n'}\n`);
+await writeFile(path.join(output,'404.html'),`<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>페이지를 찾을 수 없습니다 | SMC 인천 구월점</title><link rel="stylesheet" href="${assetUrl('styles.css', '/')}"></head><body><main class="not-found"><p>SMC 인천 구월점</p><h1>페이지를 찾을 수 없습니다.</h1><p>주소가 변경되었거나 없는 페이지입니다.</p><a class="inline-book" href="/">SMC 첫 화면으로 <span aria-hidden="true">↗</span></a></main></body></html>`);
 // 비교 페이지는 공개 전 빌드에만 포함합니다. 공개 전환 시 이전 비교 산출물도 제거합니다.
 const designOutput = path.join(output, 'design');
 await rm(designOutput, { recursive: true, force: true });
@@ -144,9 +157,9 @@ if (!site.publish) {
     ROOM_ONE_PRICE: escape(site.rates.find(r => r.name.startsWith('Room 1 ·'))?.price || '문의'),
     ROOM_PIANO_PRICE: escape(site.rates.find(r => r.name.startsWith('Room 3·4 ·'))?.price || '문의'),
     ROOM_HALL_PRICE: escape(site.rates.find(r => r.name.startsWith('Room 5 ·'))?.price || '문의'),
-    PERSONAL_IMAGE: designImage(personal), PERSONAL_SRC: '../' + escape(personal.src),
+    PERSONAL_IMAGE: designImage(personal), PERSONAL_SRC: escape(assetUrl(personal.src, '../')),
     PERSONAL_CAPTION: escape(personal.caption), PERSONAL_DESCRIPTION: escape(personal.description),
-    PIANO_IMAGE: designImage(piano), PIANO_SRC: '../' + escape(piano.src),
+    PIANO_IMAGE: designImage(piano), PIANO_SRC: escape(assetUrl(piano.src, '../')),
     PIANO_CAPTION: escape(piano.caption), PIANO_DESCRIPTION: escape(piano.description)
   };
   for (const [sourceName, outputName] of [['design-index.html', 'index.html'], ['design-a.html', 'a.html'], ['design-b.html', 'b.html'], ['design-c.html', 'c.html']]) {
