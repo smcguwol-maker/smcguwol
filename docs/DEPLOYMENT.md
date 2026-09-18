@@ -1,5 +1,15 @@
 # Cloudflare Pages 배포 안내
 
+## 현재 공식 배포 상태 · 2026-09-18 18:00 KST
+
+**공식 홈페이지 배포 완료:** [근처연습실co.kr](https://xn--co-002iq89dzga40o12n.kr/). 사용자가 준비된 공개 ZIP을 기존 고객 Pages **smcguwol-review / Production**으로 업로드했고, API에서 **006ffa04-1c5b-48f2-8a98-ee0440b644e8 / deploy success / 17:49:55 KST**를 확인했습니다. 공식 도메인 상태와 검증은 active입니다. 아래 배포 대기·Chrome 연결 대기 설명은 과거 이력입니다.
+
+공개 원본은 검토 브랜치 0d9640d29e1f94934c5bde0299488938c3d28d90이며 publish:true입니다. 공식 제공 파일 14개 HTTP200·SHA256 일치, HTTP→HTTPS301, 비교 페이지/없는 경로404, HTML index,follow·canonical·robots Allow·sitemap 정상입니다. 실제 공식 사이트를 앱 내 브라우저 PC1440/모바일390px에서 확인했고 7개 방 사진·확대·요금표·예약 경로·FAQ·주소 복사 및 제목/본문 정렬이 정상입니다. 실제 네이버의 SMC 인천 구월점과 7개 방 예약 목록도 확인했습니다.
+
+**남은 사항:** 기존 이미지 4개(room-1.jpg, room-3-upright.jpg, room-5-c6.jpg, smc-guwol-logo.jpg)에 과거 noindex 응답 헤더가 캐시로 남아 있습니다. 화면 표시와 홈페이지 HTML 검색 허용에는 문제가 없습니다. 새 쿼리의 room-1.jpg는 MISS/noindex 없음입니다. zone GET은 오류9109, 해당4개 URL의 캐시 제거는 오류10000(Authentication error)로 완료되지 않았습니다. 정확한 응답 및 후속 확인은 NEXT_SESSION.md 상단을 보세요. 네이버 서치어드바이저 소유 확인·사이트맵 제출 및 실제 색인은 아직 미완료입니다.
+
+고객 계정은 733b1c8faa19799bf480b1192f473635, zone은 56abbbdbcaec366f81c9675a261b475f입니다. 이 프로젝트는 Direct Upload/production branch main이며 Git 자동 배포는 미연결입니다. 이번 작업에서 main 수정·병합은 수행하지 않았습니다.
+
 ## 공개 배포 준비 · 2026-09-18 08:33 KST
 
 사용자가 최신본의 공식 주소 반영과 검색 공개를 승인했습니다. 검토 브랜치의 `publish:true` 공개 빌드와 검사 33개, PC·모바일 로컬 검수를 완료했습니다. 공개 파일은 검토 안내/비교 페이지를 제외하고 공식 canonical·sitemap·robots 검색 허용을 포함합니다. **실제 Production 업로드는 아직 미완료**입니다. 아래 과거 `publish:false` 설명은 당시 상태입니다.

@@ -2,6 +2,19 @@
 
 기록: 2026-09-18. 이 파일 상단의 최신 결과는 아래 과거 이력과 이전 연결 설명보다 우선합니다.
 
+## 공식 Production 배포 완료·실제 주소 검수 · 2026-09-18 18:00 KST
+
+- 사용자가 정식 공개 ZIP을 기존 고객 Pages에 직접 업로드한 뒤 “배포했어”라고 알렸습니다. Pages API에서 Production **006ffa04-1c5b-48f2-8a98-ee0440b644e8**, **deploy/success**, 완료 시각 **2026-09-18 17:49:55 KST**를 확인했습니다. canonical_deployment와 latest_deployment가 이 배포를 가리킵니다.
+- 고객 계정 **733b1c8faa19799bf480b1192f473635**, 프로젝트 **smcguwol-review**. 공식 주소 **https://xn--co-002iq89dzga40o12n.kr/** (= 근처연습실co.kr). Pages 도메인 status/validation/verification 모두 active입니다. 고정 배포는 https://006ffa04.smcguwol-review.pages.dev/ 입니다.
+- 공식 HTTPS의 제공 파일 **14개 모두 HTTP 200·준비한 public과 SHA-256 일치**. HTTP→HTTPS 301. /design/, /design/a.html, /design/b.html, /design/c.html 및 없는 경로는 404입니다. 홈페이지의 HTML robots는 index,follow, 응답 noindex 없음, canonical·robots Allow·sitemap은 공식 주소와 일치합니다. 검색 허용과 실제 검색 결과 등록은 구분합니다.
+- 앱 내 브라우저로 실제 공식 사이트 **1440×1000 / 390×844** 검수: 1·2·3·4·5·9·10번 사진 모두 로딩, 사진 contain·확대·닫기·Escape·초점 복귀 정상, 펼친 요금표 유지, 문서 가로 넘침 없음. PC 예약/이용 제목 36px·48.6px, 모바일 두 제목 32px로 일치. PC 예약 설명과 FAQ 본문 시작선은 모두 x=637.9896px. 요금표 아래 안내는 PC16px/모바일15px입니다.
+- C6 홀은 tel:050713808122, 일반 방은 https://naver.me/FlJiVAwL 로 전환합니다. FAQ 주차 안내와 주소 복사 성공 상태, 공식 검수 탭 error/warn 없음 확인. 네이버 단축 링크가 실제 **SMC 인천 구월점**으로 연결되고 예약 탭에 7개 방이 노출되는 것도 확인했습니다. 예약 제출·통화·메시지 발송은 하지 않았습니다. 실제 iPhone/Safari 기기 검수와는 구분합니다.
+- **남은 검색용 캐시 문제:** 공식 주소의 기존 이미지 room-1.jpg, room-3-upright.jpg, room-5-c6.jpg, smc-guwol-logo.jpg 응답에 과거 X-Robots-Tag noindex,nofollow,noarchive가 남아 있습니다. 파일 바이트는 새 public과 같고 화면 로딩은 정상입니다. room-1.jpg의 쿼리 없는 요청은 CF-Cache-Status REVALIDATED/과거 헤더, 새 쿼리 요청은 MISS/noindex 없음으로 캐시 차이를 확인했습니다. 이것을 HTML 검색 차단으로 보고하지 않습니다.
+- zone **56abbbdbcaec366f81c9675a261b475f** GET은 `9109: Unauthorized to access requested resource`, 해당 4개 URL만 대상으로 한 POST purge_cache는 `10000: Authentication error`를 반환해 캐시 제거 성공을 확인하지 못했습니다. execute 도구가 예외 텍스트만 반환했으므로 HTTP 상태는 단정하지 않습니다. 계정 전체 인증 실패로 확대 해석하거나 토큰/재인증을 요청하지 않았습니다. 추후 정상 관리 권한의 고객 zone에서 해당 URL 캐시를 갱신하고 쿼리 없는 주소의 헤더를 재확인하세요.
+- 모바일 ZIP 전달: 사용자 명시 승인 후 공개 홈페이지 파일 15개만 들어 있는 약1.1MB ZIP을 연결된 Google Drive에 **소유자 전용**으로 전달했습니다. 고객 공유 권한이나 메시지를 만들지 않았습니다. 공식 사이트 배포는 사용자가 완료했으므로 Chrome 연결/재업로드 대기 상태는 종료됐습니다.
+- 배포 코드 원본은 검토 브랜치 **0d9640d29e1f94934c5bde0299488938c3d28d90**이며 이번 기록은 검토 브랜치/PR #2에 추가합니다. 이번 작업에서 main 수정·병합이나 DNS 변경은 없습니다. Direct Upload 프로젝트로 Git 자동 배포 미연결 상태입니다.
+- **다음:** 공식 주소를 고객에게 전달할 수 있습니다. 사진 검색용 캐시 후속 확인 및 네이버 서치어드바이저 소유 확인·사이트맵 제출은 남아 있습니다. naverVerification은 아직 비어 있고, 검색 등록/노출 완료라고 보고하지 않습니다. 아래 “배포 전/Chrome 대기”는 과거 이력입니다.
+
 ## 최신본 공식 배포·검색 허용 승인 및 준비 · 2026-09-18 08:33 KST
 
 - 사용자에게 최신본 공식 주소 반영과 검색 공개가 남았다고 설명한 뒤 사용자가 **“그래 진행하라”**고 승인했습니다. 이번 승인에 따라 content/site.json의 publish를 true로 변경했고 정식 공개용 파일을 빌드했습니다. 기존 publish:false 유지 지침은 이번 공식 공개 범위에서 대체됩니다. 코드 기록은 codex/smc-design-review를 사용하며 main 수정·병합은 수행하지 않았습니다.
