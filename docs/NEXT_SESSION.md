@@ -2,6 +2,17 @@
 
 기록: 2026-09-18. 이 파일 상단의 최신 결과는 아래 과거 이력과 이전 연결 설명보다 우선합니다.
 
+## 검색 후속 작업 재확인 · 2026-09-18 18:09 KST
+
+- 사용자가 고객 전달 전에 검색 후속 작업을 진행하라고 승인했습니다. 홈페이지의 HTTP200, index,follow, 공식 canonical, robots Allow, sitemap, 한국어 lang, 제목/설명, LocalBusiness(사업장명·전화·공식주소·연관 채널) 모두 정상입니다. naver-site-verification 메타태그는 아직 없습니다.
+- 캐시 재확인 요청에서는 room-3-upright.jpg의 noindex가 없어졌지만 room-1.jpg, room-5-c6.jpg, smc-guwol-logo.jpg에는 남아 있었습니다. 일부 응답의 변화이므로 전 세계 캐시 해결로 단정하지 않습니다. 기존4개 URL 캐시 갱신 API를 다시 호출했으나 **10000: Authentication error**로 실패했습니다.
+- 현재 브라우저 목록은 앱 내 브라우저만 제공됩니다. Cloudflare 고객 계정 관리 URL은 로그인 페이지로 이동했고 네이버 서치어드바이저도 로그아웃 상태입니다. 비밀번호·인증번호·세션·토큰은 요청하거나 추출하지 않았습니다.
+- 네이버 서치어드바이저를 고객 계정/사용자 계정/기존 등록 계정 중 어느 것으로 관리할지 질문했고 답변 대기입니다. 계정을 임의 선택하거나 등록 완료로 보고하지 않습니다.
+- [네이버 공식 안내](https://searchadvisor.naver.com/guide/faq-start-register)에 따르면 웹마스터도구 등록은 검색 노출의 필수 조건이 아닙니다. 현재 홈페이지를 고객에게 전달할 수 있으며, 도구 등록은 수집/색인 관리용 후속 작업입니다. 검색 등록 또는 노출 완료를 보장하지 않습니다.
+- 모바일에서 기존 로그인으로 마무리할 최소 단계: Cloudflare의 **고객 도메인 근처연습실co.kr → Caching → Configuration → Purge Everything**. 캐시 사본만 갱신하는 절차이며 프로젝트/배포 파일 삭제가 아닙니다. [Cloudflare Pages 공식 안내](https://developers.cloudflare.com/pages/configuration/serving-pages/)의 Purging the cache 절차입니다. 실행 후 쿼리 없는 이미지 URL의 noindex 제거를 다시 검증해야 합니다.
+- 네이버 계정 확정 후 [서치어드바이저](https://searchadvisor.naver.com/) 웹마스터 도구에 **https://xn--co-002iq89dzga40o12n.kr/** 등록 → 소유확인용 공개 HTML 태그/파일을 사이트에 반영 → 소유확인 → 요청/사이트맵 제출에 **https://xn--co-002iq89dzga40o12n.kr/sitemap.xml** 입력 → 웹페이지 수집 요청. 공개 소유확인 메타태그는 로그인 비밀번호/OTP와 구분하며 임의 값을 만들지 않습니다. 로그인과 실제 소유확인 수단 없이 완료할 수 없습니다.
+- 이번 후속 확인에서는 홈페이지 코드/배포/main/DNS를 변경하지 않았으며, 위 상태만 검토 브랜치의 인수인계에 추가합니다.
+
 ## 공식 Production 배포 완료·실제 주소 검수 · 2026-09-18 18:00 KST
 
 - 사용자가 정식 공개 ZIP을 기존 고객 Pages에 직접 업로드한 뒤 “배포했어”라고 알렸습니다. Pages API에서 Production **006ffa04-1c5b-48f2-8a98-ee0440b644e8**, **deploy/success**, 완료 시각 **2026-09-18 17:49:55 KST**를 확인했습니다. canonical_deployment와 latest_deployment가 이 배포를 가리킵니다.
