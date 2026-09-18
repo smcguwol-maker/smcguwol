@@ -2,6 +2,18 @@
 
 기록: 2026-09-18. 이 파일 상단의 최신 결과는 아래 과거 이력과 이전 연결 설명보다 우선합니다.
 
+## 캐시 수정 공식 재배포·실제 검수 완료 · 2026-09-18 18:50 KST
+
+- 사용자가 새 ZIP 업로드 완료를 알렸고, 고객 계정 733b1c8faa19799bf480b1192f473635 / smcguwol-review의 Pages API HTTP200에서 Production **d8c1be12-6a7a-41bb-bb0e-25831454c1d9**, **deploy/success**, 완료 **2026-09-18 18:42:50 KST**를 확인했습니다. canonical_deployment와 latest_deployment가 일치합니다. 공식 도메인의 status/validation/verification도 모두 active입니다.
+- 공식 주소: https://xn--co-002iq89dzga40o12n.kr/ (= 근처연습실co.kr). 고정 배포: https://d8c1be12.smcguwol-review.pages.dev/ . 공개 원본은 검토 브랜치 4a814190ddf6afaf4d7c7df0b45acf37c43cbebd입니다. 아래 재배포 대기·006ffa04 운영 설명은 과거 이력입니다.
+- 실제 공식 주소 제공 파일 14개(HTML·CSS·JS·사진/로고·robots·sitemap·404)가 모두 HTTP200 및 준비한 캐시 수정 public과 SHA256 일치합니다. HTML은 styles.css?v=a1409b8c3173 / app.js?v=5e7ca46f92db와 사진별 버전 URL을 참조합니다. HTTP→HTTPS301, 비교 페이지4개·없는 경로404, canonical·index,follow·robots Allow·sitemap 정상입니다.
+- **실제 헤더와 설정을 구분:** HTML·sitemap·404는 Cache-Control:no-cache이나 CSS·JS·이미지·robots.txt 실제 응답은 max-age=14400입니다. _headers의 no-cache가 모든 정적 자산 응답에 그대로 적용됐다고 보고하지 않습니다. 변경된 CSS·JS·사진은 새 버전 URL로 제공되어 이전 URL의 브라우저 캐시와 분리됩니다.
+- 이번 새 버전 URL의 모든 자산 응답에는 X-Robots-Tag noindex가 없습니다. 쿼리 없는 과거 room-1.jpg / room-5-c6.jpg / smc-guwol-logo.jpg에는 과거 noindex 헤더가 남고 room-3-upright.jpg에는 없습니다. 현재 HTML·확대·공유 이미지는 새 버전 URL을 사용하므로 이 오래된 경로를 참조하지 않습니다. 구 URL 캐시의 전 세계 제거 완료로 주장하지 않으며 캐시 갱신 API를 반복하지 않았습니다.
+- 공식 사이트 앱 내 브라우저 390×844에서 작은 네이버 아이콘/짙은 하단 예약 영역, 7개 방 선택과 모든 사진 로딩, C6 전화 문의/나머지 네이버 예약 경로 전환, 2번방 사진 확대·닫기·초점 복귀, 펼친 요금표, 가로 넘침 없음 확인. 1440×1000에서 두 제목36px·행간48.6px, 예약 본문과 FAQ 시작선 x=637.9896px 일치, 가로 넘침 없음. 모바일 두 제목32px, 탭 error/warn 없음.
+- 사용자 실제 iPhone의 ChatGPT 내부 브라우저와 Safari 캐시 재검수는 아직 별도입니다. 기존 창을 닫고 공식 링크를 다시 열어 두 화면을 비교하도록 안내합니다. 서버가 이미 열린 기기 화면을 강제로 갱신할 수는 없습니다.
+- **고객에게 공식 주소를 전달할 수 있습니다.** 네이버 서치어드바이저는 관리 계정 답변·소유 확인·사이트맵 제출 대기이며 검색 등록/노출 완료가 아닙니다. 홈페이지 전달의 필수 선행 조건으로 안내하지 않습니다.
+- 이번 작업은 읽기 전용 배포/공식 사이트 검수와 검토 브랜치 문서·PR 설명 갱신입니다. 홈페이지 코드/배포/DNS/main/고객 메시지/Drive 공유 권한은 변경하지 않았습니다.
+
 ## 앱 내부 브라우저의 이전 디자인 캐시 보완 · 2026-09-18 18:22 KST
 
 - 사용자 iPhone 화면에서 ChatGPT 내부 브라우저는 흰색 테두리의 큰 네이버 버튼/연녹색 하단 예약 영역, Safari는 최신 작은 아이콘/짙은 하단 예약 영역을 표시했습니다. 서버의 공식 HTML과 CSS는 최신본이나 CSS·JS 응답이 동일 URL에 Cache-Control public,max-age=14400,must-revalidate(4시간)로 제공되고 있었습니다. 기기 캐시 자체를 읽은 것은 아니며, 브라우저별 이전 CSS 캐시가 가장 유력한 원인입니다. Safari만 지원하는 사이트로 판단하지 않습니다.
