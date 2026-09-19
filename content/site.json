@@ -1,7 +1,7 @@
 {
   "name": "SMC 인천 구월점",
   "title": "인천 구월동 음악연습실 SMC | 24시간 악기·개인 연습공간",
-  "description": "인천 구월동 로데오 거리의 음악연습실 SMC. 트럼펫·관악기 등 개인 악기 연습을 위한 방음 공간, 24시간 연중무휴 운영. 30분당 이용요금과 최소 1시간 예약, 네이버 예약을 안내합니다.",
+  "description": "인천 구월동 로데오 10층 음악연습실 SMC. 성악·보컬·현악기·목금관악기·유튜브 등 개인 방송을 위한 공간, 야마하 그랜드·업라이트피아노, 24시간 운영과 네이버 예약을 안내합니다.",
   "phone": "0507-1380-8122",
   "address": {
     "streetAddress": "인하로489번길 16, 10층",
@@ -11,7 +11,7 @@
   },
   "hours": "24시간 연중무휴",
   "url": "https://근처연습실co.kr/",
-  "publish": false,
+  "publish": true,
   "naverVerification": "",
   "approvals": {
     "photos": true,
@@ -29,8 +29,14 @@
     "map": "https://kko.to/rYoHNy6WWV",
     "kakao": "https://open.kakao.com/o/s5K5cVLi",
     "instagram": "https://www.instagram.com/smcmusicstudio_guwol/",
-    "blog": "https://blog.naver.com/ji2020chun"
+    "blog": "https://blog.naver.com/ji2020chun",
+    "instagramPost": "https://www.instagram.com/p/Dc04iA_T_7p/",
+    "youtube": "https://youtu.be/T3b6UNOPucc"
   },
+  "videos": [
+    { "id": "T3b6UNOPucc", "title": "SMC 구월점 소개" },
+    { "id": "12EVkuA5VI4", "title": "구월동 로데오거리의 SMC" }
+  ],
   "hero": {
     "src": "assets/room-5-c6.jpg",
     "alt": "SMC 인천 구월점 5번 홀의 야마하 C6 그랜드피아노와 우드 톤 실내",
@@ -46,15 +52,30 @@
       "caption": "야마하 C6 그랜드 홀 · Room 5",
       "description": "야마하 C6 그랜드피아노를 갖춘 넓은 홀입니다. 예약 가능 시간은 전화로 문의해 주세요.",
       "width": 1000,
-      "height": 700
+      "height": 700,
+      "room": {
+        "number": 5,
+        "id": "hall",
+        "title": "야마하 C6 홀",
+        "shortTitle": "C6 홀",
+        "rateName": "Room 5 · 야마하 C6 홀",
+        "booking": "phone"
+      }
     },
     {
       "src": "assets/room-1.jpg",
       "alt": "SMC 인천 구월점 1번 개인 연습실의 보면대와 우드 톤 방음 벽면",
       "caption": "개인 악기 연습공간 · Room 1",
-      "description": "보면대를 갖춘 개인 연습공간입니다. 트럼펫·관악기 등 나의 악기를 가져와 연습하세요.",
+      "description": "보면대를 갖춘 개인 연습공간입니다. 성악·보컬·현악기·목금관악기 연습과 유튜브 등 개인 방송에 이용할 수 있습니다.",
       "width": 1000,
-      "height": 748
+      "height": 748,
+      "room": {
+        "number": 1,
+        "id": "personal",
+        "title": "개인 악기 연습실",
+        "shortTitle": "개인 연습",
+        "rateName": "Room 1 · 블루투스 작은방"
+      }
     },
     {
       "src": "assets/room-3-upright.jpg",
@@ -62,7 +83,76 @@
       "caption": "야마하 업라이트 · Room 3",
       "description": "야마하 업라이트피아노가 있는 공간입니다. 피아노 개인 연습에 이용하세요.",
       "width": 1000,
-      "height": 717
+      "height": 717,
+      "room": {
+        "number": 3,
+        "id": "piano",
+        "title": "야마하 업라이트",
+        "shortTitle": "업라이트",
+        "rateName": "Room 3·4 · 업라이트"
+      }
+    },
+    {
+      "src": "assets/room-2-kurzweil.jpg",
+      "alt": "SMC 인천 구월점 2번방의 커즈와일 전자피아노와 거울",
+      "caption": "커즈와일 전자피아노 · Room 2",
+      "description": "커즈와일 전자피아노와 블루투스 스피커가 있는 연습실입니다. 악기 연습과 보컬 연습에 이용할 수 있습니다.",
+      "width": 1000,
+      "height": 1333,
+      "room": {
+        "number": 2,
+        "id": "kurzweil",
+        "title": "커즈와일 전자피아노",
+        "shortTitle": "전자피아노",
+        "rateName": "Room 2 · 커즈와일"
+      },
+      "position": "50% 55%"
+    },
+    {
+      "src": "assets/room-4-upright.jpg",
+      "alt": "SMC 인천 구월점 4번방의 업라이트피아노와 우드 톤 실내",
+      "caption": "업라이트피아노 · Room 4",
+      "description": "업라이트피아노가 준비된 연습실입니다. 3번방과 사진을 비교해 원하는 공간을 선택하세요.",
+      "width": 1000,
+      "height": 750,
+      "room": {
+        "number": 4,
+        "id": "upright-four",
+        "title": "업라이트피아노",
+        "shortTitle": "업라이트",
+        "rateName": "Room 3·4 · 업라이트"
+      }
+    },
+    {
+      "src": "assets/room-9.jpg",
+      "alt": "SMC 인천 구월점 9번방의 우드 톤 벽면과 개인 악기 연습공간",
+      "caption": "개인 악기 연습공간 · Room 9",
+      "description": "개인 악기를 가져와 연습하는 작은방입니다. 월 이용 계약 전까지 임시 운영하는 공간으로, 이용 가능 여부는 네이버에서 확인해 주세요.",
+      "width": 1000,
+      "height": 1000,
+      "room": {
+        "number": 9,
+        "id": "temporary",
+        "title": "개인 연습실 · 임시 운영",
+        "shortTitle": "임시 연습실",
+        "rateName": "Room 9 · 개인 연습실 (임시 운영)"
+      }
+    },
+    {
+      "src": "assets/room-10-g3.jpg",
+      "alt": "SMC 인천 구월점 10번방의 야마하 G3 그랜드피아노와 밝은 실내",
+      "caption": "야마하 G3 그랜드피아노 · Room 10",
+      "description": "야마하 G3 그랜드피아노가 있는 연습실입니다. 입시·콩쿠르 준비와 피아노 연습에 이용하세요.",
+      "width": 1000,
+      "height": 1334,
+      "room": {
+        "number": 10,
+        "id": "grand-g3",
+        "title": "야마하 G3 그랜드",
+        "shortTitle": "G3 그랜드",
+        "rateName": "Room 10 · 그랜드 G3"
+      },
+      "position": "50% 75%"
     }
   ],
   "faq": [
@@ -71,8 +161,8 @@
       "answer": "요금표는 30분 기준으로 표시하며, 예약은 최소 1시간부터 가능합니다. 원하는 공간과 시간을 선택한 뒤 네이버 예약에서 최종 이용금액을 확인해 주세요."
     },
     {
-      "question": "트럼펫이나 관악기도 연습할 수 있나요?",
-      "answer": "트럼펫·관악기 등 개인 악기 연습이 가능합니다. 피아노가 있는 공간과 개인 악기 연습공간 중 연습 목적에 맞게 선택해 주세요. 드럼 연습은 이용할 수 없습니다."
+      "question": "어떤 연습과 작업에 이용할 수 있나요?",
+      "answer": "성악, 보컬, 현악기, 목금관악기, 유튜브 등 개인 방송에 이용할 수 있습니다. 피아노가 있는 방과 피아노 없는 개인 연습실 중 목적에 맞게 선택해 주세요. 드럼 연습은 이용할 수 없습니다."
     },
     {
       "question": "늦은 밤이나 주말에도 이용할 수 있나요?",
@@ -83,8 +173,8 @@
       "answer": "야마하 C6 그랜드피아노가 있는 5번 홀은 전화로 예약 가능 시간을 문의해 주세요. 홈페이지의 전화 문의 버튼으로 연결할 수 있습니다."
     },
     {
-      "question": "주차는 어디에 하면 되나요?",
-      "answer": "연습실 건물 내 주차는 불가합니다. 인근 인천 문화예술회관 공영주차장 또는 뉴코아 인천점 주차장을 이용해 주세요. 각 주차장의 운영시간과 요금은 방문 전에 확인해 주세요."
+      "question": "주차장을 이용할 수 있나요?",
+      "answer": "건물 내 주차 공간이 협소하여 주차가 어렵습니다. 차량 이용 시 인근 인천문화예술회관 공영주차장 또는 뉴코아아울렛 인천점 주차장을 이용해 주세요.\n별도의 주차 지원은 제공되지 않으니 양해 부탁드립니다."
     }
   ],
   "rates": [
@@ -101,6 +191,10 @@
       "price": "3,500원"
     },
     {
+      "name": "Room 9 · 개인 연습실 (임시 운영)",
+      "price": "2,500원"
+    },
+    {
       "name": "Room 10 · 그랜드 G3",
       "price": "4,500원"
     },
@@ -113,5 +207,20 @@
       "price": "변동"
     }
   ],
-  "rateNote": "최소 1시간부터 예약할 수 있습니다. 1시간 금액은 표시된 30분 요금의 2배로 계산한 기본 이용금액입니다. 최종 요금은 네이버 예약에서 확인해 주세요. C6 홀과 개인룸은 전화로 문의해 주세요."
+  "rateNote": "최소 1시간부터 예약할 수 있습니다. 1시간 금액은 표시된 30분 요금의 2배로 계산한 기본 이용금액입니다. 최종 요금은 네이버 예약에서 확인해 주세요. C6 홀과 개인룸은 전화로 문의해 주세요.",
+  "practiceUses": "성악, 보컬, 현악기, 목금관악기, 유튜브 등 개인 방송",
+  "parking": "건물 내 주차 공간이 협소하여 주차가 어렵습니다. 차량 이용 시 인근 인천문화예술회관 공영주차장 또는 뉴코아아울렛 인천점 주차장을 이용해 주세요.\n별도의 주차 지원은 제공되지 않으니 양해 부탁드립니다.",
+  "inquiryPhones": [
+    "070-7867-3442",
+    "010-8312-8122"
+  ],
+  "assistant": {
+    "enabled": true
+  },
+  "webtoon": {
+    "src": "assets/smc-introduction-webtoon.jpg",
+    "alt": "SMC 구월점 소개 웹툰: 연습 공간을 찾던 세 연주자가 SMC에서 연습하고 무대에 서는 여섯 컷 이야기",
+    "width": 720,
+    "height": 1280
+  }
 }

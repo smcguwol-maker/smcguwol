@@ -1,16 +1,90 @@
 # Cloudflare Pages 배포 안내
 
-## 최신 상태 · 2026-09-17
+## 최신: 두 번째 유튜브 영상 공식 배포 · 2026-09-19 14:51 KST
 
-사용자가 정식 공개 범위를 승인했고 PR #1을 main에 병합했습니다(`d29f425cc779fcdc19c9fc54939226ebf05fe2ff`). 기존 고객 Pages `smcguwol-review`의 Production branch는 이제 `main`입니다. main 빌드 파일을 Production 환경에 직접 업로드했으며 [운영 배포 주소](https://smcguwol-review.pages.dev/)와 [고정 배포](https://2cc9c938.smcguwol-review.pages.dev/)의 성공을 확인했습니다. Git 자동 배포와 공식 도메인 오픈은 미완료입니다. 실제 결과·남은 작업은 [NEXT_SESSION.md](NEXT_SESSION.md)를 참고하세요.
+- Production **0d780ef7-2328-4638-9889-1c9b86d62c9e / deploy success**, 2026-09-19 14:51:47 KST. [영상 영역](https://xn--co-002iq89dzga40o12n.kr/#videos)에 기존 T3b6UNOPucc와 새12EVkuA5VI4를 함께 표시합니다.
+- 공개 빌드·정적51개·릴리스12개, 공식5페이지+CSS/JS HTTP200·SHA256 일치 및 두 영상의 실제 Chrome 내장 재생 확인. PC1440/모바일390 배치 검수.
+- 공개 ZIP: C:/Users/WOOWON/AppData/Local/Temp/SMC-production-videos-20260919.zip (22개 파일). 기존 프로젝트에 Direct Upload, AI 설정 유지. 아래 배포들은 이전 이력입니다.
 
-공식 도메인 zone 추가는 API와 관리 화면 모두 `com.cloudflare.api.account.zone.create` 권한 부족으로 실패했습니다. 소유자가 같은 고객 계정에 무료 플랜으로 도메인을 추가해야 합니다. Chrome의 GitHub 로그인도 고객 저장소 소유자 계정으로 전환해야 자동 배포 앱 권한을 이 저장소에 한정할 수 있습니다. 기존 초대·OAuth 인증 반복을 요청하지 않습니다. 공식 도메인 HTTPS 확인 후 검색 공개를 켜는 순서로 진행하며, 현재 `publish:false`입니다. main·도메인/DNS/네임서버·publish 변경에 대한 이전 승인 대기는 해제됐습니다.
+## 최신: 고객 제공 웹툰 공식 배포 · 2026-09-19 13:52 KST
+
+- Production **f63b6bca-6f86-44ba-9ce3-05e1ccd5adb0 / deploy success**, 2026-09-19 13:52:24 KST. [웹툰 바로 보기](https://xn--co-002iq89dzga40o12n.kr/guide/#webtoon). 홈 미리보기에서 연결되며 기존5페이지에 포함됩니다.
+- 원본720×1280 JPEG를 자르지 않고 사용했습니다. 공개 빌드·정적51개·릴리스12개 통과 후22개 파일 ZIP을 Chrome Direct Upload로 배포했습니다. 공식 총18개 파일 HTTP200·SHA256 일치 및 기존 AI 실제 응답을 확인했습니다.
+- 정식 ZIP: C:/Users/WOOWON/AppData/Local/Temp/SMC-production-webtoon-20260919.zip. AI 바인딩과 무료 플랜 유지, DNS/네임서버·Git main 변경 없음. 아래82485a5f는 이전 배포 이력입니다.
+
+## 최신: 프리미엄 공식 배포 완료 · 2026-09-19 13:29 KST
+
+- 사용자의 “그래 계속 진행” 승인에 따라 **Production 82485a5f-0db3-4740-bbfc-09b749cd0fbe / deploy success**로 배포했습니다. [공식 홈페이지](https://xn--co-002iq89dzga40o12n.kr/)에서 프리미엄5페이지를 제공합니다.
+- Production의 Workers AI binding AI / Text SMC_AI_ENABLED=true 저장 및 실제 AI 응답 확인. Workers Free / $0 유지. Preview만 설정된 상태라는 아래 기록은 과거 이력입니다.
+- 공개용 node scripts/build.mjs와51개 검사 후 public 내용물21개 ZIP을 직접 업로드했습니다. 기존 배포를 삭제하지 않았고 Git main도 변경하지 않았습니다.
+- 공식5페이지·버전자산10개·robots/sitemap 총17개 HTTP200·SHA256 일치. 검색 허용·canonical·5페이지 sitemap·HTTP→HTTPS·404 정상. PC/모바일,7개 방·확대·C6전화·AI·유튜브 실제 검수 완료.
+- HTML은 no-cache, 버전 정적 자산은 max-age=14400으로 확인됐습니다. 실제 응답과 _headers 선언을 구분합니다.
+- 정식 ZIP: C:/Users/WOOWON/AppData/Local/Temp/SMC-premium-production-20260919.zip. 운영 변경은 검토 브랜치에서 수정·검사 후 별도 직접 배포해야 합니다. Git 커밋만으로 자동 배포되지 않습니다.
+- 서치어드바이저 소유 확인·사이트맵 제출 완료는 미확인입니다. 상세 증거와 남은 항목은 NEXT_SESSION.md 상단이 기준입니다.
+
+## 최신: 프리미엄 Preview 배포 완료 · 2026-09-19
+
+- Preview: https://premium-review.smcguwol-review.pages.dev/ (5308e2e1-a22d-47fd-9e97-728f8fdbf334, deploy/success).
+- 공식 Production은 d8c1be12 그대로입니다. 아래 단일 페이지 설명은 과거 배포 이력입니다.
+- 빌드: node scripts/build.mjs → 공개용5페이지 public. 검토용: node scripts/build.mjs --preview → noindex5페이지 public. 프레임워크None, 저장소 루트.
+- 검사: node scripts/check.mjs (Preview이면 --preview), node scripts/check-release.mjs, node --test scripts/check-help.mjs.
+- Direct Upload ZIP에는 public의 **내용물**을 루트에 넣습니다. _worker.js와 _routes.json을 포함해야 /api/help가 작동합니다. 기존 배포를 삭제하지 않고 Create deployment로 추가합니다.
+- 고객 계정733b1c8faa19799bf480b1192f473635 / smcguwol-review의 Preview 설정에 Workers AI binding **AI**, Text **SMC_AI_ENABLED=true**를 저장했습니다. Production 설정은 아직 추가하지 않았습니다. 설정 후 새 배포에 적용합니다.
+- 유료 플랜을 신청하지 않았고 Workers Free를 확인했습니다. AI 한도·장애·끄는 방법은 ASSISTANT.md를 참조하세요.
+- 기존 공식 도메인 Web Analytics 자동 연결과 실제 수집 확인. 별도 스크립트 중복 삽입 금지.
+- 공식 반영 전 내용 검토 후 공개 빌드를 다시 만들고 검사합니다. Preview ZIP에는 noindex가 있으므로 정식용으로 사용하지 않습니다. 배포 후 Pages API 상태뿐 아니라 공식 URL의5페이지·AI·canonical·robots·sitemap도 확인하세요.
+
+## 제공 범위 정정 · 2026-09-18
+
+**SMC의 18만 원 개별 견적에는 네이버 서치어드바이저 등록 방법 안내가 포함되어 있습니다.** 기존 고객의 결제 전 확인 메시지와 결제 요청서 문안에서 명시한 항목입니다. 홈페이지가 기술적으로 등록 없이 작동한다는 설명과, 고객에게 약속한 지원 범위를 혼동하지 않습니다. 등록 안내를 계약 외 무료 추가 서비스로 설명한 앞선 답변은 정정했습니다.
+
+현재 기본 SEO·robots·sitemap은 공식 배포되어 있고 고객에게 보낼 등록 절차 안내 문구도 작성했습니다. 고객 로그인·소유 확인 태그 전달, 홈페이지 태그 반영, 실제 소유 확인·사이트맵 제출은 완료 미확인입니다. 고객 계정 협조가 필요한 안내 작업으로 이어가며 검색 노출/순위를 보장하지 않습니다. 원문 대화·견적 근거와 후속 순서는 NEXT_SESSION.md의 최신 제공 범위 정정을 따릅니다.
+
+## 캐시 수정 공식 배포 확인 완료 · 2026-09-18 18:50 KST
+
+사용자가 캐시 수정 ZIP을 업로드했고 **d8c1be12-6a7a-41bb-bb0e-25831454c1d9 / Production / deploy success / 2026-09-18 18:42:50 KST**를 API로 확인했습니다. [공식 홈페이지](https://xn--co-002iq89dzga40o12n.kr/)와 Pages 도메인 active 정상입니다. 아래 재배포 대기 설명은 과거 이력입니다.
+
+공식 파일14개 HTTP200·준비 public과 SHA256 일치. HTML이 버전 CSS·JS·사진을 참조하고, 새 버전 자산에는 noindex 응답 헤더가 없습니다. 실제 HTML은 no-cache, 정적 자산은 max-age=14400이므로 모든 응답에 no-cache 적용 완료라고 단정하지 않습니다. 버전 URL이 이전 자산 캐시와 분리합니다. 쿼리 없는 과거 이미지3개에 남은 noindex는 현재 페이지가 참조하는 새 URL과 구분합니다.
+
+공식 사이트 모바일390/PC1440 검수: 7개 방 사진·선택·예약 경로, 사진 확대·닫기, 열린 요금표, 제목 크기/본문 정렬, 가로 넘침·error/warn 없음 확인. 사용자 iPhone의 ChatGPT 창을 닫고 다시 열기/Safari 비교는 별도 확인입니다. 고객에게 공식 주소 전달 가능하며, 네이버 서치어드바이저 관리 계정·소유 확인·사이트맵 제출은 후속입니다. 원본은 검토 브랜치4a814190, main 병합·DNS 변경은 없습니다. 상세 증거는 NEXT_SESSION.md 최신 기록을 보세요.
+
+## 캐시 갱신 수정본 재배포 대기 · 2026-09-18 18:22 KST
+
+ChatGPT 내부 브라우저/Safari의 화면 차이 제보를 확인했습니다. 현재 서버의 CSS·JS는 동일 URL에 최대4시간 캐시됩니다. 수정 빌드는 CSS·JS·사진 URL에 내용+공개모드 해시를 붙이고 Cache-Control:no-cache로 재검증합니다. CSS·사진 원본과 디자인은 유지합니다. 정적22개·공개12개 시나리오 및 로컬 PC/모바일 검수 완료.
+
+**공식 배포에는 아직 반영되지 않았습니다.** 사용자 승인된 기존 비공개 Drive ZIP을 SMC-정식배포-캐시수정-20260918.zip(1,109,281바이트)으로 갱신했습니다. 같은 링크에서 새로 다운로드한 뒤 기존 smcguwol-review의 Production에 재업로드해야 합니다. 이후 공식 HTML에서 styles.css?v=a1409b8c3173 및 app.js?v=5e7ca46f92db 참조와 실제 자산 응답을 확인합니다. 상세 근거·검수·후속은 NEXT_SESSION.md 상단을 따릅니다.
+
+## 현재 공식 배포 상태 · 2026-09-18 18:00 KST
+
+**공식 홈페이지 배포 완료:** [근처연습실co.kr](https://xn--co-002iq89dzga40o12n.kr/). 사용자가 준비된 공개 ZIP을 기존 고객 Pages **smcguwol-review / Production**으로 업로드했고, API에서 **006ffa04-1c5b-48f2-8a98-ee0440b644e8 / deploy success / 17:49:55 KST**를 확인했습니다. 공식 도메인 상태와 검증은 active입니다. 아래 배포 대기·Chrome 연결 대기 설명은 과거 이력입니다.
+
+공개 원본은 검토 브랜치 0d9640d29e1f94934c5bde0299488938c3d28d90이며 publish:true입니다. 공식 제공 파일 14개 HTTP200·SHA256 일치, HTTP→HTTPS301, 비교 페이지/없는 경로404, HTML index,follow·canonical·robots Allow·sitemap 정상입니다. 실제 공식 사이트를 앱 내 브라우저 PC1440/모바일390px에서 확인했고 7개 방 사진·확대·요금표·예약 경로·FAQ·주소 복사 및 제목/본문 정렬이 정상입니다. 실제 네이버의 SMC 인천 구월점과 7개 방 예약 목록도 확인했습니다.
+
+**남은 사항:** 기존 이미지 4개(room-1.jpg, room-3-upright.jpg, room-5-c6.jpg, smc-guwol-logo.jpg)에 과거 noindex 응답 헤더가 캐시로 남아 있습니다. 화면 표시와 홈페이지 HTML 검색 허용에는 문제가 없습니다. 새 쿼리의 room-1.jpg는 MISS/noindex 없음입니다. zone GET은 오류9109, 해당4개 URL의 캐시 제거는 오류10000(Authentication error)로 완료되지 않았습니다. 정확한 응답 및 후속 확인은 NEXT_SESSION.md 상단을 보세요. 네이버 서치어드바이저 소유 확인·사이트맵 제출 및 실제 색인은 아직 미완료입니다.
+
+고객 계정은 733b1c8faa19799bf480b1192f473635, zone은 56abbbdbcaec366f81c9675a261b475f입니다. 이 프로젝트는 Direct Upload/production branch main이며 Git 자동 배포는 미연결입니다. 이번 작업에서 main 수정·병합은 수행하지 않았습니다.
+
+## 공개 배포 준비 · 2026-09-18 08:33 KST
+
+사용자가 최신본의 공식 주소 반영과 검색 공개를 승인했습니다. 검토 브랜치의 `publish:true` 공개 빌드와 검사 33개, PC·모바일 로컬 검수를 완료했습니다. 공개 파일은 검토 안내/비교 페이지를 제외하고 공식 canonical·sitemap·robots 검색 허용을 포함합니다. **실제 Production 업로드는 아직 미완료**입니다. 아래 과거 `publish:false` 설명은 당시 상태입니다.
+
+Cloudflare 프로젝트 읽기는 HTTP 200이나 자산 업로드 확인 API가 HTTP 403 / 8000013 Authorization failed를 반환했습니다. 기존 로그인된 Chrome 연결을 기다립니다. 앱 내 브라우저는 Cloudflare 로그인 화면입니다. 사용자가 기존 Chrome을 연결하면 고객 계정 `733b1c8faa19799bf480b1192f473635` / 기존 `smcguwol-review`의 **Production**으로 전용 폴더의 public 또는 `C:/Users/WOOWON/AppData/Local/Temp/smc-production-20260918.zip`을 업로드하세요. 재초대·토큰 추출은 필요하지 않습니다.
+
+공식 도메인 `근처연습실co.kr`의 네임서버와 HTTPS는 07:42에 확인 완료했고 Pages 도메인/검증 상태는 모두 active입니다. 현재 실제 Production은 여전히 `0f68846e`입니다. 배포 후 성공 ID, 공식 주소의 최신 7개 방 사진 및 검색 허용 응답을 검증하고 이 기록을 갱신합니다. 네이버 서치어드바이저 등록은 별도입니다. 자세한 근거와 승인 범위는 NEXT_SESSION.md 상단을 따릅니다.
+
+## 최신 상태 · 2026-09-18 00:08 KST
+
+기존 고객 Pages `smcguwol-review`의 Production branch는 `main`이며 Direct Upload 방식입니다. 현재 Production은 `0f68846e`입니다. 이후의 예약 버튼·모바일 정렬·PC 오시는 길·큰 글씨 대응·예약/이용 안내 정렬·전체 7개 방 사진·요금 안내 가독성 수정은 `codex/smc-design-review` 및 PR #2에 있고, [최신 검토본](https://home-review.smcguwol-review.pages.dev/)에 배포했습니다. 7개 방 사진(1·2·3·4·5·9·10번)과 PC 16px/모바일 15px 요금 안내를 포함합니다. 최신 Preview는 `8fc2c61e-c95c-4259-a264-25434e666888`, deploy/success입니다. 검토 주소와 [기존 운영 주소](https://smcguwol-review.pages.dev/)를 구분하세요.
+
+고객 권한 추가 후 Chrome 관리 화면에서 공식 도메인을 Free / $0, Full DNS로 추가했고, Pages custom domain 및 CNAME @ → smcguwol-review.pages.dev(Proxied, TTL Auto)를 저장했습니다. 마지막 도메인 조회인 22:44에는 pending이었으며 현재 고객의 LETO 변경 답변을 기다립니다. 실제 발급 네임서버는 `annabel.ns.cloudflare.com`, `roman.ns.cloudflare.com`입니다. 도메인 재생성·재초대·OAuth 재인증을 반복하지 마세요. 플러그인 zone 조회는 생성 후에도 빈 목록이어서 도메인 부재로 판단하면 안 됩니다.
+
+공식 HTTPS 확인, 최신 검토 수정본의 운영 반영, 검색 공개 검증이 남습니다. `publish:false`입니다. 사용자의 이전 공개/도메인 승인과 실제 실행 상태를 구분하고, 최근 작업은 Preview에만 반영했음을 유의하세요. Git 자동 배포도 연결되지 않았습니다. 상세 승인 범위·실패 이력·고객 답변 후 순서는 [NEXT_SESSION.md](NEXT_SESSION.md)를 참고하세요.
 
 이 기존 프로젝트는 Direct Upload 방식이며 Git integration으로 전환할 수 없습니다. Git 자동 배포에는 별도 Git 연결 프로젝트가 필요합니다([공식 문서](https://developers.cloudflare.com/pages/get-started/direct-upload/)). 이번 통합 작업에서는 새 프로젝트를 만들지 않았고 기존 오류 8000011을 재인증으로 해결했다고 주장하지 않습니다.
 
 현재 홈페이지 원본은 `src/index.html`, `src/styles.css`, `src/app.js`이며, `src/design-*`는 비교 이력입니다. 공개 빌드에서 비교 페이지를 제거해도 통합 첫 페이지는 유지됩니다.
 
-2026-09-17 확인: 고객 계정의 해당 도메인 zone은 생성 실패 후 재조회에서도 빈 목록이며 Pages custom domain도 연결하지 않았습니다. 공개 NS는 LETO 두 서버이며 apex A/AAAA/MX/TXT/CAA 및 www A/AAAA/CNAME 응답은 ENODATA, 공개 DNS DS 조회의 answer는 빈 목록이었습니다. 다른 하위 도메인 전체를 조사한 것은 아닙니다. 실제 도메인/네임서버 변경은 승인됐지만 zone 생성 권한 문제가 먼저 해결되어야 합니다.
+22:44 공개 DNS 확인: NS는 LETO 두 서버였으며 apex A/AAAA/MX/TXT/CAA 및 www A/AAAA/CNAME은 ENODATA, 공개 DNS DS 응답의 Answer는 null이었습니다. 다른 사용자 정의 하위 도메인 전체를 조사한 것은 아닙니다. 고객의 변경 완료 답변 후 공개 NS·zone active·Pages 도메인 active 및 공식 HTTPS를 다시 확인합니다.
 
 ## 기본 설정
 
@@ -48,7 +122,7 @@
 ## 현재 공개 상태
 
 - 시안: 검색 제외(`noindex`, robots 차단). 고객이 확인한 도메인은 설정 파일에 입력했으며 정식 공개 시 canonical·sitemap에 사용됩니다.
-- 고객 계정에 검토본을 배포했습니다. 도메인은 연결하지 않았습니다.
+- 고객 계정에 검토본을 배포했습니다. 도메인/Pages/DNS 설정은 저장했고 네임서버 전환과 실제 HTTPS 활성화는 확인 대기입니다.
 - 사진·방 번호·요금표·도메인 철자는 고객 확인을 반영했습니다. 실제 방문자용 공개 전 화면·버튼 목적지·도메인 연결을 확인해야 합니다.
 - 시안 공유용 배포도 고객님 계정에서만 진행합니다. 검색 제외는 접근 차단이나 암호 보호가 아닙니다.
 

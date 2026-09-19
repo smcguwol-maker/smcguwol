@@ -1,100 +1,11 @@
-<!doctype html>
-<html lang="ko">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#17241f">
-  <title>{{TITLE}}</title>
-  <meta name="description" content="{{DESCRIPTION}}">
-  {{SEO}}
-  {{VERIFICATION}}
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="ko_KR">
-  <meta property="og:site_name" content="{{NAME}}">
-  <meta property="og:title" content="{{TITLE}}">
-  <meta property="og:description" content="{{DESCRIPTION}}">
-  {{SHARE_IMAGE}}
-  <link rel="icon" href="./{{LOGO_SRC}}" type="{{LOGO_TYPE}}">
-  <link rel="stylesheet" href="./styles.css">
-  <script src="./app.js" defer></script>
-  <script type="application/ld+json">{{SCHEMA}}</script>
-</head>
-<body>
-  <a class="skip" href="#main">본문 바로가기</a>
-  {{PREVIEW_NOTICE}}
-  <main id="main">
-    <section class="cover" aria-labelledby="cover-title">
-      <div class="cover-image">{{HERO_IMAGE}}</div>
-      <header class="site-header">
-        <a class="brand" href="#main" aria-label="SMC 인천 구월점 첫 화면">{{LOGO_IMAGE}}<span><strong>SMC</strong><small>인천 구월점</small></span></a>
-        <nav aria-label="주 메뉴"><a href="#rooms">공간</a><a href="#rates">요금·예약</a><a href="#visit">오시는 길</a></nav>
-        <a class="header-book" href="{{BOOKING}}" target="_blank" rel="noopener noreferrer">네이버 예약 <span aria-hidden="true">↗</span></a>
-      </header>
-      <p class="photo-caption">{{HERO_CAPTION}} <span>실제 공간 사진</span></p>
-      <div class="cover-copy">
-        <h1 id="cover-title">구월동의 <br>24시간<br>음악연습실.</h1>
-        <p>개인 연습실부터 피아노룸, C6 홀까지. <br>SMC 인천 구월점에서 연습하세요.</p>
-        <a class="cover-link" href="#rooms">공간과 요금 살펴보기 <span aria-hidden="true">↓</span></a>
-      </div>
-    </section>
+<section class="cover" aria-labelledby="cover-title">
+  <div class="cover-image">{{HERO_IMAGE}}</div>
+  <p class="photo-caption">{{HERO_CAPTION}} <span>실제 공간 사진</span></p>
+  <div class="cover-copy"><p class="hero-eyebrow">SMC GUWOL MUSIC STUDIO</p><h1 id="cover-title">구월동의 <br>24시간<br>음악연습실.</h1><p>로데오 거리 10층, 나의 소리에 집중하는 공간.<br>개인 연습실부터 피아노룸, C6 홀까지.</p><a class="cover-link" href="/rooms/">공간과 요금 살펴보기 <span aria-hidden="true">↗</span></a></div>
+</section>
+<div class="studio-line"><p>인천 구월동 로데오 · 세동네오스 <strong>10층</strong></p><p>{{HOURS}} <span aria-hidden="true">/</span> 최소 1시간 예약</p></div>
+<section class="home-directory content-width" aria-labelledby="directory-title"><div><p class="section-label">연습을 위한 공간</p><h2 id="directory-title">필요한 안내를<br>바로 만나보세요.</h2></div><div class="directory-links"><a href="/rooms/"><span><strong>공간과 요금</strong><small>7개 방의 실제 사진과 전체 요금표</small></span><span aria-hidden="true">↗</span></a><a href="/booking/"><span><strong>예약 안내</strong><small>네이버 예약부터 방문 전 확인까지</small></span><span aria-hidden="true">↗</span></a><a href="/guide/"><span><strong>이용 안내</strong><small>공간의 장점·시설·자주 묻는 질문</small></span><span aria-hidden="true">↗</span></a><a href="/visit/"><span><strong>오시는 길</strong><small>주소·지하철·주차 안내</small></span><span aria-hidden="true">↗</span></a></div></section>
+<section class="home-rooms content-width" aria-labelledby="home-rooms-title"><div class="section-intro"><div><p class="section-label">SMC의 7개 공간</p><h2 id="home-rooms-title">사진으로 먼저 둘러보세요.</h2></div><a class="all-rooms-link" href="/rooms/">전체 사진과 요금 <span aria-hidden="true">↗</span></a></div><div class="room-thumbnails">{{ROOM_THUMBNAILS}}</div></section>
 
-    <div class="studio-line"><p>인천 구월동 로데오 · 세동네오스 <strong>10층</strong></p><p>{{HOURS}} <span aria-hidden="true">/</span> 최소 1시간 예약</p></div>
-    <nav class="mobile-sections" aria-label="본문 바로 이동"><a href="#rooms">공간·사진 <span aria-hidden="true">↓</span></a><a href="#rates">요금표 <span aria-hidden="true">↓</span></a><a href="#visit">오시는 길 <span aria-hidden="true">↓</span></a></nav>
-
-    <section class="rooms-section content-width" id="rooms" aria-labelledby="rooms-title">
-      <div class="section-intro"><div><p class="section-label">SMC의 공간</p><h2 id="rooms-title">개인 연습실.<br>피아노룸과 C6 홀.</h2></div><p>방을 선택하면 실제 공간 사진을 볼 수 있습니다. <br>표시 요금은 <strong>30분 기준</strong>입니다.</p></div>
-      <div class="room-switcher" data-room-switcher>
-        <nav class="room-choices" aria-label="연습공간 선택">
-          <a class="room-choice" href="#room-personal" id="choice-personal"><span class="choice-number">01</span><span><strong>개인 악기 연습실</strong><small>악기를 가져와 연습하는 방</small><b>{{ROOM_ONE_PRICE}} <span>/ 30분</span></b></span><span class="choice-arrow" aria-hidden="true">↗</span></a>
-          <a class="room-choice" href="#room-piano" id="choice-piano"><span class="choice-number">03</span><span><strong>야마하 업라이트</strong><small>피아노가 준비된 방</small><b>{{ROOM_PIANO_PRICE}} <span>/ 30분</span></b></span><span class="choice-arrow" aria-hidden="true">↗</span></a>
-          <a class="room-choice" href="#room-hall" id="choice-hall"><span class="choice-number">05</span><span><strong>야마하 C6 홀</strong><small>그랜드피아노가 있는 홀</small><b>{{ROOM_HALL_PRICE}} <span>/ 30분</span></b></span><span class="choice-arrow" aria-hidden="true">↗</span></a>
-          <p class="room-conditions"><span class="room-facilities">냉난방 · 개별 환기 · 무료 Wi-Fi</span>트럼펫·관악기 연습이 가능합니다. <br>드럼 연습은 이용할 수 없습니다.</p>
-        </nav>
-        <div class="room-panels">
-          <article class="room-panel" id="room-personal" aria-labelledby="personal-title" data-booking-room="1번방 · 개인 악기 연습실">
-            <a class="room-image" href="{{PERSONAL_SRC}}" aria-label="1번 개인 악기 연습실 사진 크게 보기">{{PERSONAL_IMAGE}}<span>사진 크게 보기 ＋</span></a>
-            <div class="room-description"><div><p class="room-caption">Room 1 · 블루투스 작은방</p><h3 id="personal-title">개인 악기 연습실</h3><p>{{PERSONAL_DESCRIPTION}}</p></div><a class="inline-book" href="{{BOOKING}}" target="_blank" rel="noopener noreferrer">네이버 예약 <span aria-hidden="true">↗</span></a></div>
-          </article>
-          <article class="room-panel" id="room-piano" aria-labelledby="piano-title" data-booking-room="3번방 · 야마하 업라이트">
-            <a class="room-image" href="{{PIANO_SRC}}" aria-label="3번 업라이트피아노 연습실 사진 크게 보기">{{PIANO_IMAGE}}<span>사진 크게 보기 ＋</span></a>
-            <div class="room-description"><div><p class="room-caption">Room 3 · 야마하 업라이트</p><h3 id="piano-title">야마하 업라이트피아노</h3><p>{{PIANO_DESCRIPTION}}</p></div><a class="inline-book" href="{{BOOKING}}" target="_blank" rel="noopener noreferrer">네이버 예약 <span aria-hidden="true">↗</span></a></div>
-          </article>
-          <article class="room-panel" id="room-hall" aria-labelledby="hall-title" data-booking-room="5번 홀 · 야마하 C6">
-            <a class="room-image" href="{{HALL_SRC}}" aria-label="5번 야마하 C6 홀 사진 크게 보기">{{HALL_IMAGE}}<span>사진 크게 보기 ＋</span></a>
-            <div class="room-description"><div><p class="room-caption">Room 5 · 야마하 C6</p><h3 id="hall-title">그랜드피아노가 있는 홀.</h3><p>야마하 C6 그랜드피아노를 갖춘 공간입니다.<br>예약 가능 시간은 전화로 문의해 주세요.</p></div><a class="inline-book" href="{{TEL}}">C6 홀 전화 문의 <span aria-hidden="true">↗</span></a></div>
-          </article>
-        </div>
-      </div>
-      <div class="rates-wrap" id="rates">
-        <details class="rates-disclosure">
-          <summary><span>전체 공간 요금표</span><span class="summary-note">30분 기준 · 최소 1시간 예약</span><span class="disclosure-icon" aria-hidden="true">＋</span></summary>
-          <div class="rates-content">{{RATES}}<p>{{RATE_NOTE}}</p></div>
-        </details>
-        <p class="booking-note">일반 연습실은 <a href="{{BOOKING}}" target="_blank" rel="noopener noreferrer">네이버에서 시간 확인</a> · C6 홀과 개인룸은 <a href="{{TEL}}">전화 문의</a></p>
-        <div class="booking-guide" aria-labelledby="booking-guide-title">
-          <div><p class="section-label">예약 방법</p><h3 id="booking-guide-title">연습할 방과 시간을<br>확인해 주세요.</h3><a class="inline-book" href="{{BOOKING}}" target="_blank" rel="noopener noreferrer">네이버 예약 열기 <span aria-hidden="true">↗</span></a></div>
-          <div><ol class="booking-steps"><li><span aria-hidden="true">01</span><div><strong>네이버의 예약 탭 선택</strong><p>예약 링크를 열고 ‘예약’ 탭에서 원하는 방을 선택하세요.</p></div></li><li><span aria-hidden="true">02</span><div><strong>날짜·시간과 금액 확인</strong><p>최소 1시간부터 예약할 수 있습니다. 최종 요금과 취소·변경 조건을 확인하세요.</p></div></li><li><span aria-hidden="true">03</span><div><strong>예약 확정·입실 안내 확인</strong><p>예약이 확정되면 안내된 방법으로 방문해 주세요.</p></div></li></ol><p class="booking-policy">C6 홀과 개인룸은 <a href="{{TEL}}">전화로 예약 가능 시간 문의</a>가 필요합니다.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="faq-section content-width" id="faq" aria-labelledby="faq-title">
-      <div><p class="section-label">이용 안내</p><h2 id="faq-title">방문 전에<br>확인해 주세요.</h2><p class="faq-intro">예약 시간과 이용 방법을 미리 살펴보세요.</p><a class="inline-book" href="{{KAKAO}}" target="_blank" rel="noopener noreferrer">카카오톡 공간 문의 <span aria-hidden="true">↗</span></a></div>
-      <div class="faq-list">{{FAQ}}</div>
-    </section>
-
-    <section class="visit-section" id="visit" aria-labelledby="visit-title">
-      <div class="content-width visit-layout">
-        <div class="visit-address"><p class="section-label">SMC 인천 구월점</p><h2 id="visit-title">구월동 로데오,<br>세동네오스 10층.</h2><address>{{ADDRESS}}</address><div class="visit-actions"><a class="map-link" href="{{MAP}}" target="_blank" rel="noopener noreferrer">카카오맵으로 길찾기 <span aria-hidden="true">↗</span></a><button class="copy-address" type="button" hidden>주소 복사</button></div><p class="copy-status" role="status" aria-live="polite"></p></div>
-        <div class="visit-details"><div class="transit-info"><h3>지하철</h3><p>인천터미널역 2번 출구 또는<br>예술회관역 5·6번 출구에서 방문하세요.</p></div><div><h3>운영 시간</h3><p>{{HOURS}}<br>방문 전 예약 확정과 입실 안내를 확인해 주세요.</p></div><div><h3>주차 안내</h3><p>건물 내 주차는 불가합니다.<br>인근 문화예술회관 공영주차장 또는<br>뉴코아 인천점 주차장을 이용해 주세요.</p></div><a class="phone-number" href="{{TEL}}">{{PHONE}} <span aria-hidden="true">↗</span></a></div>
-      </div>
-    </section>
-  </main>
-  <footer class="site-footer content-width"><div><p><strong>SMC</strong> 인천 구월점</p><p class="footer-address">{{ADDRESS}}<br>전화 <a href="{{TEL}}">{{PHONE}}</a> · {{HOURS}}</p><p class="copyright">© {{YEAR}} {{NAME}}</p></div><div><a href="{{KAKAO}}" target="_blank" rel="noopener noreferrer">카카오톡 문의</a><a href="{{INSTAGRAM}}" target="_blank" rel="noopener noreferrer">인스타그램</a><a href="{{BLOG}}" target="_blank" rel="noopener noreferrer">블로그</a></div></footer>
-  <aside class="mobile-booking" aria-label="빠른 예약"><a data-mobile-secondary href="{{TEL}}">전화 문의</a><a data-mobile-primary href="{{BOOKING}}" target="_blank" rel="noopener noreferrer"><small data-mobile-room>일반 연습실</small><span data-mobile-action>네이버 예약 ↗</span></a></aside>
-  <dialog class="photo-viewer" aria-labelledby="photo-viewer-title">
-    <div class="photo-viewer-header"><h2 id="photo-viewer-title">SMC 공간 사진</h2><button class="photo-close" type="button" autofocus>닫기 <span aria-hidden="true">×</span></button></div>
-    <figure>{{HALL_IMAGE}}<figcaption></figcaption></figure>
-  </dialog>
-</body>
-</html>
+<section class="home-intro content-width"><p class="section-label">SKY LOUNGE MUSIC STUDIO</p><h2>도심의 위층에서,<br>나의 연습에 집중하는 시간.</h2><p>{{PRACTICE_USES}}.<br>다양한 연습과 작업을 위한 방음 공간을 준비했습니다.</p><div class="studio-highlights"><div><strong>24시간</strong><span>연중무휴 운영</span></div><div><strong>10층</strong><span>탑층 전체 단독 사용</span></div><div><strong>Wi-Fi</strong><span>기업용 무제한 무료 이용</span></div></div><a class="inline-book" href="/guide/#facilities">시설과 이용 안내 <span aria-hidden="true">↗</span></a></section>
+<section class="studio-media content-width" id="videos" aria-labelledby="media-title"><div><p class="section-label">SMC 더 둘러보기</p><h2 id="media-title">영상과 소식으로<br>만나보세요.</h2><p>SMC 구월점의 영상과 블로그, 인스타그램을 모았습니다.</p></div><div><div class="video-list">{{VIDEO_CARDS}}</div><div class="media-links"><a href="{{BLOG}}" target="_blank" rel="noopener noreferrer">네이버 블로그 ↗</a><a href="{{INSTAGRAM_POST}}" target="_blank" rel="noopener noreferrer">인스타그램 SMC 구월 ↗</a></div>{{WEBTOON_CARD}}</div></section>

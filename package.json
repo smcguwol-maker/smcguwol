@@ -9,7 +9,11 @@
     "check": "node scripts/check.mjs",
     "check:design": "node scripts/check-design.mjs",
     "check:release": "node scripts/check-release.mjs",
-    "preview": "node scripts/serve.mjs"
+    "preview": "node scripts/serve.mjs",
+    "build:preview": "node scripts/build.mjs --preview",
+    "check:help": "node --test scripts/check-help.mjs"
   },
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=20"
+  }
 }
