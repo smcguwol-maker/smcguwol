@@ -1,5 +1,17 @@
 # Cloudflare Pages 배포 안내
 
+## 최신: 프리미엄 Preview 배포 완료 · 2026-09-19
+
+- Preview: https://premium-review.smcguwol-review.pages.dev/ (5308e2e1-a22d-47fd-9e97-728f8fdbf334, deploy/success).
+- 공식 Production은 d8c1be12 그대로입니다. 아래 단일 페이지 설명은 과거 배포 이력입니다.
+- 빌드: node scripts/build.mjs → 공개용5페이지 public. 검토용: node scripts/build.mjs --preview → noindex5페이지 public. 프레임워크None, 저장소 루트.
+- 검사: node scripts/check.mjs (Preview이면 --preview), node scripts/check-release.mjs, node --test scripts/check-help.mjs.
+- Direct Upload ZIP에는 public의 **내용물**을 루트에 넣습니다. _worker.js와 _routes.json을 포함해야 /api/help가 작동합니다. 기존 배포를 삭제하지 않고 Create deployment로 추가합니다.
+- 고객 계정733b1c8faa19799bf480b1192f473635 / smcguwol-review의 Preview 설정에 Workers AI binding **AI**, Text **SMC_AI_ENABLED=true**를 저장했습니다. Production 설정은 아직 추가하지 않았습니다. 설정 후 새 배포에 적용합니다.
+- 유료 플랜을 신청하지 않았고 Workers Free를 확인했습니다. AI 한도·장애·끄는 방법은 ASSISTANT.md를 참조하세요.
+- 기존 공식 도메인 Web Analytics 자동 연결과 실제 수집 확인. 별도 스크립트 중복 삽입 금지.
+- 공식 반영 전 내용 검토 후 공개 빌드를 다시 만들고 검사합니다. Preview ZIP에는 noindex가 있으므로 정식용으로 사용하지 않습니다. 배포 후 Pages API 상태뿐 아니라 공식 URL의5페이지·AI·canonical·robots·sitemap도 확인하세요.
+
 ## 제공 범위 정정 · 2026-09-18
 
 **SMC의 18만 원 개별 견적에는 네이버 서치어드바이저 등록 방법 안내가 포함되어 있습니다.** 기존 고객의 결제 전 확인 메시지와 결제 요청서 문안에서 명시한 항목입니다. 홈페이지가 기술적으로 등록 없이 작동한다는 설명과, 고객에게 약속한 지원 범위를 혼동하지 않습니다. 등록 안내를 계약 외 무료 추가 서비스로 설명한 앞선 답변은 정정했습니다.

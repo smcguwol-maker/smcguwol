@@ -31,7 +31,8 @@ async function build(config, errorText = '') {
     ['index.html', 'robots.txt', 'sitemap.xml', '_headers'].map(name => readFile(path.join(fixture, 'public', name), 'utf8'))
   );
   const schema = JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
-  return { html, robots, sitemap, headers, schema };
+  const otherPages=await Promise.all(['rooms','booking','guide','visit'].map(name=>readFile(path.join(fixture,'public',name,'index.html'),'utf8')));
+  return { html:html+'\n'+otherPages.join('\n'), robots, sitemap, headers, schema };
 }
 
 try {
@@ -52,7 +53,7 @@ try {
     const {room} = photo;
     assert.ok(preview.html.includes(`href="#room-${room.id}"`));
     const panel = preview.html.match(new RegExp(`<article class="room-panel" id="room-${room.id}"[\\s\\S]*?</article>`))?.[0];
-    assert.ok(panel?.includes(`src="./${photo.src}?v=`), `${room.number}번방의 사진 연결 누락`);
+    assert.ok(panel?.includes(`src="/${photo.src}?v=`), `${room.number}번방의 사진 연결 누락`);
     assert.ok(panel.includes(room.booking === 'phone' ? `href="tel:${site.phone.replace(/-/g, '')}"` : `href="${site.links.booking}"`));
   }
   passed('모든 등록 방의 사진·선택 항목·예약 경로가 공개 빌드에 연결됨');
@@ -124,9 +125,9 @@ try {
     assert.ok(!match[1].startsWith('../'), '첫 페이지의 자산 경로가 상위 폴더를 참조함');
     await access(path.join(fixture, 'public', new URL(match[1], 'https://check.invalid/').pathname));
   }
-  passed('비교 시안을 제거해도 통합 첫 페이지의 공간·예약·FAQ와 모든 로컬 자산 유지');
+  passed('비교 시안을 제거해도 프리미엄 5페이지의 공간·예약·FAQ와 모든 로컬 자산 유지');
 
-  const assetLinks = page => new Map([...page.matchAll(/(?:src|href)="(\.\/(?:assets\/[^"?]+|styles\.css|app\.js)\?v=[a-f0-9]{12})"/g)]
+  const assetLinks = page => new Map([...page.matchAll(/(?:src|href)="(\/(?:assets\/[^"?]+|styles\.css|app\.js)\?v=[a-f0-9]{12})"/g)]
     .map(match => [new URL(match[1], canonical).pathname.slice(1), match[1]]));
   const originalAssets = assetLinks(production.html);
   assert.equal(originalAssets.size, new Set([site.logo, site.hero, ...site.gallery].map(photo => photo.src)).size + 2);

@@ -2,9 +2,12 @@ import { readFile, writeFile, mkdir, cp, access, rm } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
+import { buildPages, pages } from './pages.mjs';
+import {helpConfig} from './help-config.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const site = JSON.parse(await readFile(path.join(root, 'content/site.json'), 'utf8'));
+if (process.argv.includes('--preview')) site.publish = false;
 const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const https = value => { const u = new URL(value); if (u.protocol !== 'https:' || u.username || u.password) throw new Error('HTTPS 공개 주소만 사용하세요.'); return u.href; };
 if (typeof site.publish !== 'boolean') throw new Error('publish는 따옴표 없는 true 또는 false로 입력하세요.');
@@ -42,7 +45,7 @@ if (site.publish) {
   if (u.search || u.hash || u.pathname !== '/' || !u.hostname.includes('.') || /localhost|example\.|\.invalid$/.test(u.hostname)) throw new Error('정확히 확인된 사이트 루트 주소가 필요합니다.');
   canonical = u.origin + '/';
 }
-const image = (photo, hero = false) => `<img class="${hero ? 'hero-photo' : 'gallery-photo'}" src="${escape(assetUrl(photo.src))}" alt="${escape(photo.alt)}" width="${Number(photo.width) || 1200}" height="${Number(photo.height) || 900}" ${hero ? 'fetchpriority="high" loading="eager"' : 'loading="lazy" decoding="async"'}${hero && /^\d{1,3}% \d{1,3}%$/.test(photo.position || '') ? ` style="object-position:${escape(photo.position)}"` : ''}>`;
+const image = (photo, hero = false) => `<img class="${hero ? 'hero-photo' : 'gallery-photo'}" src="${escape(assetUrl(photo.src))}" alt="${escape(photo.alt)}" width="${Number(photo.width) || 1200}" height="${Number(photo.height) || 900}" ${hero ? 'fetchpriority="high" loading="eager"' : 'loading="lazy" decoding="async"'}${/^\d{1,3}% \d{1,3}%$/.test(photo.position || '') ? ` style="object-position:${escape(photo.position)}"` : ''}>`;
 const hero = site.hero.src ? image(site.hero, true) : '<div class="photo-unavailable"><strong>SMC 인천 구월점</strong><span>실제 공간 사진 확인 후 반영 예정</span></div>';
 const logo = `<img class="brand-logo" src="${escape(assetUrl(site.logo.src))}" alt="${escape(site.logo.alt)}" width="${Number(site.logo.width)}" height="${Number(site.logo.height)}" decoding="async">`;
 const gallery = site.gallery.length ? `<div class="gallery-grid">${site.gallery.map((photo, i) => `<figure class="gallery-item"><a class="gallery-link" href="${escape(assetUrl(photo.src))}" aria-label="${escape(photo.caption)} 사진 크게 보기">${image(photo)}<span class="photo-expand" aria-hidden="true">＋</span></a><figcaption><span class="gallery-number">${String(i + 1).padStart(2, '0')}</span><div><span class="gallery-title">${escape(photo.caption)}</span>${photo.description ? `<p class="gallery-description">${escape(photo.description)}</p>` : ''}</div></figcaption></figure>`).join('')}</div>` : '<div class="gallery-empty"><div class="photo-unavailable"><strong>공간 갤러리</strong><span>실제 사진을 확보한 뒤 반영합니다. 가상 공간 이미지는 사용하지 않습니다.</span></div></div>';
@@ -84,7 +87,7 @@ const roomPanels = rooms.map(photo => {
     ? `<a class="inline-book" href="tel:${site.phone.replace(/-/g, '')}">C6 홀 전화 문의 <span aria-hidden="true">↗</span></a>`
     : `<a class="inline-book naver-book" href="${escape(site.links.booking)}" target="_blank" rel="noopener noreferrer"><span class="naver-mark" aria-hidden="true"></span><span class="naver-label">네이버 예약</span><span class="booking-arrow" aria-hidden="true">↗</span></a>`;
   return `<article class="room-panel" id="room-${room.id}" aria-labelledby="${room.id}-title" data-booking-room="${room.number}번방 · ${escape(room.shortTitle)}">
-            <a class="room-image" href="${escape(assetUrl(photo.src))}" aria-label="${room.number}번방 ${escape(room.title)} 사진 크게 보기">${image(photo)}<span>사진 크게 보기 ＋</span></a>
+            <a class="room-image${photo.height > photo.width ? ' room-image-portrait' : ''}" href="${escape(assetUrl(photo.src))}" aria-label="${room.number}번방 ${escape(room.title)} 사진 크게 보기">${image(photo)}<span>사진 크게 보기 ＋</span></a>
             <div class="room-description"><div><p class="room-caption">Room ${room.number}</p><h3 id="${room.id}-title">${escape(room.title)}</h3><p class="room-price">30분 ${escape(roomPrice(room))} · 최소 1시간 예약</p><p>${escape(photo.description)}</p></div>${booking}</div>
           </article>`;
 }).join('\n          ');
@@ -99,6 +102,7 @@ if (canonical) { schema.url = canonical; schema['@id'] = canonical + '#smc-guwol
 const replacements = {
   STYLE_URL:assetUrl('styles.css'), SCRIPT_URL:assetUrl('app.js'),
   TITLE:escape(site.title), DESCRIPTION:escape(site.description), NAME:escape(site.name),
+  PRACTICE_USES:escape(site.practiceUses), PARKING:escape(site.parking).replace(/\n/g,'<br>'), INQUIRY_PHONES:site.inquiryPhones.map(phone=>`<a href="tel:${phone.replace(/-/g,'')}">${escape(phone)} <span aria-hidden="true">↗</span></a>`).join(''), YOUTUBE:escape(site.links.youtube), INSTAGRAM_POST:escape(site.links.instagramPost),
   PHONE:escape(site.phone), TEL:`tel:${site.phone.replace(/-/g,'')}`, ADDRESS:escape(addressText), HOURS:escape(site.hours),
   BOOKING:escape(site.links.booking), MAP:escape(site.links.map), KAKAO:escape(site.links.kakao), INSTAGRAM:escape(site.links.instagram), BLOG:escape(site.links.blog),
   SEO:canonical ? `<meta name="robots" content="index,follow"><link rel="canonical" href="${escape(canonical)}"><meta property="og:url" content="${escape(canonical)}">` : '<meta name="robots" content="noindex,nofollow,noarchive">',
@@ -116,16 +120,22 @@ const replacements = {
   ROOM_PIANO_PRICE:escape(site.rates.find(r => r.name.startsWith('Room 3·4 ·'))?.price || '문의'),
   ROOM_HALL_PRICE:escape(site.rates.find(r => r.name.startsWith('Room 5 ·'))?.price || '문의')
 };
-const source = await readFile(path.join(root, 'src/index.html'), 'utf8');
 const render = template => template.replace(/\r\n/g, '\n').replace(/\{\{([A-Z_]+)\}\}/g, (_, key) => {
   if (!(key in replacements)) throw new Error(`정의되지 않은 템플릿 항목: ${key}`);
   return replacements[key];
 }).replace(/[\t ]+$/gm, '');
-const html = render(source);
 const guide = render(await readFile(path.join(root, 'src/guide.html'), 'utf8'));
 const output = path.join(root, 'public');
 await mkdir(output, {recursive:true});
-await writeFile(path.join(output,'index.html'),html);
+await buildPages({root,site,replacements,canonical,rooms,assetUrl});
+if(site.assistant?.enabled) {
+  const worker=await readFile(path.join(root,'src/help-worker.js'),'utf8');
+  await writeFile(path.join(output,'_worker.js'),worker.replace('__HELP_CONFIG__',JSON.stringify(helpConfig(site))));
+  await writeFile(path.join(output,'_routes.json'),JSON.stringify({version:1,include:['/api/help'],exclude:[]},null,2)+'\n');
+} else {
+  await rm(path.join(output,'_worker.js'),{force:true});
+  await rm(path.join(output,'_routes.json'),{force:true});
+}
 await writeFile(path.join(root,'START_HERE.html'),guide);
 await cp(path.join(root,'src/styles.css'),path.join(output,'styles.css'));
 await cp(path.join(root,'src/app.js'),path.join(output,'app.js'));
@@ -137,13 +147,13 @@ for (const sourcePath of new Set(photos.map(photo => photo.src))) {
   await cp(path.join(root,sourcePath),destination);
 }
 await writeFile(path.join(output,'robots.txt'),canonical ? `User-agent: *\nAllow: /\n\nSitemap: ${canonical}sitemap.xml\n` : 'User-agent: *\nDisallow: /\n');
-await writeFile(path.join(output,'sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${canonical ? `\n  <url><loc>${escape(canonical)}</loc></url>\n` : '\n  <!-- 시안: 정식 공개 설정 시 공식 URL이 자동 생성됩니다. -->\n'}</urlset>\n`);
+await writeFile(path.join(output,'sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${canonical ? pages.map(page=>`\n  <url><loc>${escape(new URL(page.url,canonical).href)}</loc></url>`).join('')+'\n' : '\n  <!-- 시안: 정식 공개 설정 시 공식 URL이 자동 생성됩니다. -->\n'}</urlset>\n`);
 await writeFile(path.join(output,'_headers'),`/*\n  Cache-Control: no-cache\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n${site.publish ? '' : '  X-Robots-Tag: noindex, nofollow, noarchive\n'}\n`);
 await writeFile(path.join(output,'404.html'),`<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>페이지를 찾을 수 없습니다 | SMC 인천 구월점</title><link rel="stylesheet" href="${assetUrl('styles.css', '/')}"></head><body><main class="not-found"><p>SMC 인천 구월점</p><h1>페이지를 찾을 수 없습니다.</h1><p>주소가 변경되었거나 없는 페이지입니다.</p><a class="inline-book" href="/">SMC 첫 화면으로 <span aria-hidden="true">↗</span></a></main></body></html>`);
 // 비교 페이지는 공개 전 빌드에만 포함합니다. 공개 전환 시 이전 비교 산출물도 제거합니다.
 const designOutput = path.join(output, 'design');
 await rm(designOutput, { recursive: true, force: true });
-if (!site.publish) {
+if (!site.publish && !process.argv.includes('--preview')) {
   await mkdir(designOutput, { recursive: true });
   const personal = site.gallery[1] || site.gallery[0] || site.hero;
   const piano = site.gallery[2] || site.gallery[0] || site.hero;
