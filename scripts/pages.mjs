@@ -6,7 +6,7 @@ export const pages = [
   {key:'home',url:'/',label:'홈',file:'index.html'},
   {key:'rooms',url:'/rooms/',label:'공간과 요금',file:'pages/rooms.html',title:'공간과 요금 | SMC 인천 구월점 음악연습실',description:'SMC 인천 구월점 7개 연습실의 실제 사진과 30분·1시간 요금, 피아노와 개인 악기 연습공간을 확인하세요.'},
   {key:'booking',url:'/booking/',label:'예약 안내',file:'pages/booking.html',title:'예약 안내 | SMC 인천 구월점',description:'일반 연습실 네이버 예약, 야마하 C6 홀과 개인룸 전화 문의, 최소 1시간 예약과 방문 전 확인 사항을 안내합니다.'},
-  {key:'guide',url:'/guide/',label:'이용 안내',file:'pages/guide.html',title:'이용 안내·자주 묻는 질문 | SMC 인천 구월점',description:'24시간 음악연습실 SMC의 성악·보컬·현악기·목금관악기·개인 방송을 위한 시설, 이용 시간, 주차와 예약 안내을 확인하세요.'},
+  {key:'guide',url:'/guide/',label:'이용 안내',file:'pages/guide.html',title:'이용 안내·자주 묻는 질문 | SMC 인천 구월점',description:'24시간 음악연습실 SMC의 성악·보컬·현악기·목금관악기·개인 방송을 위한 시설, 이용 시간, 주차와 예약 안내를 확인하세요.'},
   {key:'visit',url:'/visit/',label:'오시는 길',file:'pages/visit.html',title:'오시는 길·주차 안내 | SMC 인천 구월점',description:'인천광역시 남동구 인하로489번길 16, 세동네오스 10층. SMC 구월점 주소, 길찾기, 지하철과 주변 주차 안내입니다.'}
 ];
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

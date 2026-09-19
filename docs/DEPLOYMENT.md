@@ -1,5 +1,15 @@
 # Cloudflare Pages 배포 안내
 
+## 최신: 프리미엄 공식 배포 완료 · 2026-09-19 13:29 KST
+
+- 사용자의 “그래 계속 진행” 승인에 따라 **Production 82485a5f-0db3-4740-bbfc-09b749cd0fbe / deploy success**로 배포했습니다. [공식 홈페이지](https://xn--co-002iq89dzga40o12n.kr/)에서 프리미엄5페이지를 제공합니다.
+- Production의 Workers AI binding AI / Text SMC_AI_ENABLED=true 저장 및 실제 AI 응답 확인. Workers Free / $0 유지. Preview만 설정된 상태라는 아래 기록은 과거 이력입니다.
+- 공개용 node scripts/build.mjs와51개 검사 후 public 내용물21개 ZIP을 직접 업로드했습니다. 기존 배포를 삭제하지 않았고 Git main도 변경하지 않았습니다.
+- 공식5페이지·버전자산10개·robots/sitemap 총17개 HTTP200·SHA256 일치. 검색 허용·canonical·5페이지 sitemap·HTTP→HTTPS·404 정상. PC/모바일,7개 방·확대·C6전화·AI·유튜브 실제 검수 완료.
+- HTML은 no-cache, 버전 정적 자산은 max-age=14400으로 확인됐습니다. 실제 응답과 _headers 선언을 구분합니다.
+- 정식 ZIP: C:/Users/WOOWON/AppData/Local/Temp/SMC-premium-production-20260919.zip. 운영 변경은 검토 브랜치에서 수정·검사 후 별도 직접 배포해야 합니다. Git 커밋만으로 자동 배포되지 않습니다.
+- 서치어드바이저 소유 확인·사이트맵 제출 완료는 미확인입니다. 상세 증거와 남은 항목은 NEXT_SESSION.md 상단이 기준입니다.
+
 ## 최신: 프리미엄 Preview 배포 완료 · 2026-09-19
 
 - Preview: https://premium-review.smcguwol-review.pages.dev/ (5308e2e1-a22d-47fd-9e97-728f8fdbf334, deploy/success).

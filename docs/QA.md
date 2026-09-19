@@ -1,5 +1,13 @@
 # SMC 홈페이지 검수 상태
 
+## 최신 · 2026-09-19 프리미엄 공식 배포
+
+- 공식 https://xn--co-002iq89dzga40o12n.kr/ / Production82485a5f / 13:29 KST deploy success. 아래 Preview 전용 설명은 과거 상태입니다.
+- 공개 빌드와 정적51개 검사 통과. 공식 파일17개 HTTP200·SHA256일치, index/canonical/robots/sitemap/noindex헤더없음, HTTP→HTTPS301·없는주소404 확인.
+- PC1440/모바일390,5페이지 가로넘침없음·H1하나·관찰된이미지오류없음. 7개 방 사진/예약경로,2·9·10프레임채움,확대/Escape닫기,주소복사,유튜브재생 검수. 자체페이지 error/warn없음.
+- 공식 API 실제 주차/연습질문AI응답,빈방문의→네이버,무관질문→모름,비밀번호미제공 HTTP200. 모바일상담창 실제 주차문구 표시.
+- 무료 플랜과Production AI바인딩 확인. 공식브라우저 WebAnalytics beacon유지. 실제iPhone 외부앱전환 및 서치어드바이저 등록완료는 별도입니다.
+
 ## 최신 · 2026-09-19 프리미엄5페이지와 고객 추가 요청
 
 - [검토본](https://premium-review.smcguwol-review.pages.dev/) / 배포5308e2e1 / Preview deploy success. 공식 Production d8c1be12는 유지.
