@@ -33,6 +33,10 @@
     "instagramPost": "https://www.instagram.com/p/Dc04iA_T_7p/",
     "youtube": "https://youtu.be/T3b6UNOPucc"
   },
+  "videos": [
+    { "id": "T3b6UNOPucc", "title": "SMC 구월점 소개" },
+    { "id": "12EVkuA5VI4", "title": "구월동 로데오거리의 SMC" }
+  ],
   "hero": {
     "src": "assets/room-5-c6.jpg",
     "alt": "SMC 인천 구월점 5번 홀의 야마하 C6 그랜드피아노와 우드 톤 실내",

@@ -1,5 +1,11 @@
 # Cloudflare Pages 배포 안내
 
+## 최신: 두 번째 유튜브 영상 공식 배포 · 2026-09-19 14:51 KST
+
+- Production **0d780ef7-2328-4638-9889-1c9b86d62c9e / deploy success**, 2026-09-19 14:51:47 KST. [영상 영역](https://xn--co-002iq89dzga40o12n.kr/#videos)에 기존 T3b6UNOPucc와 새12EVkuA5VI4를 함께 표시합니다.
+- 공개 빌드·정적51개·릴리스12개, 공식5페이지+CSS/JS HTTP200·SHA256 일치 및 두 영상의 실제 Chrome 내장 재생 확인. PC1440/모바일390 배치 검수.
+- 공개 ZIP: C:/Users/WOOWON/AppData/Local/Temp/SMC-production-videos-20260919.zip (22개 파일). 기존 프로젝트에 Direct Upload, AI 설정 유지. 아래 배포들은 이전 이력입니다.
+
 ## 최신: 고객 제공 웹툰 공식 배포 · 2026-09-19 13:52 KST
 
 - Production **f63b6bca-6f86-44ba-9ce3-05e1ccd5adb0 / deploy success**, 2026-09-19 13:52:24 KST. [웹툰 바로 보기](https://xn--co-002iq89dzga40o12n.kr/guide/#webtoon). 홈 미리보기에서 연결되며 기존5페이지에 포함됩니다.

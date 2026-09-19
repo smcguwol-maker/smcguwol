@@ -1,5 +1,14 @@
 # SMC 홈페이지 작업 이어가기
 
+## 고객 추가 영상 공식 반영 · 2026-09-19 14:51 KST
+
+- 사용자가 전달한 https://youtu.be/12EVkuA5VI4 영상을 기존 T3b6UNOPucc와 함께 홈의 `/#videos`에 추가했습니다. PC에서는 두 개를 나란히, 모바일에서는 세로로 표시합니다. 각 제목·클릭 재생·YouTube 원본 링크를 제공하며, 웹툰과 기존5페이지를 유지합니다.
+- 고객 계정733b1c8faa19799bf480b1192f473635 / smcguwol-review / Production **0d780ef7-2328-4638-9889-1c9b86d62c9e**, deploy/success, **2026-09-19 14:51:47 KST**. 공식 https://xn--co-002iq89dzga40o12n.kr/#videos . 고정 배포 https://0d780ef7.smcguwol-review.pages.dev/ .
+- 공개 빌드·정적51개·릴리스12개 통과. 공개 내용22개 파일 ZIP을 Chrome Direct Upload로 배포했습니다. 공식5페이지와CSS/JS 총7개 HTTP200·로컬SHA256 일치, 두 영상ID·외부링크·클릭 전 iframe없음·웹툰 링크 유지 확인.
+- 로컬 PC1440/모바일390 배치와 가로 넘침 없음, 공식 모바일390 화면 확인. 공식 Chrome 내장 플레이어에서 새 영상 재생9.37초/총48.061초, 기존 영상11.47초/총61.1초와 paused=false를 직접 확인했습니다. 인앱 브라우저의 내장 플레이어 검수에서는 빈 iframe이 보여 Chrome에서 실제 재생을 별도로 확인했으며, 두 영상 모두 원본 YouTube 링크를 제공합니다.
+- AI 바인딩 AI 및 SMC_AI_ENABLED=true가 새 배포에도 유지됨을 API로 확인했습니다. 이번 변경은 영상 목록·표시이며 AI·예약 기능은 수정하지 않았습니다.
+- 영상 추가/제목 수정은 content/site.json의 videos(id,title)에서 합니다. 배포 ZIP: C:/Users/WOOWON/AppData/Local/Temp/SMC-production-videos-20260919.zip. 소스 ZIP도 갱신합니다. main·DNS·유료 서비스 변경 및 고객 메시지 발송 없음. 서치어드바이저 후속은 이전 기록을 따릅니다.
+
 ## 고객 제공 웹툰 공식 반영 · 2026-09-19 13:52 KST
 
 - 사용자가 고객 제공 웹툰의 홈페이지 추가를 요청했습니다. 홈의 영상·소식 영역에 작은 미리보기와 전체 보기 링크를 넣고, 기존 이용 안내의 `/guide/#webtoon`에 전체 그림을 원본 비율로 추가했습니다. 그림을 누르면 원본 새 탭, 글로 읽기 펼침을 지원하며 5페이지 구성을 유지합니다.

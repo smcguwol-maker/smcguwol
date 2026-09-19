@@ -29,6 +29,11 @@ function assistant(site) {
 
 export async function buildPages({root,site,replacements,canonical,rooms,assetUrl}) {
   const layout=await readFile(path.join(root,'src/layout.html'),'utf8');
+  const videoCards=(site.videos||[]).map(video=>{
+    if(!/^[a-zA-Z0-9_-]{11}$/.test(video.id)||!video.title?.trim()) throw Error('영상의 YouTube ID와 제목을 확인하세요.');
+    const title=escape(video.title);
+    return `<article class="video-card"><h3>${title}</h3><div class="video-shell" data-video="${video.id}" data-video-title="${title}"><button class="video-play" type="button" aria-label="${title} 유튜브 영상 재생"><span class="video-play-icon" aria-hidden="true">▶</span><strong>영상 재생</strong><small>누르면 YouTube 영상이 열립니다.</small></button></div><a class="video-external" href="https://youtu.be/${video.id}" target="_blank" rel="noopener noreferrer" aria-label="${title} YouTube에서 보기">YouTube에서 보기 <span aria-hidden="true">↗</span></a></article>`;
+  }).join('');
   const comic=site.webtoon;
   const comicImage=comic?.src ? `<img src="${assetUrl(comic.src,'/')}" alt="${escape(comic.alt)}" width="${comic.width}" height="${comic.height}" loading="lazy" decoding="async">` : '';
   const comicCard=comicImage ? `<a class="webtoon-card" href="/guide/#webtoon"><span class="webtoon-thumbnail">${comicImage}</span><span><small>SMC 이야기</small><strong>웹툰으로 만나는 SMC</strong><span class="webtoon-card-action">웹툰 전체 보기 <span aria-hidden="true">↗</span></span></span></a>` : '';
@@ -38,6 +43,7 @@ export async function buildPages({root,site,replacements,canonical,rooms,assetUr
     const values={...replacements,
       TITLE:escape(page.title||site.title), DESCRIPTION:escape(page.description||site.description),
       PAGE_KEY:page.key,
+      VIDEO_CARDS:videoCards,
       WEBTOON_CARD:comicCard, WEBTOON_READER:comicReader,
       NAV:pages.map(p=>`<a href="${p.url}"${p.key===page.key?' aria-current="page"':''}>${p.label}</a>`).join(''),
       SEO:pageCanonical ? `<meta name="robots" content="index,follow"><link rel="canonical" href="${pageCanonical}"><meta property="og:url" content="${pageCanonical}">` : '<meta name="robots" content="noindex,nofollow,noarchive">',

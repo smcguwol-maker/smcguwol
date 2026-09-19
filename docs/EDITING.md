@@ -14,6 +14,7 @@
 | 30분 요금과 부가 안내 | content/site.json의 rates / rateNote |
 | FAQ 질문·답변 | content/site.json의 faq |
 | 첫 화면·영상 영역 | src/index.html |
+| 홈의 유튜브 영상 목록·제목 | content/site.json의 videos (id와 title) |
 | 소개 웹툰 원본·대체 설명·크기 | content/site.json의 webtoon / assets/smc-introduction-webtoon.jpg |
 | 공간/예약/시설/오시는 길 본문 | src/pages/rooms.html / booking.html / guide.html / visit.html |
 | 공통 헤더·큰 로고·메뉴·푸터 | src/layout.html |
