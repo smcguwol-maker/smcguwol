@@ -85,8 +85,8 @@ try {
   await assert.rejects(access(path.join(fixture, 'public', 'assets', 'unused-review.jpg')));
   await assert.rejects(access(path.join(fixture, 'public', 'assets', 'removed-review.jpg')));
   await access(path.join(fixture, 'assets', 'unused-review.jpg'));
-  for (const photo of [site.logo, site.hero, ...site.gallery]) {
-    if (!photo.src) continue;
+  for (const photo of [site.logo, site.hero, ...site.gallery, site.webtoon]) {
+    if (!photo?.src) continue;
     assert.deepEqual(await readFile(path.join(fixture, photo.src)), await readFile(path.join(fixture, 'public', photo.src)));
   }
   passed('사용 사진 원본은 보존하고 미사용·삭제 사진은 배포 출력에서 제외');
@@ -130,7 +130,7 @@ try {
   const assetLinks = page => new Map([...page.matchAll(/(?:src|href)="(\/(?:assets\/[^"?]+|styles\.css|app\.js)\?v=[a-f0-9]{12})"/g)]
     .map(match => [new URL(match[1], canonical).pathname.slice(1), match[1]]));
   const originalAssets = assetLinks(production.html);
-  assert.equal(originalAssets.size, new Set([site.logo, site.hero, ...site.gallery].map(photo => photo.src)).size + 2);
+  assert.equal(originalAssets.size, new Set([site.logo, site.hero, ...site.gallery, site.webtoon].filter(photo => photo?.src).map(photo => photo.src)).size + 2);
   const repeated = await build(productionConfig);
   assert.deepEqual(assetLinks(repeated.html), originalAssets, '동일한 빌드에서 자산 주소가 바뀜');
   const previewAssets = assetLinks(preview.html);

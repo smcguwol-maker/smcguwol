@@ -1,5 +1,16 @@
 # SMC 홈페이지 작업 이어가기
 
+## 고객 제공 웹툰 공식 반영 · 2026-09-19 13:52 KST
+
+- 사용자가 고객 제공 웹툰의 홈페이지 추가를 요청했습니다. 홈의 영상·소식 영역에 작은 미리보기와 전체 보기 링크를 넣고, 기존 이용 안내의 `/guide/#webtoon`에 전체 그림을 원본 비율로 추가했습니다. 그림을 누르면 원본 새 탭, 글로 읽기 펼침을 지원하며 5페이지 구성을 유지합니다.
+- 공식 확인 링크: https://xn--co-002iq89dzga40o12n.kr/guide/#webtoon . 고객 Pages smcguwol-review의 Production **f63b6bca-6f86-44ba-9ce3-05e1ccd5adb0**, deploy/success, **2026-09-19 13:52:24 KST**. 고정 배포: https://f63b6bca.smcguwol-review.pages.dev/ . 아래82485a5f는 이전 배포입니다.
+- 고객 원본 JPEG 720×1280,401,576바이트를 편집 없이 추가했습니다. assets와 public의 이미지 및 공식 HTTP 응답의 SHA256이 일치합니다. 출처는 CONTENT_SOURCES.md, 수정 방법은 EDITING.md에 기록했습니다.
+- 공개 빌드·정적51개·릴리스12개 통과. 기존 릴리스 검사의 사용 자산 집계/원본 보존 대상에 웹툰을 포함했습니다. Chrome에서 public 내용22개 ZIP을 Production에 직접 업로드했습니다.
+- 공식5페이지+버전자산11개+robots/sitemap2개, 총18개 HTTP200·로컬파일 일치, 검색 허용·canonical·5페이지 sitemap·HTTPS301·없는주소404 확인. 기존 AI 바인딩 AI / SMC_AI_ENABLED=true 유지 및 실제 응답 검사 통과.
+- 로컬과 공식 PC1440/모바일390에서 웹툰 원본 비율·가로 넘침 없음 확인. 홈 카드→웹툰 앵커 이동, 이미지720×1280 로딩, 원본 새 탭 열림과 글 설명 펼침을 확인했습니다.
+- 정식 ZIP: C:/Users/WOOWON/AppData/Local/Temp/SMC-production-webtoon-20260919.zip. 소스 ZIP도 웹툰 포함본으로 갱신합니다. 수정은 codex/smc-design-review에 저장하고 main은 변경·병합하지 않습니다. 고객에게 메시지는 발송하지 않았습니다.
+- 서치어드바이저 소유 확인·사이트맵 제출과 기존 운영 정보 후속 사항은 바로 아래 기록 그대로입니다. 이번 웹툰 추가로 별도 유료 서비스는 신청하지 않았습니다.
+
 ## 프리미엄 공식 배포 완료 · 2026-09-19 13:29 KST
 
 사용자가 미리보기 완료 보고와 공식 반영 단계 안내에 “그래 계속 진행”이라고 승인했습니다. 아래 Preview 전용 상태와 공식 반영 대기는 과거 기록입니다.

@@ -212,5 +212,11 @@
   ],
   "assistant": {
     "enabled": true
+  },
+  "webtoon": {
+    "src": "assets/smc-introduction-webtoon.jpg",
+    "alt": "SMC 구월점 소개 웹툰: 연습 공간을 찾던 세 연주자가 SMC에서 연습하고 무대에 서는 여섯 컷 이야기",
+    "width": 720,
+    "height": 1280
   }
 }

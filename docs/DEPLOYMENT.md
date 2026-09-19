@@ -1,5 +1,11 @@
 # Cloudflare Pages 배포 안내
 
+## 최신: 고객 제공 웹툰 공식 배포 · 2026-09-19 13:52 KST
+
+- Production **f63b6bca-6f86-44ba-9ce3-05e1ccd5adb0 / deploy success**, 2026-09-19 13:52:24 KST. [웹툰 바로 보기](https://xn--co-002iq89dzga40o12n.kr/guide/#webtoon). 홈 미리보기에서 연결되며 기존5페이지에 포함됩니다.
+- 원본720×1280 JPEG를 자르지 않고 사용했습니다. 공개 빌드·정적51개·릴리스12개 통과 후22개 파일 ZIP을 Chrome Direct Upload로 배포했습니다. 공식 총18개 파일 HTTP200·SHA256 일치 및 기존 AI 실제 응답을 확인했습니다.
+- 정식 ZIP: C:/Users/WOOWON/AppData/Local/Temp/SMC-production-webtoon-20260919.zip. AI 바인딩과 무료 플랜 유지, DNS/네임서버·Git main 변경 없음. 아래82485a5f는 이전 배포 이력입니다.
+
 ## 최신: 프리미엄 공식 배포 완료 · 2026-09-19 13:29 KST
 
 - 사용자의 “그래 계속 진행” 승인에 따라 **Production 82485a5f-0db3-4740-bbfc-09b749cd0fbe / deploy success**로 배포했습니다. [공식 홈페이지](https://xn--co-002iq89dzga40o12n.kr/)에서 프리미엄5페이지를 제공합니다.

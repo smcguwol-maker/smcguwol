@@ -20,7 +20,7 @@ if (verification && !/^[a-zA-Z0-9_-]{1,200}$/.test(verification)) throw new Erro
 const imageType = source => ({'.jpg':'image/jpeg','.jpeg':'image/jpeg','.png':'image/png','.webp':'image/webp','.avif':'image/avif'})[path.extname(source)];
 for (const value of Object.values(site.links)) https(value);
 if (!/^0[0-9-]+$/.test(site.phone)) throw new Error('연락처 형식을 확인하세요.');
-const photos = [site.logo, site.hero, ...site.gallery].filter(photo => photo.src);
+const photos = [site.logo, site.hero, ...site.gallery, site.webtoon].filter(photo => photo?.src);
 for (const photo of photos) {
   if (!/^assets\/[a-zA-Z0-9/_-]+\.(jpg|jpeg|png|webp|avif)$/.test(photo.src) || !photo.alt?.trim()) throw new Error('사진 파일 경로 또는 대체 설명을 확인하세요.');
   if (!Number.isInteger(photo.width) || photo.width <= 0 || !Number.isInteger(photo.height) || photo.height <= 0) throw new Error(`사진의 width·height에 실제 픽셀 크기를 입력하세요: ${photo.src}`);

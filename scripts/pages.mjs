@@ -29,11 +29,16 @@ function assistant(site) {
 
 export async function buildPages({root,site,replacements,canonical,rooms,assetUrl}) {
   const layout=await readFile(path.join(root,'src/layout.html'),'utf8');
+  const comic=site.webtoon;
+  const comicImage=comic?.src ? `<img src="${assetUrl(comic.src,'/')}" alt="${escape(comic.alt)}" width="${comic.width}" height="${comic.height}" loading="lazy" decoding="async">` : '';
+  const comicCard=comicImage ? `<a class="webtoon-card" href="/guide/#webtoon"><span class="webtoon-thumbnail">${comicImage}</span><span><small>SMC 이야기</small><strong>웹툰으로 만나는 SMC</strong><span class="webtoon-card-action">웹툰 전체 보기 <span aria-hidden="true">↗</span></span></span></a>` : '';
+  const comicReader=comicImage ? `<section class="webtoon-section content-width" id="webtoon" aria-labelledby="webtoon-title"><div class="webtoon-heading"><p class="section-label">SMC 이야기</p><h2 id="webtoon-title">연습이 즐거워지는 공간.</h2><p>연습할 곳을 찾아 나선 세 사람의 이야기를 웹툰으로 만나보세요.</p></div><figure class="webtoon-full"><a href="${assetUrl(comic.src,'/')}" target="_blank" rel="noopener noreferrer" aria-label="SMC 소개 웹툰 원본 크게 보기">${comicImage}</a><figcaption>SMC 구월점 소개 웹툰 <span>그림을 누르면 원본을 크게 볼 수 있습니다.</span></figcaption></figure><details class="webtoon-transcript"><summary>웹툰 내용 글로 읽기</summary><ol><li>악기와 악보를 든 세 사람. “연습할 곳이 없네…”</li><li>SMC 음악연습실 간판을 발견합니다. “어? 여기다!”</li><li>여러 연습실이 있는 복도를 둘러봅니다. “방이 이렇게 많아?”</li><li>트럼펫, 보컬, 바이올린 연습에 몰입합니다. “집중력 폭발!”</li><li>세 사람이 무대에서 함께 연주합니다. “합격!”</li><li>“SMC 구월 음악연습실 — 연습이 즐거워지는 공간”</li></ol></details><a class="inline-book" href="/rooms/">실제 공간과 요금 보기 <span aria-hidden="true">↗</span></a></section>` : '';
   for(const page of pages) {
     const pageCanonical=canonical ? new URL(page.url,canonical).href : '';
     const values={...replacements,
       TITLE:escape(page.title||site.title), DESCRIPTION:escape(page.description||site.description),
       PAGE_KEY:page.key,
+      WEBTOON_CARD:comicCard, WEBTOON_READER:comicReader,
       NAV:pages.map(p=>`<a href="${p.url}"${p.key===page.key?' aria-current="page"':''}>${p.label}</a>`).join(''),
       SEO:pageCanonical ? `<meta name="robots" content="index,follow"><link rel="canonical" href="${pageCanonical}"><meta property="og:url" content="${pageCanonical}">` : '<meta name="robots" content="noindex,nofollow,noarchive">',
       PREVIEW_NOTICE:site.publish?'':'<div class="review-strip"><span>SMC 프리미엄 검토본</span><span>공개 전 확인용</span></div>',

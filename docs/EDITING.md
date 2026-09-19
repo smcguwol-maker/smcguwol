@@ -14,6 +14,7 @@
 | 30분 요금과 부가 안내 | content/site.json의 rates / rateNote |
 | FAQ 질문·답변 | content/site.json의 faq |
 | 첫 화면·영상 영역 | src/index.html |
+| 소개 웹툰 원본·대체 설명·크기 | content/site.json의 webtoon / assets/smc-introduction-webtoon.jpg |
 | 공간/예약/시설/오시는 길 본문 | src/pages/rooms.html / booking.html / guide.html / visit.html |
 | 공통 헤더·큰 로고·메뉴·푸터 | src/layout.html |
 | 화면 디자인·사진 프레임 | src/styles.css |
@@ -22,6 +23,8 @@
 | AI 요청 처리 | src/help-worker.js |
 
 public 폴더는 자동 생성되는 배포 파일이므로 직접 수정하지 않습니다. 사진 원본은 assets에 보관합니다. 새로운 기능·알림톡·예약 조회는 별도 개발 범위입니다.
+
+소개 웹툰은 홈의 미리보기에서 이용 안내의 `/guide/#webtoon`으로 연결됩니다. 전체 그림은 자르지 않고 원본 비율로 표시하며, 누르면 원본 이미지를 새 탭에서 크게 볼 수 있습니다. `webtoon.src`, `alt`, `width`, `height`를 교체하면 두 위치에 함께 반영됩니다. 장면의 글 설명은 scripts/pages.mjs의 webtoon-transcript 부분에 있습니다.
 
 ## 요금·사진을 바꿀 때
 
