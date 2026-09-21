@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /api/
 
 Sitemap: https://xn--co-002iq89dzga40o12n.kr/sitemap.xml

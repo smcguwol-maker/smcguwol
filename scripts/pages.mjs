@@ -1,6 +1,8 @@
 import {readFile,mkdir,writeFile} from 'node:fs/promises';
 import path from 'node:path';
 import {helpConfig} from './help-config.mjs';
+import {promoSeeds} from './promotions-config.mjs';
+import {promoMarkup} from '../src/promotions-shared.js';
 
 export const pages = [
   {key:'home',url:'/',label:'홈',file:'index.html'},
@@ -32,7 +34,7 @@ export async function buildPages({root,site,replacements,canonical,rooms,assetUr
   const videoCards=(site.videos||[]).map(video=>{
     if(!/^[a-zA-Z0-9_-]{11}$/.test(video.id)||!video.title?.trim()) throw Error('영상의 YouTube ID와 제목을 확인하세요.');
     const title=escape(video.title);
-    return `<article class="video-card"><h3>${title}</h3><div class="video-shell" data-video="${video.id}" data-video-title="${title}"><button class="video-play" type="button" aria-label="${title} 유튜브 영상 재생"><span class="video-play-icon" aria-hidden="true">▶</span><strong>영상 재생</strong><small>누르면 YouTube 영상이 열립니다.</small></button></div><a class="video-external" href="https://youtu.be/${video.id}" target="_blank" rel="noopener noreferrer" aria-label="${title} YouTube에서 보기">YouTube에서 보기 <span aria-hidden="true">↗</span></a></article>`;
+    return `<article class="video-card"><h3>${title}</h3><div class="video-shell" data-video="${video.id}" data-video-title="${title}"><button class="video-play" type="button" aria-label="${title} 유튜브 영상 재생"><img class="video-poster" src="https://i.ytimg.com/vi/${video.id}/hqdefault.jpg" alt="${title} 영상 썸네일" width="480" height="360" loading="lazy"><span class="video-play-icon" aria-hidden="true">▶</span><strong>영상 재생</strong><small>누르면 YouTube 영상이 열립니다.</small></button></div><a class="video-external" href="https://youtu.be/${video.id}" target="_blank" rel="noopener noreferrer" aria-label="${title} YouTube에서 보기">YouTube에서 보기 <span aria-hidden="true">↗</span></a></article>`;
   }).join('');
   const comic=site.webtoon;
   const comicImage=comic?.src ? `<img src="${assetUrl(comic.src,'/')}" alt="${escape(comic.alt)}" width="${comic.width}" height="${comic.height}" loading="lazy" decoding="async">` : '';
@@ -43,7 +45,7 @@ export async function buildPages({root,site,replacements,canonical,rooms,assetUr
     const values={...replacements,
       TITLE:escape(page.title||site.title), DESCRIPTION:escape(page.description||site.description),
       PAGE_KEY:page.key,
-      VIDEO_CARDS:videoCards,
+      VIDEO_CARDS:videoCards, PROMOTIONS:promoMarkup(promoSeeds(site)),
       WEBTOON_CARD:comicCard, WEBTOON_READER:comicReader,
       NAV:pages.map(p=>`<a href="${p.url}"${p.key===page.key?' aria-current="page"':''}>${p.label}</a>`).join(''),
       SEO:pageCanonical ? `<meta name="robots" content="index,follow"><link rel="canonical" href="${pageCanonical}"><meta property="og:url" content="${pageCanonical}">` : '<meta name="robots" content="noindex,nofollow,noarchive">',

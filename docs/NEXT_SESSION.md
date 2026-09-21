@@ -1,5 +1,20 @@
 # SMC 홈페이지 작업 이어가기
 
+## 첫 화면 홍보 게시판 배포 / 고객 로그인 설정 대기 · 2026-09-22
+
+- 고객 요청: 첫 화면에서 영상 썸네일·그림을 바로 보고, 제작 후 고객이 직접 유튜브 영상/사진을 등록·교체. 사용자가 관리자 이메일 **Smcguwol@gmail.com**을 확인했습니다.
+- **공식 배포 완료:** 고객 계정733b1c8faa19799bf480b1192f473635 / smcguwol-review / Production **581286e5-24dc-44d1-ac1e-0570247c38d8**, deploy/success, **2026-09-22 08:23:48 KST**. 고정 주소 https://581286e5.smcguwol-review.pages.dev/ . 공식 https://xn--co-002iq89dzga40o12n.kr/ . 25개 파일 ZIP을 Chrome Direct Upload로 업로드했습니다.
+- 홈 상단에 SMC 소식 3개(영상2+웹툰)를 배치하고 실제 YouTube 썸네일 표시, 모달 재생/그림 전체보기, 블로그·인스타 링크, 4개 이상 더 보기를 구현했습니다. 기존5페이지·7개 방·요금·AI·예약 경로는 유지합니다.
+- D1 **smcguwol-promotions** / **7086be90-5d6b-4ea6-97c3-c217e6ae789b** 생성, migrations/0001 및0002 실행 성공을 Chrome UI로 확인했습니다. Production 바인딩 **SMC_PROMO_DB** PATCH HTTP200 성공. 기존 AI/SMC_AI_ENABLED 유지. Preview에는DB를 연결하지 않았습니다.
+- 고객 관리 화면 /admin/: 제목·설명, YouTube 공유 주소, 사진 자동 JPEG 압축(원본15MB/저장1MB/최대변2400px), 공개/숨김, 순서 변경, 최대30개. D1 저장으로 재배포 후에도 유지하며 동시수정 충돌409·본문제한·파일형식검증·출력이스케이프·CSRF·서명검증을 적용했습니다. 초기 seed는 실제저장데이터를 덮어쓰지 않습니다.
+- **아직 전체 완료 아님:** Cloudflare Zero Trust UI는 9/22 재확인에서도 “Your current role does not allow you to view this content.”로 차단됩니다. /admin 및 API는 현재 **503 / 관리자 로그인 연결을 준비하고 있습니다.**로 안전하게 잠긴 상태입니다. 실제 고객 로그인/실서비스 직접 편집 성공을 주장하지 않습니다. 사용자에게 기존 작업 계정의 Zero Trust 관리 권한 추가를 요청하는 질문을 보냈고 답변 대기입니다. 필요한 단계는 **docs/PROMOTION_BOARD.md**에 한 번에 정리했습니다. 새 계정/유료 서비스/반복 OAuth를 요청하지 않았습니다.
+- Cloudflare MCP의 Access조직·D1목록·KV목록 조회는 오류10000 Authentication error, Access앱/IDP는9999 not_enabled였습니다. Pages조회/설정은200이며 Chrome D1생성/SQL은성공이므로 플러그인 전체 인증 실패로 단정하지 않습니다.
+- 검증: 정적51개·릴리스12개·도우미9개·홍보보안/저장9개 통과. Chrome 로컬 PC1440/모바일390 첫화면·실제썸네일480×360·두영상재생(paused=false)·닫으면iframe제거 확인. 관리자 영상주소교체/저장 후새로고침 유지, 사진원본401KB→348KB자동압축/저장/홈표시/720×1280원본확대, 네번째더보기 확인. 로컬시험만이며 고객 실제로그인검증과 구분합니다.
+- 공식 HTTP:5페이지200, /api/promotions200로D1의3게시물확인, 홈홍보카드3개와no-store확인(캐시로이전게시물재사용방지), /admin 및/admin/api/board503차단확인. 공식ChromePC1440/모바일390첫화면과썸네일3개·가로넘침없음확인. 공식 첫 영상 플레이어의 재생/일시중지 버튼 상태, 두번째 영상9.66초·paused=false·readyState4, 웹툰720×1280원본 로딩과 닫기 확인.
+- 배포ZIP: C:/Users/WOOWON/AppData/Local/Temp/SMC-promotion-board-20260922.zip. ZIP은 정적앱파일이며 나중에 고객이 작성한D1데이터를 포함하지 않습니다. 로컬 검수 서버 scripts/serve-promotions-test.mjs는127.0.0.1전용·메모리DB·테스트서명이며절대public에배포하지 않습니다.
+- 다음 작업: 권한이 추가되면 고객 계정에서 Access 무료 초기설정→공식/admin경로보호→이메일한개Allow→실제 SMC_ACCESS_DOMAIN/SMC_ACCESS_AUD 변수설정→재배포→고객이 직접로그인/등록확인. 비밀번호·OTP를 채팅으로 받지 않습니다. main변경/병합·유료신청·고객메시지발송 없음.
+
+
 ## 고객 추가 영상 공식 반영 · 2026-09-19 14:51 KST
 
 - 사용자가 전달한 https://youtu.be/12EVkuA5VI4 영상을 기존 T3b6UNOPucc와 함께 홈의 `/#videos`에 추가했습니다. PC에서는 두 개를 나란히, 모바일에서는 세로로 표시합니다. 각 제목·클릭 재생·YouTube 원본 링크를 제공하며, 웹툰과 기존5페이지를 유지합니다.

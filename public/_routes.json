@@ -1,7 +1,12 @@
 {
   "version": 1,
   "include": [
-    "/api/help"
+    "/",
+    "/index.html",
+    "/api/*",
+    "/admin",
+    "/admin/*",
+    "/media/promotions/*"
   ],
   "exclude": []
 }

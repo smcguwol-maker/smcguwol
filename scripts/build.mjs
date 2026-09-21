@@ -4,6 +4,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { buildPages, pages } from './pages.mjs';
 import {helpConfig} from './help-config.mjs';
+import {promoSeeds} from './promotions-config.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const site = JSON.parse(await readFile(path.join(root, 'content/site.json'), 'utf8'));
@@ -128,14 +129,23 @@ const guide = render(await readFile(path.join(root, 'src/guide.html'), 'utf8'));
 const output = path.join(root, 'public');
 await mkdir(output, {recursive:true});
 await buildPages({root,site,replacements,canonical,rooms,assetUrl});
-if(site.assistant?.enabled) {
+{
+  const shared=(await readFile(path.join(root,'src/promotions-shared.js'),'utf8')).replace(/^export /gm,'');
+  const promo=(await readFile(path.join(root,'src/promotions-worker.js'),'utf8')).replace('__PROMO_SEEDS__',JSON.stringify(promoSeeds(site))); 
   const worker=await readFile(path.join(root,'src/help-worker.js'),'utf8');
-  await writeFile(path.join(output,'_worker.js'),worker.replace('__HELP_CONFIG__',JSON.stringify(helpConfig(site))));
-  await writeFile(path.join(output,'_routes.json'),JSON.stringify({version:1,include:['/api/help'],exclude:[]},null,2)+'\n');
-} else {
-  await rm(path.join(output,'_worker.js'),{force:true});
-  await rm(path.join(output,'_routes.json'),{force:true});
+  await writeFile(path.join(output,'_worker.js'),shared+'\n'+promo+'\n'+worker.replace('__HELP_CONFIG__',JSON.stringify(helpConfig(site))));
+  await writeFile(path.join(output,'_routes.json'),JSON.stringify({version:1,include:['/','/index.html','/api/*','/admin','/admin/*','/media/promotions/*'],exclude:[]},null,2)+'\n');
 }
+await mkdir(path.join(output,'admin'),{recursive:true});
+await mkdir(path.join(output,'admin-assets'),{recursive:true});
+let admin=await readFile(path.join(root,'src/admin/index.html'),'utf8');
+for(const name of ['admin.js','admin.css']) {
+  const source=await readFile(path.join(root,'src/admin',name));
+  const hash=createHash('sha256').update(source).digest('hex').slice(0,12);
+  admin=admin.replace(name+'?v=1',name+'?v='+hash);
+  await writeFile(path.join(output,'admin-assets',name),source);
+}
+await writeFile(path.join(output,'admin/index.html'),admin);
 await writeFile(path.join(root,'START_HERE.html'),guide);
 await cp(path.join(root,'src/styles.css'),path.join(output,'styles.css'));
 await cp(path.join(root,'src/app.js'),path.join(output,'app.js'));
@@ -146,7 +156,7 @@ for (const sourcePath of new Set(photos.map(photo => photo.src))) {
   await mkdir(path.dirname(destination), {recursive:true});
   await cp(path.join(root,sourcePath),destination);
 }
-await writeFile(path.join(output,'robots.txt'),canonical ? `User-agent: *\nAllow: /\n\nSitemap: ${canonical}sitemap.xml\n` : 'User-agent: *\nDisallow: /\n');
+await writeFile(path.join(output,'robots.txt'),canonical ? `User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /api/\n\nSitemap: ${canonical}sitemap.xml\n` : 'User-agent: *\nDisallow: /\n');
 await writeFile(path.join(output,'sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${canonical ? pages.map(page=>`\n  <url><loc>${escape(new URL(page.url,canonical).href)}</loc></url>`).join('')+'\n' : '\n  <!-- 시안: 정식 공개 설정 시 공식 URL이 자동 생성됩니다. -->\n'}</urlset>\n`);
 await writeFile(path.join(output,'_headers'),`/*\n  Cache-Control: no-cache\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n${site.publish ? '' : '  X-Robots-Tag: noindex, nofollow, noarchive\n'}\n`);
 await writeFile(path.join(output,'404.html'),`<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>페이지를 찾을 수 없습니다 | SMC 인천 구월점</title><link rel="stylesheet" href="${assetUrl('styles.css', '/')}"></head><body><main class="not-found"><p>SMC 인천 구월점</p><h1>페이지를 찾을 수 없습니다.</h1><p>주소가 변경되었거나 없는 페이지입니다.</p><a class="inline-book" href="/">SMC 첫 화면으로 <span aria-hidden="true">↗</span></a></main></body></html>`);

@@ -19,6 +19,8 @@ async function readQuestion(request) {
 
 export default {
   async fetch(request, env) {
+    const promotion=await promoRoute(request,env);
+    if(promotion)return promotion;
     const url=new URL(request.url);
     if(url.pathname!=='/api/help')return env.ASSETS.fetch(request);
     if(request.method!=='POST')return reply('질문은 홈페이지 이용 도우미에서 입력해 주세요.','invalid',405);

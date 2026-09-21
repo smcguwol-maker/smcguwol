@@ -191,3 +191,24 @@ if (copyAddress && navigator.clipboard?.writeText) {
 
 // Load third-party video only after a visitor explicitly chooses to play it.
 document.querySelectorAll('[data-video]').forEach(shell=>{shell.querySelector('button')?.addEventListener('click',()=>{const id=shell.dataset.video;if(!/^[a-zA-Z0-9_-]{11}$/.test(id))return;const frame=document.createElement('iframe');frame.title=(shell.dataset.videoTitle||'SMC 소개')+' 유튜브 영상';frame.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1';frame.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';frame.allowFullscreen=true;frame.referrerPolicy='strict-origin-when-cross-origin';shell.replaceChildren(frame);});});
+
+// Promotional videos and images open in an accessible dialog, with a working link fallback.
+const promoDialog=document.querySelector('.promo-viewer');
+if(promoDialog&&typeof promoDialog.showModal==='function') {
+ const container=promoDialog.querySelector('.promo-viewer-content');
+ document.querySelector('.promo-grid')?.addEventListener('click',event=>{
+  const more=event.target.closest('.promo-more');
+  if(more){const expanded=more.getAttribute('aria-expanded')==='true';document.querySelectorAll('[data-promo-extra]').forEach(card=>card.hidden=expanded);more.setAttribute('aria-expanded',String(!expanded));more.textContent=expanded?'소식 더 보기 ＋':'소식 접기 −';return;}
+  const link=event.target.closest('.promo-open');if(!link||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
+  event.preventDefault();container.replaceChildren();
+  promoDialog.querySelector('h2').textContent=link.dataset.promoTitle;
+  promoDialog.querySelector('.promo-viewer-description').textContent=link.dataset.promoDescription;
+  const original=promoDialog.querySelector('.promo-original');original.href=link.href;original.textContent=link.dataset.promoType==='video'?'YouTube에서 보기 ↗':'그림 원본 보기 ↗';
+  if(link.dataset.promoType==='video'&&/^[a-zA-Z0-9_-]{11}$/.test(link.dataset.promoVideo)){
+   const frame=document.createElement('iframe');frame.title=link.dataset.promoTitle+' 유튜브 영상';frame.src='https://www.youtube-nocookie.com/embed/'+link.dataset.promoVideo+'?autoplay=1';frame.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';frame.allowFullscreen=true;frame.referrerPolicy='strict-origin-when-cross-origin';container.append(frame);
+  }else{const image=document.createElement('img');image.src=link.href;image.alt=link.dataset.promoTitle;container.append(image);}
+  promoDialog.showModal();
+ });
+ promoDialog.querySelector('.promo-close').addEventListener('click',()=>promoDialog.close());
+ promoDialog.addEventListener('close',()=>container.replaceChildren());
+}

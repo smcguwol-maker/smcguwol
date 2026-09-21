@@ -101,7 +101,8 @@ try {
   assert.ok(production.html.includes('content="index,follow"'));
   assert.ok(!production.html.includes('noindex'));
   assert.ok(!production.headers.includes('X-Robots-Tag'));
-  assert.ok(!production.robots.includes('Disallow: /'));
+  assert.ok(!/^Disallow: \/$/m.test(production.robots));
+  assert.ok(production.robots.includes('Disallow: /admin'));
   const imageUrl = production.html.match(/property="og:image" content="([^"]+)"/)[1];
   assert.equal(new URL(imageUrl).origin, new URL(canonical).origin);
   await access(path.join(fixture, 'public', new URL(imageUrl).pathname.slice(1)));
