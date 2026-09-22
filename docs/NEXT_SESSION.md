@@ -1,5 +1,16 @@
 # SMC 홈페이지 작업 이어가기
 
+## 권한 추가 확인 / 로그인 세션 재확인 대기 · 2026-09-23
+
+- 고객이 Zero Trust 권한 추가 및 저장 완료를 알렸고, 사용자가 관리자 로그인 연결·실제 저장 검수를 이어가도록 요청했습니다.
+- **고객의 권한 추가는 실제로 정상 확인했습니다.** Chrome 구성원 상세에서 기존 작업 계정 circle970908@naver.com / Entire account / Cloudflare Zero Trust; Workers Platform Admin; Administrator를 확인했습니다. User menu의 현재 로그인 이메일도 같은 계정입니다. 이전의 “Zero Trust 역할이 없다”는 진단으로 다시 권한 추가를 요청하지 않습니다.
+- 그런데 같은 고객 계정의 Zero Trust → Get started → /one/overview는 새로고침 후에도 “Your current role does not allow you to view this content.”를 표시합니다. API Access 앱/IDP는9999 access.api.error.not_enabled, 조직 조회는10000 Authentication error입니다. 권한 저장은 확인됐으나 실제 관리 화면 진입/초기 활성화는 아직 되지 않았습니다. 로그인 세션 반영 문제인지 또는 서비스 초기화 문제인지 확정하지 않았습니다.
+- 사용자에게 **PC Chrome에서 기존 작업 계정으로 로그아웃 후 재로그인**을 요청했습니다. 고객에게 같은 권한을 재요청하지 않고 먼저 작업 세션 갱신으로 확인합니다. 비밀번호/OTP를 채팅으로 받거나 추출하지 않습니다.
+- 공식 Pages는 API HTTP200, Production581286e5-24dc-44d1-ac1e-0570247c38d8 유지, 환경변수는SMC_AI_ENABLED만 있으며 Access DOMAIN/AUD는 아직 미설정입니다. 운영 로그인/게시물 쓰기를 성공했다고 말하지 않습니다. 배포/권한/요금 변경 없음.
+- 웹툰을 계속 제작해 올리는 것은 **같은 홍보 게시판의 사진·그림 게시물 추가**로 지원합니다. 소식 올리기 → 사진·그림 → 파일 선택 → 제목(예: SMC 웹툰 2화) → 홈페이지에 공개 → 저장하기. 현재 한 게시물당 이미지1장, 전체게시물30개, 원본15MB/최대변2400px 자동압축입니다. 여러 장으로 구성된 회차는 장별 게시물 또는 한 장으로 구성한 파일로 올릴 수 있으나, 매우 긴 합본은 축소로 글씨가 작아질 수 있습니다. 무제한 누적/다중이미지 회차 관리 기능으로 소개하지 않습니다.
+- 다음 단계: 세션 갱신 후 같은 계정의 Zero Trust 재확인. 진입하면 무료 Access 초기화 및 공식/admin 경로, 고객 이메일1개 Allow, 실제DOMAIN/AUD 변수설정/재배포. Cloudflare 공식 현재 초기 설정 문서는 Free도 결제수단 등록 단계가 있다고 안내하므로 실제 화면이 요구할 경우 고객이 직접 입력해야 합니다(https://developers.cloudflare.com/cloudflare-one/setup/). 아직 결제 단계에 도달한 것은 아니며 이것을 현재 오류의 확정 원인으로 설명하지 않습니다.
+- 원격 검토 브랜치95c56e3를 GitHub read API로 확인했습니다. shell git fetch는네트워크연결실패, MCP members읽기는자동승인검토시간초과여서 구성원UI로 확인했습니다. 시간초과를안전성거부나인증실패로단정하지않습니다.
+
 ## 첫 화면 홍보 게시판 배포 / 고객 로그인 설정 대기 · 2026-09-22
 
 - 고객 요청: 첫 화면에서 영상 썸네일·그림을 바로 보고, 제작 후 고객이 직접 유튜브 영상/사진을 등록·교체. 사용자가 관리자 이메일 **Smcguwol@gmail.com**을 확인했습니다.
