@@ -20,7 +20,8 @@ if (config.publish) {
     for (const match of html.matchAll(/\b(?:src|href)="([^"]+)"/g)) {
       const target = match[1];
       if (/^(https:|tel:)/.test(target)) continue;
-      const [relative, id] = target.split('#');
+      const [withQuery, id] = target.split('#');
+      const relative = withQuery.split('?')[0];
       const destination = relative ? path.resolve(path.dirname(file), relative) : file;
       await access(destination);
       if (id) {
