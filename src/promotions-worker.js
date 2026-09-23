@@ -20,24 +20,42 @@ function promoDecode(value) {
 }
 async function promoAuthorize(request,env) {
   if(!/^[a-z0-9][a-z0-9-]*\.cloudflareaccess\.com$/.test(env.SMC_ACCESS_DOMAIN||'')||!env.SMC_ACCESS_AUD)throw promoError('관리자 로그인 연결을 준비하고 있습니다.',503);
-  const token=request.headers.get('Cf-Access-Jwt-Assertion')||'';
-  if(token.length>16000)throw promoError('다시 로그인해 주세요.',401);
+  // Access can also supply its signed application JWT in this browser cookie.
+  // Prefer the assertion header; never fall back after a present header fails.
+  let token=request.headers.get('Cf-Access-Jwt-Assertion');
+  if(token===null) {
+    const values=(request.headers.get('Cookie')||'').split(';').map(value=>value.trim()).filter(value=>value.startsWith('CF_Authorization='));
+    token=values.length===1?values[0].slice('CF_Authorization='.length):'';
+  }
+  let stage='A01';
   try {
+    if(!token||token.length>16000)throw Error('token');
+    stage='A02';
     const parts=token.split('.');if(parts.length!==3)throw Error('jwt');
     const h=JSON.parse(new TextDecoder().decode(promoDecode(parts[0])));
     const claims=JSON.parse(new TextDecoder().decode(promoDecode(parts[1])));
     const issuer='https://'+env.SMC_ACCESS_DOMAIN;
     const now=Math.floor(Date.now()/1000);
+    stage='A03';
     if(h.alg!=='RS256'||typeof h.kid!=='string'||h.crit||claims.iss!==issuer||!Array.isArray(claims.aud)||!claims.aud.includes(env.SMC_ACCESS_AUD)||!Number.isFinite(claims.exp)||claims.exp<=now||!Number.isFinite(claims.iat)||claims.iat>now+60||(claims.nbf!==undefined&&(!Number.isFinite(claims.nbf)||claims.nbf>now))||String(claims.email||'').toLowerCase()!==promoOwner||claims.type!=='app')throw Error('claims');
     // Keys come only from the configured Access tenant, never an untrusted JWT URL.
+    stage='A04';
     const response=await fetch(issuer+'/cdn-cgi/access/certs',{signal:AbortSignal.timeout(5000),redirect:'error'});
     if(!response.ok)throw Error('keys');
     const jwks=JSON.parse(new TextDecoder().decode(await promoReadBody(response.body,65536)));
+    stage='A05';
     const key=jwks.keys?.find(k=>k.kid===h.kid&&k.kty==='RSA'&&(!k.alg||k.alg==='RS256')&&(!k.use||k.use==='sig'));
     if(!key)throw Error('key');
     const imported=await crypto.subtle.importKey('jwk',key,{name:'RSASSA-PKCS1-v1_5',hash:'SHA-256'},false,['verify']);
+    stage='A06';
     if(!await crypto.subtle.verify('RSASSA-PKCS1-v1_5',imported,promoDecode(parts[2]),new TextEncoder().encode(parts[0]+'.'+parts[1])))throw Error('signature');
-  }catch {throw promoError('로그인이 만료되었거나 관리 권한이 없습니다. 다시 로그인해 주세요.',401);}
+  }catch {
+    // Fixed stage codes help diagnose deployment failures without logging tokens,
+    // cookies, claim values, email addresses, or raw upstream errors.
+    const upstream=stage==='A04'||stage==='A05';
+    const message=upstream?'로그인 확인 서비스에 일시적으로 연결하지 못했습니다. 잠시 후 새로고침해 주세요.':'로그인이 만료되었거나 관리 권한이 없습니다. 다시 로그인해 주세요.';
+    throw Object.assign(promoError(message,upstream?503:401),{authCode:stage});
+  }
 }
 function promoCleanPosts(input) {
   if(!Array.isArray(input)||input.length>30)throw promoError('게시물은 최대 30개까지 보관할 수 있습니다.');
@@ -164,7 +182,8 @@ async function promoRoute(request,env) {
     return new Response(html.replace(/<!--PROMO_START-->[\s\S]*?<!--PROMO_END-->/,()=>'<!--PROMO_START-->'+markup+'<!--PROMO_END-->'),{headers:h,status:response.status});
   }catch(error) {
     const status=error.status||503,message=error.status?error.message:'잠시 후 다시 시도해 주세요. 저장되지 않은 내용은 화면에 남아 있습니다.';
-    if(isAdmin&&!path.startsWith('/admin/api/'))return new Response(`<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>SMC 소식 관리</title><link rel="stylesheet" href="/admin-assets/admin.css"><main class="admin-locked"><p>SMC 인천 구월점</p><h1>소식 관리</h1><p>${promoEscape(message)}</p>${status===401?'<a href="/cdn-cgi/access/logout">다시 로그인</a> · ':'<p>잠시 후 이 페이지를 다시 열어 주세요.</p>'}<a href="/">홈페이지로</a></main></html>`,{status,headers:{...promoSecurity,'Content-Type':'text/html; charset=utf-8','Content-Security-Policy':"default-src 'none'; style-src 'self'; frame-ancestors 'none'; base-uri 'none'"}});
-    return promoJson({error:message},status);
+    const authCode=/^A0[1-6]$/.test(error.authCode||'')?error.authCode:'';
+    if(isAdmin&&!path.startsWith('/admin/api/'))return new Response(`<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>SMC 소식 관리</title><link rel="stylesheet" href="/admin-assets/admin.css"><main class="admin-locked"><p>SMC 인천 구월점</p><h1>소식 관리</h1><p>${promoEscape(message)}</p>${authCode?'<p>문의 시 알려주실 오류 코드: '+authCode+'</p>':''}${status===401?'<a href="/cdn-cgi/access/logout">다시 로그인</a> · ':'<p>잠시 후 이 페이지를 다시 열어 주세요.</p>'}<a href="/">홈페이지로</a></main></html>`,{status,headers:{...promoSecurity,'Content-Type':'text/html; charset=utf-8','Content-Security-Policy':"default-src 'none'; style-src 'self'; frame-ancestors 'none'; base-uri 'none'"}});
+    return promoJson({error:message,...(authCode?{code:authCode}:{})},status);
   }
 }

@@ -6,7 +6,7 @@ const videoId=value=>{try {const u=new URL(value.trim());if(u.protocol!=='https:
 async function api(method='GET',data) {
  const response=await fetch('/admin/api/board',{method,credentials:'same-origin',cache:'no-store',headers:data?{'Content-Type':'application/json'}:{},...(data?{body:JSON.stringify(data)}:{}),signal:AbortSignal.timeout(20000)});
  if(!response.headers.get('content-type')?.includes('application/json'))throw Error('로그인이 만료되었습니다. 입력 내용을 복사해 둔 뒤 다시 로그인해 주세요.');
- const body=await response.json();if(!response.ok)throw Error(body.error||'저장하지 못했습니다. 잠시 후 다시 시도해 주세요.');return body;
+ const body=await response.json();if(!response.ok)throw Error((body.error||'저장하지 못했습니다. 잠시 후 다시 시도해 주세요.')+(/^A0[1-6]$/.test(body.code||'')?' (오류 코드: '+body.code+')':''));return body;
 }
 function element(tag,text,className){const e=document.createElement(tag);if(text)e.textContent=text;if(className)e.className=className;return e;}
 function photoUrl(p){return p.type==='video'?`https://i.ytimg.com/vi/${p.videoId}/hqdefault.jpg`:p.image.startsWith('/media/promotions/')?p.image.replace('/media/promotions/','/admin/api/image/'):p.image;}

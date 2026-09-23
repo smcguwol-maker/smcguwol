@@ -31,6 +31,27 @@ test('만료·다른 이메일·audience·issuer·서명·alg·미래 토큰 차
  const token=await f.token();const parts=token.split('.');parts[1]=Buffer.from(JSON.stringify({email:'smcguwol@gmail.com'})).toString('base64url');assert.equal((await call(undefined,{token:parts.join('.')})).status,401);
 });
 test('서명 확인된 고객 로그인만 기존 3개 소식 읽기',async()=>{const response=await call();assert.equal(response.status,200);assert.equal((await response.json()).posts.length,3);assert.equal(response.headers.get('cache-control'),'no-store');});
+
+test('브라우저의 서명된 Access 쿠키로도 인증하며 헤더 오류는 쿠키로 우회하지 않음',async()=>{
+ const signed=await f.token();
+ const cookieCall=async(cookie,extra={})=>worker.fetch(new Request(origin+'/admin/api/board',{headers:{Cookie:cookie,...extra}}),f.env);
+ assert.equal((await cookieCall('other=1; CF_Authorization='+signed)).status,200);
+ for(const claims of [{email:'someone@example.com'},{aud:['wrong']},{type:'org'},{exp:1}])assert.equal((await cookieCall('CF_Authorization='+await f.token(claims))).status,401);
+ assert.equal((await cookieCall('CF_Authorization=invalid')).status,401);
+ assert.equal((await cookieCall('CF_Authorization='+signed,{ 'Cf-Access-Jwt-Assertion':'invalid' })).status,401);
+ assert.equal((await cookieCall('CF_Authorization='+signed+'; CF_Authorization='+signed)).status,401);
+});
+
+test('검증키 서비스 장애는 만료로 오안내하지 않고 비밀정보 없는 오류 코드만 반환',async()=>{
+ const previousFetch=globalThis.fetch;
+ try {
+  globalThis.fetch=async()=>{throw Error('private upstream detail');};
+  const result=await call();assert.equal(result.status,503);
+  const data=await result.json();assert.equal(data.code,'A04');assert.ok(!JSON.stringify(data).includes('private'));
+ }finally{globalThis.fetch=previousFetch;}
+ const missing=await call(undefined,{token:''});assert.equal((await missing.json()).code,'A01');
+ const invalid=await call(undefined,{token:await f.token({aud:['wrong']})});assert.equal((await invalid.json()).code,'A03');
+});
 test('CSRF·형식·본문 제한',async()=>{
  const data={revision:1,posts:await board()};
  assert.equal((await call(undefined,{method:'PUT',data,headers:{origin:'https://evil.example'}})).status,403);
