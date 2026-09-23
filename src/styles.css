@@ -410,6 +410,8 @@ a,button,summary{touch-action:manipulation}
 .premium .site-footer{border-top:1px solid var(--line)}
 .help-launch{position:fixed;z-index:21;right:24px;bottom:24px;display:flex;align-items:center;gap:10px;border:1px solid #a7b59e;background:var(--paper);padding:10px 15px;color:var(--ink);font-size:.875rem;box-shadow:0 4px 18px #17241f16;min-height:46px}
 .help-launch>span{display:grid;place-items:center;width:24px;height:24px;border:1px solid #788574;border-radius:50%;font-family:Georgia,serif;font-size:17px}
+.footer-help{flex-basis:100%;min-height:56px;display:flex;justify-content:flex-end;align-items:flex-start}
+.help-launch.is-docked{position:static;margin:0;box-shadow:none}
 .help-dialog{position:fixed;inset:auto 24px 24px auto;margin:0;width:min(420px,calc(100% - 32px));max-width:none;max-height:calc(100dvh - 48px);padding:0;border:1px solid #a7b59e;background:var(--paper);color:var(--ink);box-shadow:0 12px 70px #0c171738;overflow:auto}
 .help-dialog::backdrop{background:#10191145}
 .help-heading{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:20px 24px;background:var(--forest);color:white;z-index:1}

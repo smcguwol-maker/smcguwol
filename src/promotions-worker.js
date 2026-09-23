@@ -164,7 +164,7 @@ async function promoRoute(request,env) {
     return new Response(html.replace(/<!--PROMO_START-->[\s\S]*?<!--PROMO_END-->/,()=>'<!--PROMO_START-->'+markup+'<!--PROMO_END-->'),{headers:h,status:response.status});
   }catch(error) {
     const status=error.status||503,message=error.status?error.message:'잠시 후 다시 시도해 주세요. 저장되지 않은 내용은 화면에 남아 있습니다.';
-    if(isAdmin&&!path.startsWith('/admin/api/'))return new Response(`<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>SMC 소식 관리</title><link rel="stylesheet" href="/admin-assets/admin.css"><main class="admin-locked"><p>SMC 인천 구월점</p><h1>소식 관리</h1><p>${promoEscape(message)}</p><a href="/cdn-cgi/access/logout">다시 로그인</a> · <a href="/">홈페이지로</a></main></html>`,{status,headers:{...promoSecurity,'Content-Type':'text/html; charset=utf-8','Content-Security-Policy':"default-src 'none'; style-src 'self'; frame-ancestors 'none'; base-uri 'none'"}});
+    if(isAdmin&&!path.startsWith('/admin/api/'))return new Response(`<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>SMC 소식 관리</title><link rel="stylesheet" href="/admin-assets/admin.css"><main class="admin-locked"><p>SMC 인천 구월점</p><h1>소식 관리</h1><p>${promoEscape(message)}</p>${status===401?'<a href="/cdn-cgi/access/logout">다시 로그인</a> · ':'<p>잠시 후 이 페이지를 다시 열어 주세요.</p>'}<a href="/">홈페이지로</a></main></html>`,{status,headers:{...promoSecurity,'Content-Type':'text/html; charset=utf-8','Content-Security-Policy':"default-src 'none'; style-src 'self'; frame-ancestors 'none'; base-uri 'none'"}});
     return promoJson({error:message},status);
   }
 }

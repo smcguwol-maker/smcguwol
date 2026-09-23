@@ -108,6 +108,18 @@ if(helpDialog && helpLaunch && helpConfig && typeof helpDialog.showModal==='func
   const submit=helpDialog.querySelector('button[type="submit"]');
   let pending;
   helpLaunch.hidden=false;
+  // Dock in the footer while it is visible so fixed controls cannot cover its links.
+  const helpDock=document.querySelector('.footer-help');
+  const siteFooter=document.querySelector('.site-footer');
+  if(helpDock && siteFooter) {
+    helpDock.append(helpLaunch);
+    helpLaunch.classList.add('is-docked');
+    if(typeof IntersectionObserver==='function') {
+      new IntersectionObserver(([entry])=>{
+        helpLaunch.classList.toggle('is-docked',entry.isIntersecting);
+      }).observe(siteFooter);
+    }
+  }
   helpLaunch.addEventListener('click',()=>{helpDialog.showModal();document.body.classList.add('photo-open');});
   helpDialog.querySelector('.help-close').addEventListener('click',()=>helpDialog.close());
   helpDialog.addEventListener('click',event=>{if(event.target===helpDialog)helpDialog.close();});

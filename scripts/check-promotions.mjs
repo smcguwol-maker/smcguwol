@@ -15,6 +15,16 @@ test('인증 없는 관리자, 위조 이메일 헤더, 다른 배포 호스트 
  assert.equal((await worker.fetch(new Request('https://smcguwol-review.pages.dev/admin/api/board',{headers:{'Cf-Access-Jwt-Assertion':await f.token()}}),f.env)).status,403);
  assert.equal((await call(undefined,{},{})).status,503);
 });
+test('연결 준비 중에는 오류가 나는 로그인 링크를 제공하지 않음',async()=>{
+ const pending=await call('/admin/',{token:''},{});
+ assert.equal(pending.status,503);
+ const html=await pending.text();
+ assert.ok(html.includes('관리자 로그인 연결을 준비하고 있습니다.'));
+ assert.ok(!html.includes('/cdn-cgi/access/logout'));
+ const expired=await call('/admin/',{token:''});
+ assert.equal(expired.status,401);
+ assert.ok((await expired.text()).includes('/cdn-cgi/access/logout'));
+});
 test('만료·다른 이메일·audience·issuer·서명·alg·미래 토큰 차단',async()=>{
  for(const claims of [{exp:1},{email:'someone@example.com'},{aud:['wrong']},{iss:'https://evil.example'},{iat:9999999999},{nbf:9999999999},{type:'service'}])assert.equal((await call(undefined,{token:await f.token(claims)})).status,401);
  assert.equal((await call(undefined,{token:await f.token({},{alg:'none'})})).status,401);
