@@ -1,5 +1,14 @@
 # SMC 홈페이지 작업 이어가기
 
+## A04 실제 원인 재현 및 수정 배포 · 2026-09-23 22:55 KST
+
+- 고객이 오류 코드 **A04**를 알려줬습니다. 이메일/Access 정책/인증 전달 문제가 아니라 공개 검증키 요청 구간임을 확정했습니다. 같은 고객 Pages 프로젝트의 임시 Preview `access-runtime-check`에서 고객 토큰 없이 고정된 공개키 URL 요청만 재현했습니다.
+- **실제 원인:** Worker의 `fetch(..., {redirect:'error'})`가 실행 환경에서 TypeError를 발생시킵니다. 실제 메시지: `Invalid redirect value, must be one of "follow" or "manual" ("error" won't be implemented since it does not make sense at the edge; use "manual" and check the response status code).` 같은 환경에서 `redirect:'manual'`은 **HTTP200, application/json, 5116바이트, 키2개, 598ms**로 성공했습니다. Cloudflare 최신 Request 문서는 error 옵션을 기재하지만, 이 프로젝트 실제 런타임(compatibility_date2026-09-15)의 재현 결과를 우선합니다.
+- `src/promotions-worker.js`를 `redirect:'manual'`로 수정했습니다. 기존 `response.ok` 검사에서3xx를 거부하므로 임의 다른 주소의 키를 따라가지 않으며 서명/issuer/audience/email/만료 검증도 유지합니다. 정적51·릴리스12·도우미9·홍보13개 검사 통과. 실제 Workers와 같은 요청 옵션 및302키소스 거부 회귀검사를 추가했습니다. 이전 로컬 모의 fetch 검사가 이 런타임 차이를 놓쳤던 문제입니다.
+- **Production 배포 완료:** **7a48789f-5816-422f-9e26-f37b39c6cb34**, deploy/success, **2026-09-23 22:55:27 KST**. https://7a48789f.smcguwol-review.pages.dev/ . ZIP **C:/Users/WOOWON/AppData/Local/Temp/SMC-admin-A04-fixed-20260923.zip**,1,560,641바이트/25파일. 같은 고객 계정733b1c8faa19799bf480b1192f473635·smcguwol-review 유지.
+- 재현 전용 Preview **0f4b841e-14f3-4b2a-8529-bcec59538201**은 검사 후 environment=preview/branch=access-runtime-check를 재확인하고 API로 삭제HTTP200 성공했습니다. 고객 게시물·기존 배포는 삭제하지 않았습니다. 로그 수집/인증정보 추출/추가 로그인 권한/유료서비스 없이 재현했습니다.
+- **남은 확인:** 고객 기존 오류 화면 새로고침 후 실제 관리자 목록·게시물 저장 확인. A04 원인은 재현 및 수정됐지만 고객 인증 후 편집 성공을 아직 직접 확인한 것은 아닙니다. 고객에게 계정 재설정/같은 로그인 반복 요청 대신 새로고침 안내문을 전달합니다. 세션이 만료된 경우에만 기존 이메일로 로그인합니다.
+
 ## 고객 인증 통과 후 홈페이지 오류 조사 / 보완 배포 · 2026-09-23 22:41 KST
 
 - 고객은 관리자 이메일을 기존 **smcguwol@gmail.com**으로 유지하기로 확인했습니다. ultratp72@gmail.com은 추가하지 않습니다. 고객이 “로그인이 만료되었거나 관리권한이 없습니다”를 보고했습니다.

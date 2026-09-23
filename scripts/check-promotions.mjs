@@ -52,6 +52,20 @@ test('검증키 서비스 장애는 만료로 오안내하지 않고 비밀정�
  const missing=await call(undefined,{token:''});assert.equal((await missing.json()).code,'A01');
  const invalid=await call(undefined,{token:await f.token({aud:['wrong']})});assert.equal((await invalid.json()).code,'A03');
 });
+
+test('Workers가 지원하는 공개키 요청 옵션 사용 및 리다이렉트 키 소스 거부',async()=>{
+ const previousFetch=globalThis.fetch;let calls=0;
+ try {
+  globalThis.fetch=async(url,options)=>{
+   calls++;assert.equal(url,'https://'+testDomain+'/cdn-cgi/access/certs');
+   assert.equal(options.redirect,'manual');assert.ok(options.signal);
+   return Response.json({keys:[f.jwk]});
+  };
+  assert.equal((await call()).status,200);assert.equal(calls,1);
+  globalThis.fetch=async()=>new Response(null,{status:302,headers:{location:'https://untrusted.example/keys'}});
+  const redirected=await call();assert.equal(redirected.status,503);assert.equal((await redirected.json()).code,'A04');
+ }finally{globalThis.fetch=previousFetch;}
+});
 test('CSRF·형식·본문 제한',async()=>{
  const data={revision:1,posts:await board()};
  assert.equal((await call(undefined,{method:'PUT',data,headers:{origin:'https://evil.example'}})).status,403);

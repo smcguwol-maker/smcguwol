@@ -40,7 +40,9 @@ async function promoAuthorize(request,env) {
     if(h.alg!=='RS256'||typeof h.kid!=='string'||h.crit||claims.iss!==issuer||!Array.isArray(claims.aud)||!claims.aud.includes(env.SMC_ACCESS_AUD)||!Number.isFinite(claims.exp)||claims.exp<=now||!Number.isFinite(claims.iat)||claims.iat>now+60||(claims.nbf!==undefined&&(!Number.isFinite(claims.nbf)||claims.nbf>now))||String(claims.email||'').toLowerCase()!==promoOwner||claims.type!=='app')throw Error('claims');
     // Keys come only from the configured Access tenant, never an untrusted JWT URL.
     stage='A04';
-    const response=await fetch(issuer+'/cdn-cgi/access/certs',{signal:AbortSignal.timeout(5000),redirect:'error'});
+    // Workers supports manual/follow here, not Node's redirect:'error'.
+    // Reject 3xx below without following an untrusted key-source redirect.
+    const response=await fetch(issuer+'/cdn-cgi/access/certs',{signal:AbortSignal.timeout(5000),redirect:'manual'});
     if(!response.ok)throw Error('keys');
     const jwks=JSON.parse(new TextDecoder().decode(await promoReadBody(response.body,65536)));
     stage='A05';
