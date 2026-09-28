@@ -1,5 +1,12 @@
 # Cloudflare Pages 배포 안내
 
+## 현재 운영: 복원 보완본 배포 완료 · 2026-09-28 23:23 KST
+
+- **Production/canonical `8a1dcbef-91c3-4c6f-b001-61b2dad8a2c1`, deploy success.** https://8a1dcbef.smcguwol-review.pages.dev/ . 기존 고객 계정 및 `smcguwol-review` 프로젝트에 Chrome Direct Upload로25파일 반영 완료했습니다.
+- 소스: `codex/smc-design-review`의 `46edda7934325d811400b75ce20c827aff65683c`. ZIP: `C:/Users/WOOWON/AppData/Local/Temp/smc-recovery-20260928/SMC-premium-restored-20260928.zip`(1,561,351바이트). 홈페이지 원본 전체나 이전 원페이지 ZIP을 재업로드하지 마세요.
+- 프리미엄5페이지·고객 홍보 게시물6개 유지, 네이버 확인 태그5페이지 반영, 기존 Web Analytics 수집, 관리자 통계 바로가기 포함. 공식5페이지200/공개검색허용, 관리자302로그인 보호 및 AI/D1바인딩 유지 확인.
+- 아래의 ‘추가 배포 대기’는 이전 상태입니다. 새 배포가 완료됐습니다. [NEXT_SESSION.md](NEXT_SESSION.md) 최상단과 [방문 통계 안내](ANALYTICS.md)를 최신 기준으로 사용하세요.
+
 ## 현재 운영 및 추가 배포 대기 · 2026-09-28
 
 - 9월24일 이전 단일 페이지 파일이 Production에 재업로드된 것을 확인했고, **정상 프리미엄 `7a48789f-5816-422f-9e26-f37b39c6cb34`로 롤백 완료**했습니다. 공식5페이지와 고객 홍보 게시물6개 정상 확인. `canonical_deployment`를 운영본 기준으로 사용합니다.
