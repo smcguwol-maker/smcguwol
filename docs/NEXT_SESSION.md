@@ -1,5 +1,16 @@
 # SMC 홈페이지 작업 이어가기
 
+## 단일 페이지 재배포 사고 복원 / 방문 통계 확인 · 2026-09-28
+
+- 고객이 홍보 작업 중 홈페이지가 이전 한 페이지로 돌아갔다고 보고했습니다. 조사 시작 시 Production canonical은 `56fa79d8-96ef-4d64-8f58-01e73d504be0`(9월24일21:33 KST)였습니다. 그 직전 `aa6e445f-1b67-4882-ba33-2709fbef243e`(같은 날19:36 KST)도 이전 단일 페이지 HTML입니다. 누가 어떤 절차로 업로드했는지는 확정하지 않았습니다. DNS/도메인은 active로 정상입니다.
+- **긴급 복원 완료:** 기존 정상 Production `7a48789f-5816-422f-9e26-f37b39c6cb34`로 rollback API HTTP200 성공. canonical이7a48789f로 변경된 것과 공식5페이지/robots/sitemap HTTP200, Chrome PC1440·모바일390의 메뉴·홍보 게시판·사진 정상 표시를 확인했습니다. API의 latest_deployment는56fa여도 canonical_deployment가 실제 운영본입니다. 기존 배포나 DB는 삭제하지 않았습니다.
+- 공개 `/api/promotions`에 고객 게시물6개(영상4·그림2)가 남아 있음을 확인했습니다. Access/AI/D1 바인딩을 변경하지 않았으며 고객 관리자 로그인·실서비스 저장을 대신 수행하지 않았습니다.
+- **방문 통계는 기존 설정으로 실제 집계 중:** 공식도메인의 Web Analytics 사이트 `0c836be68ad6426fb5e2f090d1a715d8`, auto_install/enabled=true. 복원된5페이지 모두 beacon 자동 삽입 확인. GraphQL `rumPageloadEventsAdaptiveGroups`에서 계정/사이트를 한정하여 **2026-09-21 00:00~09-28 00:00 KST**를 조회한 결과 HTTP200, **조회120회·방문50회**입니다. 방문 횟수는 중복 제거된 사람 수와 다릅니다. 통계 스크립트를 중복 삽입하지 않습니다.
+- **추가 보완본은 아직 미배포:** 이전 한 페이지 파일에 추가된 공개 `naver-site-verification` 값 `43c915f8951e3f0798c30d7c71fe407330c5463f`를 새 소스 `content/site.json`에 보존하고, 소식 관리에 고객 Cloudflare Web Analytics 대시보드로 가는 방문 통계 바로가기를 추가했습니다. 현재 긴급 롤백본에는 이 네이버 메타태그와 새 통계 버튼이 없습니다. 새 ZIP 배포 전까지 네이버 소유확인 설정까지 복구됐다고 안내하지 않습니다.
+- 신규 작업 폴더 `C:/Users/WOOWON/AppData/Local/Temp/smc-recovery-20260928/repo`, 검토 브랜치 기반. 공개 빌드·정적51·릴리스12·도우미9·홍보13개 검사(총85개), diff 검사, 로컬 관리자 PC/모바일 배치 검수 통과. ZIP `C:/Users/WOOWON/AppData/Local/Temp/smc-recovery-20260928/SMC-premium-restored-20260928.zip`(1,561,351바이트)은 public 내용물25파일 및 `_worker.js` 포함입니다.
+- **남은 작업:** Chrome Cloudflare 대시보드가 로그아웃 상태이며 MCP `/pages/assets/check-missing`은 HTTP403 /8000013 Authorization failed입니다. 사용자에게 기존 작업 계정 로그인을 요청한 상태입니다. 토큰·비밀번호·인증번호를 요청/추출하지 않습니다. 로그인 후 기존 `smcguwol-review`에 위 ZIP을 Production으로 업로드하고 새 deployment/canonical, 공식5페이지의 네이버 확인 태그, 고객 게시물6개 유지, 관리자 통계 링크를 확인해야 합니다. 다시 예전 ZIP으로 배포하지 마세요. 통계 확인 방법은 [ANALYTICS.md](ANALYTICS.md)를 참고합니다.
+- Git main/다른 프로젝트/유료 서비스/DNS/네임서버/Access 정책은 변경하지 않았습니다. 고객 메시지는 발송하지 않았습니다.
+
 ## A04 실제 원인 재현 및 수정 배포 · 2026-09-23 22:55 KST
 
 - 고객이 오류 코드 **A04**를 알려줬습니다. 이메일/Access 정책/인증 전달 문제가 아니라 공개 검증키 요청 구간임을 확정했습니다. 같은 고객 Pages 프로젝트의 임시 Preview `access-runtime-check`에서 고객 토큰 없이 고정된 공개키 URL 요청만 재현했습니다.

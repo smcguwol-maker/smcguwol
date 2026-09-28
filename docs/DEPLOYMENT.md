@@ -1,5 +1,13 @@
 # Cloudflare Pages 배포 안내
 
+## 현재 운영 및 추가 배포 대기 · 2026-09-28
+
+- 9월24일 이전 단일 페이지 파일이 Production에 재업로드된 것을 확인했고, **정상 프리미엄 `7a48789f-5816-422f-9e26-f37b39c6cb34`로 롤백 완료**했습니다. 공식5페이지와 고객 홍보 게시물6개 정상 확인. `canonical_deployment`를 운영본 기준으로 사용합니다.
+- 최신 소스는 계속 **codex/smc-design-review**입니다. main을 직접 수정/병합하지 않습니다. Pages의 Production branch=main은 Direct Upload 환경 설정이며 Git 자동 배포와는 무관합니다.
+- **보완 ZIP은 아직 미배포:** `C:/Users/WOOWON/AppData/Local/Temp/smc-recovery-20260928/SMC-premium-restored-20260928.zip`. 네이버 소유확인 메타태그 보존 및 관리자 방문 통계 바로가기 추가. 현재 긴급 롤백본에는 이 두 변경이 없습니다. 로그인 후 이 ZIP의 public 내용물25파일을 기존 고객 프로젝트에 업로드하고 운영 응답을 재확인해야 합니다.
+- 기존 방문 통계 수집은 정상입니다. Web Analytics 자동 삽입을 유지하고 추적 코드를 중복 추가하지 않습니다. 고객 확인 방법은 [ANALYTICS.md](ANALYTICS.md)를 참고합니다.
+- 상세 사고 원인·검증 결과·403 업로드 차단 및 로그인 대기는 [NEXT_SESSION.md](NEXT_SESSION.md) 최상단을 따릅니다. 아래의 ‘최신’ 제목과 초기 구성 설명은 각 날짜의 과거 기록입니다.
+
 ## 최신: 두 번째 유튜브 영상 공식 배포 · 2026-09-19 14:51 KST
 
 - Production **0d780ef7-2328-4638-9889-1c9b86d62c9e / deploy success**, 2026-09-19 14:51:47 KST. [영상 영역](https://xn--co-002iq89dzga40o12n.kr/#videos)에 기존 T3b6UNOPucc와 새12EVkuA5VI4를 함께 표시합니다.
